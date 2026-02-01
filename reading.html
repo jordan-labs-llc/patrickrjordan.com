@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Feed — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --accent-hover: #60a5fa;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .category {
+            margin-bottom: 3rem;
+        }
+        .category h2 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .article:last-child { border-bottom: none; }
+        .article a {
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .article a:hover { color: var(--accent); }
+        .article .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+        .article .description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .updated {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back">← Back</a>
+        <h1>Research Feed</h1>
+        <p class="subtitle">Curated reading on agentic commerce, AI reasoning, and protocol design.</p>
+
+        <div class="category">
+            <h2>Agentic Commerce</h2>
+            <div class="article">
+                <a href="https://ucp.dev/specification/overview" target="_blank">Universal Commerce Protocol (UCP) Specification</a>
+                <span class="tag">Protocol</span>
+                <div class="meta">Google • January 2026</div>
+                <div class="description">The official spec for enabling AI agents to transact with businesses autonomously.</div>
+            </div>
+            <div class="article">
+                <a href="https://github.com/Universal-Commerce-Protocol/ucp" target="_blank">UCP GitHub Repository</a>
+                <span class="tag">Reference</span>
+                <div class="meta">Google • Active Development</div>
+                <div class="description">Open-source implementation, samples, and SDKs for UCP.</div>
+            </div>
+            <div class="article">
+                <a href="https://ucp.dev/documentation/roadmap/" target="_blank">UCP Roadmap</a>
+                <span class="tag">Roadmap</span>
+                <div class="meta">Google • 2026</div>
+                <div class="description">Future plans including loyalty programs, personalization, and global market expansion.</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>AI Protocols & Infrastructure</h2>
+            <div class="article">
+                <a href="https://modelcontextprotocol.io" target="_blank">Model Context Protocol (MCP)</a>
+                <span class="tag">Protocol</span>
+                <div class="meta">Anthropic • 2024</div>
+                <div class="description">Open standard for connecting AI systems with external data sources and tools.</div>
+            </div>
+            <div class="article">
+                <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank">Introducing the Model Context Protocol</a>
+                <span class="tag">Announcement</span>
+                <div class="meta">Anthropic • November 2024</div>
+                <div class="description">Anthropic's announcement and rationale for MCP.</div>
+            </div>
+            <div class="article">
+                <a href="https://agentprotocol.ai" target="_blank">Agent Protocol Specification</a>
+                <span class="tag">Protocol</span>
+                <div class="meta">AI Engineer Foundation • 2024</div>
+                <div class="description">Universal API for AI agent communication across frameworks.</div>
+            </div>
+            <div class="article">
+                <a href="https://github.com/teslamotors/vehicle-command" target="_blank">Tesla Vehicle Command SDK</a>
+                <span class="tag">SDK</span>
+                <div class="meta">Tesla • 2024</div>
+                <div class="description">End-to-end authenticated vehicle control protocol — a glimpse of secure agent-device interaction.</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>Research Papers</h2>
+            <div class="article">
+                <a href="https://arxiv.org/abs/2303.17580" target="_blank">HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face</a>
+                <span class="tag">Paper</span>
+                <div class="meta">Shen et al. • March 2023</div>
+                <div class="description">LLM as controller for orchestrating multiple AI models to solve complex tasks.</div>
+            </div>
+            <div class="article">
+                <a href="https://arxiv.org/abs/2308.11432" target="_blank">AgentBench: Evaluating LLMs as Agents</a>
+                <span class="tag">Paper</span>
+                <div class="meta">Liu et al. • August 2023</div>
+                <div class="description">Comprehensive benchmark for evaluating LLMs in agentic scenarios.</div>
+            </div>
+            <div class="article">
+                <a href="https://arxiv.org/abs/2210.03629" target="_blank">ReAct: Synergizing Reasoning and Acting in Language Models</a>
+                <span class="tag">Paper</span>
+                <div class="meta">Yao et al. • October 2022</div>
+                <div class="description">Foundational work on combining reasoning traces with actions.</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>Industry Analysis</h2>
+            <div class="article">
+                <a href="https://a16z.com/emerging-architectures-for-llm-applications/" target="_blank">Emerging Architectures for LLM Applications</a>
+                <span class="tag">Analysis</span>
+                <div class="meta">a16z • June 2023</div>
+                <div class="description">Reference architecture patterns for building LLM-powered applications.</div>
+            </div>
+        </div>
+
+        <p class="updated">Last updated: February 2026</p>
+    </div>
+</body>
+</html>

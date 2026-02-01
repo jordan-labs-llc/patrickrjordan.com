@@ -4,76 +4,212 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #fafafa;
-            --text: #1a1a1a;
-            --muted: #666;
-            --accent: #0066cc;
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border: #e2e8f0;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
         }
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #1a1a1a;
-                --text: #f0f0f0;
-                --muted: #999;
-                --accent: #4da6ff;
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --accent-hover: #60a5fa;
+                --border: #334155;
+                --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
             }
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 2rem;
         }
         .container {
-            max-width: 600px;
+            max-width: 720px;
             margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        header {
+            margin-bottom: 3rem;
+        }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1.5rem;
         }
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
         }
         .title {
-            color: var(--muted);
+            color: var(--text-secondary);
             font-size: 1.1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
         .bio {
-            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            max-width: 540px;
         }
-        .links {
+        .social-links {
             display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
-        a {
-            color: var(--accent);
+        .social-links a {
+            color: var(--text-secondary);
             text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
         }
-        a:hover {
-            text-decoration: underline;
+        .social-links a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--bg-secondary);
+        }
+        section {
+            margin-bottom: 3rem;
+        }
+        h2 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .card-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+        }
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--card-shadow);
+            transform: translateY(-2px);
+        }
+        .card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+        }
+        .card p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .card .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            margin-top: 0.75rem;
+        }
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Patrick R. Jordan</h1>
-        <p class="title">General Manager, Advanced Reasoning &bull; Microsoft AI</p>
-        <p class="bio">
-            AI researcher and engineering leader focused on advancing machine reasoning capabilities.
-            Building the future of AI at Microsoft.
-        </p>
-        <div class="links">
-            <a href="https://www.linkedin.com/in/patrickrjordan/">LinkedIn</a>
-            <a href="https://github.com/pjordan">GitHub</a>
-        </div>
+        <header>
+            <div class="avatar">PJ</div>
+            <h1>Patrick R. Jordan</h1>
+            <p class="title">General Manager, Advanced Reasoning • Microsoft AI</p>
+            <p class="bio">
+                AI researcher and engineering leader focused on advancing machine reasoning capabilities. 
+                Exploring the intersection of AI agents and commerce.
+            </p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/patrickrjordan/">LinkedIn</a>
+                <a href="https://github.com/pjordan">GitHub</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>Interests</h2>
+            <div class="card-grid">
+                <a href="https://ucp.dev" class="card" target="_blank">
+                    <h3>Universal Commerce Protocol (UCP)</h3>
+                    <p>Google's open standard enabling AI agents to transact with businesses autonomously.</p>
+                    <span class="tag">Agentic Commerce</span>
+                </a>
+                <a href="https://github.com/anthropics/acp" class="card" target="_blank">
+                    <h3>Agent Commerce Protocol (ACP)</h3>
+                    <p>Anthropic's protocol for secure, authenticated agent-to-business transactions.</p>
+                    <span class="tag">Agentic Commerce</span>
+                </a>
+                <a href="https://modelcontextprotocol.io" class="card" target="_blank">
+                    <h3>Model Context Protocol (MCP)</h3>
+                    <p>Open standard for connecting AI systems with external data sources and tools.</p>
+                    <span class="tag">AI Infrastructure</span>
+                </a>
+                <a href="https://agentprotocol.ai" class="card" target="_blank">
+                    <h3>Agent Protocol</h3>
+                    <p>Universal API specification for seamless AI agent communication across platforms.</p>
+                    <span class="tag">AI Infrastructure</span>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Focus Areas</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Agentic Commerce</h3>
+                    <p>The emerging economy where AI agents discover, negotiate, and transact on behalf of users.</p>
+                </div>
+                <div class="card">
+                    <h3>Advanced Reasoning</h3>
+                    <p>Building AI systems capable of complex, multi-step reasoning and problem-solving.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 Patrick R. Jordan</p>
+        </footer>
     </div>
 </body>
 </html>

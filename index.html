@@ -16,7 +16,7 @@
             --accent: #2563eb;
             --accent-hover: #1d4ed8;
             --border: #e2e8f0;
-            --card-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --green: #10b981;
         }
         @media (prefers-color-scheme: dark) {
             :root {
@@ -27,7 +27,6 @@
                 --accent: #3b82f6;
                 --accent-hover: #60a5fa;
                 --border: #334155;
-                --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
             }
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -78,6 +77,7 @@
             display: flex;
             gap: 1rem;
             margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
         .social-links a {
             color: var(--text-secondary);
@@ -96,14 +96,25 @@
         section {
             margin-bottom: 3rem;
         }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
         h2 {
             font-size: 0.875rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-secondary);
-            margin-bottom: 1rem;
         }
+        .view-all {
+            font-size: 0.875rem;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .view-all:hover { text-decoration: underline; }
         .card-grid {
             display: grid;
             gap: 1rem;
@@ -119,7 +130,6 @@
         }
         .card:hover {
             border-color: var(--accent);
-            box-shadow: var(--card-shadow);
             transform: translateY(-2px);
         }
         .card h3 {
@@ -141,6 +151,41 @@
             color: white;
             border-radius: 4px;
             margin-top: 0.75rem;
+        }
+        .card .meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        .pulse-item {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .pulse-item:last-child { border-bottom: none; }
+        .pulse-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+        .pulse-content {
+            flex: 1;
+        }
+        .pulse-content a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .pulse-content a:hover { color: var(--accent); }
+        .pulse-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
         }
         footer {
             margin-top: 4rem;
@@ -164,47 +209,71 @@
             <div class="social-links">
                 <a href="https://www.linkedin.com/in/patrickrjordan/">LinkedIn</a>
                 <a href="https://github.com/pjordan">GitHub</a>
-                <a href="/reading.html">Research Feed</a>
             </div>
         </header>
+
+        <section>
+            <div class="section-header">
+                <h2>Repo Pulse</h2>
+                <a href="/pulse.html" class="view-all">View all →</a>
+            </div>
+            <div class="card" style="cursor: default;">
+                <div class="pulse-item">
+                    <div class="pulse-indicator"></div>
+                    <div class="pulse-content">
+                        <a href="https://github.com/Universal-Commerce-Protocol/ucp" target="_blank">UCP: Multi-parent extends + deterministic schema resolution</a>
+                        <div class="pulse-meta">Ilya Grigorik • Jan 28</div>
+                    </div>
+                </div>
+                <div class="pulse-item">
+                    <div class="pulse-indicator"></div>
+                    <div class="pulse-content">
+                        <a href="https://github.com/Universal-Commerce-Protocol/ucp" target="_blank">UCP: Two-layer error handling for negotiation failures</a>
+                        <div class="pulse-meta">Ilya Grigorik • Jan 28</div>
+                    </div>
+                </div>
+                <div class="pulse-item">
+                    <div class="pulse-indicator"></div>
+                    <div class="pulse-content">
+                        <a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/150" target="_blank">UCP Issue #150: TypeScript generator references removed directory</a>
+                        <div class="pulse-meta">Open Issue • Jan 30</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2>Featured Reading</h2>
+                <a href="/reading.html" class="view-all">View all →</a>
+            </div>
+            <div class="card-grid">
+                <a href="https://ucp.dev/specification/overview" class="card" target="_blank">
+                    <h3>Universal Commerce Protocol Specification</h3>
+                    <p>The official spec for AI agents transacting with businesses autonomously.</p>
+                    <span class="tag">Protocol</span>
+                </a>
+                <a href="https://arxiv.org/abs/2210.03629" class="card" target="_blank">
+                    <h3>ReAct: Synergizing Reasoning and Acting</h3>
+                    <p>Foundational work on combining reasoning traces with actions in language models.</p>
+                    <span class="tag">Paper</span>
+                </a>
+            </div>
+        </section>
 
         <section>
             <h2>Interests</h2>
             <div class="card-grid">
                 <a href="https://ucp.dev" class="card" target="_blank">
                     <h3>Universal Commerce Protocol (UCP)</h3>
-                    <p>Google's open standard enabling AI agents to transact with businesses autonomously.</p>
-                    <span class="tag">Agentic Commerce</span>
-                </a>
-                <a href="https://github.com/anthropics/acp" class="card" target="_blank">
-                    <h3>Agent Commerce Protocol (ACP)</h3>
-                    <p>Anthropic's protocol for secure, authenticated agent-to-business transactions.</p>
+                    <p>Google's open standard enabling AI agents to transact with businesses.</p>
                     <span class="tag">Agentic Commerce</span>
                 </a>
                 <a href="https://modelcontextprotocol.io" class="card" target="_blank">
                     <h3>Model Context Protocol (MCP)</h3>
-                    <p>Open standard for connecting AI systems with external data sources and tools.</p>
+                    <p>Open standard for connecting AI systems with external data sources.</p>
                     <span class="tag">AI Infrastructure</span>
                 </a>
-                <a href="https://agentprotocol.ai" class="card" target="_blank">
-                    <h3>Agent Protocol</h3>
-                    <p>Universal API specification for seamless AI agent communication across platforms.</p>
-                    <span class="tag">AI Infrastructure</span>
-                </a>
-            </div>
-        </section>
-
-        <section>
-            <h2>Focus Areas</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <h3>Agentic Commerce</h3>
-                    <p>The emerging economy where AI agents discover, negotiate, and transact on behalf of users.</p>
-                </div>
-                <div class="card">
-                    <h3>Advanced Reasoning</h3>
-                    <p>Building AI systems capable of complex, multi-step reasoning and problem-solving.</p>
-                </div>
             </div>
         </section>
 

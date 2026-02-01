@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repo Pulse — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .repo-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .repo-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .repo-name a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .repo-name a:hover { color: var(--accent); }
+        .repo-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .stat { display: flex; align-items: center; gap: 0.25rem; }
+        .repo-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .activity-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .activity-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .activity-item {
+            font-size: 0.875rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 0.75rem;
+        }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-type {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .type-commit { background: var(--green); color: white; }
+        .type-issue { background: var(--yellow); color: black; }
+        .type-pr { background: var(--purple); color: white; }
+        .type-discussion { background: var(--accent); color: white; }
+        .activity-content { flex: 1; }
+        .activity-content a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .activity-content a:hover { color: var(--accent); }
+        .activity-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+        .updated {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .no-activity {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back">← Back</a>
+        <h1>Repo Pulse</h1>
+        <p class="subtitle">Daily tracking of key repositories in agentic commerce and AI infrastructure.</p>
+
+        <div class="repo-card">
+            <div class="repo-header">
+                <div class="repo-name">
+                    <a href="https://github.com/Universal-Commerce-Protocol/ucp" target="_blank">Universal-Commerce-Protocol/ucp</a>
+                </div>
+                <div class="repo-stats">
+                    <span class="stat">⭐ 2,223</span>
+                    <span class="stat">🍴 249</span>
+                    <span class="stat">📋 45 open</span>
+                </div>
+            </div>
+            <p class="repo-desc">Google's Universal Commerce Protocol — enabling AI agents to transact with businesses.</p>
+            
+            <div class="activity-section">
+                <div class="activity-title">Recent Activity (Last 7 Days)</div>
+                
+                <div class="activity-item">
+                    <span class="activity-type type-commit">Commit</span>
+                    <div class="activity-content">
+                        <a href="#">feat(context): Added intent field; clarified non-identifying constraint</a>
+                        <div class="activity-meta">Ilya Grigorik • Jan 29</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <span class="activity-type type-commit">Commit</span>
+                    <div class="activity-content">
+                        <a href="#">feat(extends): Multi-parent support + deterministic schema resolution</a>
+                        <div class="activity-meta">Ilya Grigorik • Jan 28</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <span class="activity-type type-commit">Commit</span>
+                    <div class="activity-content">
+                        <a href="#">Two-layer error handling for UCP negotiation failures</a>
+                        <div class="activity-meta">Ilya Grigorik • Jan 28</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <span class="activity-type type-issue">Issue</span>
+                    <div class="activity-content">
+                        <a href="#">#150: TypeScript type generator references removed spec/ directory</a>
+                        <div class="activity-meta">Open • Jan 30</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-header">
+                <div class="repo-name">
+                    <a href="https://github.com/modelcontextprotocol/servers" target="_blank">modelcontextprotocol/servers</a>
+                </div>
+                <div class="repo-stats">
+                    <span class="stat">⭐ 12.4k</span>
+                    <span class="stat">🍴 1.2k</span>
+                </div>
+            </div>
+            <p class="repo-desc">Anthropic's Model Context Protocol server implementations.</p>
+            
+            <div class="activity-section">
+                <div class="activity-title">Recent Activity (Last 7 Days)</div>
+                <p class="no-activity">Checking for updates...</p>
+            </div>
+        </div>
+
+        <div class="repo-card">
+            <div class="repo-header">
+                <div class="repo-name">
+                    <a href="https://github.com/AI-Engineer-Foundation/agent-protocol" target="_blank">AI-Engineer-Foundation/agent-protocol</a>
+                </div>
+                <div class="repo-stats">
+                    <span class="stat">⭐ 1.8k</span>
+                    <span class="stat">🍴 142</span>
+                </div>
+            </div>
+            <p class="repo-desc">Universal API specification for AI agent communication.</p>
+            
+            <div class="activity-section">
+                <div class="activity-title">Recent Activity (Last 7 Days)</div>
+                <p class="no-activity">Checking for updates...</p>
+            </div>
+        </div>
+
+        <p class="updated">Last updated: February 1, 2026 • Updated daily</p>
+    </div>
+</body>
+</html>

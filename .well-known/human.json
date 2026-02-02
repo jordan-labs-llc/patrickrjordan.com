@@ -1,0 +1,15 @@
+{
+  "$schema": "https://patrickrjordan.com/.well-known/human.schema.json",
+  "protocol": "HCP/1.0",
+  "entity": {
+    "name": "Patrick R. Jordan",
+    "type": "human",
+    "role": "General Manager, Advanced Reasoning",
+    "organization": "Microsoft AI"
+  },
+  "interests": [
+    "machine reasoning",
+    "agentic commerce",
+    "protocol design"
+  ]
+}

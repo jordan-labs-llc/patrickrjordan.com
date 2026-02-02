@@ -202,7 +202,33 @@
             color: var(--text-secondary);
             font-size: 0.875rem;
         }
+        .code-block {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+        .code-block a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.75rem;
+            float: right;
+            margin-top: -0.25rem;
+        }
+        .code-block a:hover { color: var(--accent); }
+        .json-key { color: #0550ae; }
+        .json-string { color: #0a3069; }
+        .json-bracket { color: var(--text-secondary); }
+        @media (prefers-color-scheme: dark) {
+            .json-key { color: #79c0ff; }
+            .json-string { color: #a5d6ff; }
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -291,6 +317,28 @@
                     <p>Google's protocol enabling AI agents to communicate and collaborate with each other.</p>
                     <span class="tag">Agent Interop</span>
                 </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>/.well-known/human.json</h2>
+            <div class="code-block">
+                <a href="/.well-known/human.json" target="_blank">View raw →</a>
+<pre><span class="json-bracket">{</span>
+  <span class="json-key">"$schema"</span>: <span class="json-string">"https://patrickrjordan.com/.well-known/human.schema.json"</span>,
+  <span class="json-key">"protocol"</span>: <span class="json-string">"HCP/1.0"</span>,
+  <span class="json-key">"entity"</span>: <span class="json-bracket">{</span>
+    <span class="json-key">"name"</span>: <span class="json-string">"Patrick R. Jordan"</span>,
+    <span class="json-key">"type"</span>: <span class="json-string">"human"</span>,
+    <span class="json-key">"role"</span>: <span class="json-string">"General Manager, Advanced Reasoning"</span>,
+    <span class="json-key">"organization"</span>: <span class="json-string">"Microsoft AI"</span>
+  <span class="json-bracket">}</span>,
+  <span class="json-key">"interests"</span>: <span class="json-bracket">[</span>
+    <span class="json-string">"machine reasoning"</span>,
+    <span class="json-string">"agentic commerce"</span>,
+    <span class="json-string">"protocol design"</span>
+  <span class="json-bracket">]</span>
+<span class="json-bracket">}</span></pre>
             </div>
         </section>
 

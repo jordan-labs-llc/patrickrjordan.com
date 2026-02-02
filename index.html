@@ -227,6 +227,46 @@
             .json-key { color: #79c0ff; }
             .json-string { color: #a5d6ff; }
         }
+        .press-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.75rem;
+        }
+        .press-links a {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .press-links a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        .card-static {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .card-static h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .card-static p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .card-static .meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 </head>
@@ -287,6 +327,21 @@
                     <div class="pulse-content">
                         <a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/150" target="_blank">UCP Issue #150: TypeScript generator references removed directory</a>
                         <div class="pulse-meta">Open Issue • Jan 30</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Team Work</h2>
+            <div class="card-grid">
+                <div class="card-static">
+                    <h3>Copilot Checkout</h3>
+                    <p>Conversational commerce experience enabling purchases directly within Microsoft Copilot.</p>
+                    <div class="meta">January 2026</div>
+                    <div class="press-links">
+                        <a href="https://searchengineland.com/microsoft-launches-copilot-checkout-and-brand-agents-467175" target="_blank">Search Engine Land</a>
+                        <a href="https://about.ads.microsoft.com/en/blog/post/january-2026/conversations-that-convert-copilot-checkout-and-brand-agents" target="_blank">Microsoft Ads Blog</a>
                     </div>
                 </div>
             </div>

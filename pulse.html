@@ -190,6 +190,26 @@
             color: var(--text-secondary);
             margin-top: 0.25rem;
         }
+        .insight-detail a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+        .insight-detail a:hover {
+            text-decoration: underline;
+        }
+        .insight-detail code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            background: var(--bg);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        .insight-detail strong {
+            color: var(--text);
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -422,19 +442,23 @@
             <ul class="insights-list">
                 <li>
                     <div class="insight-title">UCP payment ecosystem expanding rapidly</div>
-                    <div class="insight-detail">Four major payment providers — Block, Fiserv, Klarna, and Splitit — joined as endorsed partners this week, signaling serious enterprise adoption of Google's agentic commerce standard.</div>
+                    <div class="insight-detail">Four major payment providers joined as endorsed UCP partners this week: <strong>Block</strong> (Square, Cash App), <strong>Fiserv</strong> (one of the largest payment processors globally), <strong>Klarna</strong> (BNPL leader), and <strong>Splitit</strong> (installment payments). This signals serious enterprise momentum behind Google's agentic commerce standard. The addition of BNPL providers is particularly notable — it suggests UCP is being designed with flexible payment options in mind, not just traditional card-on-file transactions. <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/8307e0c" target="_blank">View commit →</a></div>
                 </li>
                 <li>
-                    <div class="insight-title">A2A breaking change: simpler IDs</div>
-                    <div class="insight-detail">The switch to non-complex IDs in A2A requests is a breaking change, but simplifies the protocol for implementers. SDK backwards compatibility was added in the same release cycle.</div>
+                    <div class="insight-title">UCP adds intent signaling for smarter agent context</div>
+                    <div class="insight-detail">A new <code>intent</code> field was added to the UCP context object, allowing AI agents to signal their purpose (browse, compare, purchase) to merchants. Combined with clarifications on "non-identifying constraints," this enables merchants to personalize responses without requiring user authentication upfront — a key friction point in agentic commerce. <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/c4860fc" target="_blank">View commit →</a></div>
                 </li>
                 <li>
-                    <div class="insight-title">OpenClaw hits 156k+ stars</div>
-                    <div class="insight-detail">The personal AI assistant framework continues its rapid growth, with active development on TypeScript tooling and Mac app improvements this week.</div>
+                    <div class="insight-title">A2A simplifies IDs — breaking change with migration path</div>
+                    <div class="insight-detail">Google's Agent-to-Agent Protocol switched from complex composite IDs to simple string identifiers in requests. While this is a breaking change, the team simultaneously shipped SDK backwards compatibility support, giving implementers a clear migration path. The change reflects learnings from early adopters: simpler IDs reduce parsing errors and make debugging easier in multi-agent systems. <a href="https://github.com/a2aproject/A2A/commit/2596c1c" target="_blank">Breaking change</a> · <a href="https://github.com/a2aproject/A2A/commit/227e249" target="_blank">SDK compat →</a></div>
                 </li>
                 <li>
-                    <div class="insight-title">MCP servers: security focus</div>
-                    <div class="insight-detail">Anthropic's Model Context Protocol server implementations saw security requirements updates, reflecting the maturation of the ecosystem as production deployments increase.</div>
+                    <div class="insight-title">OpenClaw consolidates TypeScript tooling</div>
+                    <div class="insight-detail">The personal AI assistant framework (156k+ stars) saw significant TypeScript infrastructure improvements this week, including merged tsconfigs and a switch to <code>NodeNext</code> module resolution. These changes improve build reliability and developer experience — important as the project scales. The Mac app build pipeline was also fixed, suggesting increased focus on native desktop experiences. <a href="https://github.com/openclaw/openclaw/commit/1f2f79a" target="_blank">View commit →</a></div>
+                </li>
+                <li>
+                    <div class="insight-title">MCP servers tighten security requirements</div>
+                    <div class="insight-detail">Anthropic's Model Context Protocol server implementations updated their security requirements documentation. As MCP moves from experimental to production deployments, security posture becomes critical — these servers often have access to sensitive data sources and tools. The update reflects the protocol's maturation. <a href="https://github.com/modelcontextprotocol/servers/commit/e6b0b0f" target="_blank">View commit →</a></div>
                 </li>
             </ul>
         </div>

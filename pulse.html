@@ -150,6 +150,46 @@
             font-size: 0.875rem;
             font-style: italic;
         }
+        .insights-section {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .insights-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .insights-header h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        .insights-list {
+            list-style: none;
+        }
+        .insights-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .insights-list li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .insight-title {
+            font-weight: 600;
+            color: var(--text);
+        }
+        .insight-detail {
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
     </style>
 </head>
 <body>
@@ -372,6 +412,31 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="insights-section">
+            <div class="insights-header">
+                <span>💡</span>
+                <h2>Weekly Insights</h2>
+            </div>
+            <ul class="insights-list">
+                <li>
+                    <div class="insight-title">UCP payment ecosystem expanding rapidly</div>
+                    <div class="insight-detail">Four major payment providers — Block, Fiserv, Klarna, and Splitit — joined as endorsed partners this week, signaling serious enterprise adoption of Google's agentic commerce standard.</div>
+                </li>
+                <li>
+                    <div class="insight-title">A2A breaking change: simpler IDs</div>
+                    <div class="insight-detail">The switch to non-complex IDs in A2A requests is a breaking change, but simplifies the protocol for implementers. SDK backwards compatibility was added in the same release cycle.</div>
+                </li>
+                <li>
+                    <div class="insight-title">OpenClaw hits 156k+ stars</div>
+                    <div class="insight-detail">The personal AI assistant framework continues its rapid growth, with active development on TypeScript tooling and Mac app improvements this week.</div>
+                </li>
+                <li>
+                    <div class="insight-title">MCP servers: security focus</div>
+                    <div class="insight-detail">Anthropic's Model Context Protocol server implementations saw security requirements updates, reflecting the maturation of the ecosystem as production deployments increase.</div>
+                </li>
+            </ul>
         </div>
 
         <p class="updated">Last updated: February 3, 2026 • Updated daily</p>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Risk & Abuse Signals: Building Trust Infrastructure for Agentic Commerce — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+        }
+        .author-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-header {
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .author-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-title {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .author-bio {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box p {
+            margin-bottom: 0;
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin: 1.5rem 0;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .next-steps {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .next-steps h3 {
+            margin-top: 0;
+        }
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/pulse.html" class="back">← Back to Repo Pulse</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Enhancement Proposal</span>
+            <span>February 4, 2026</span> · 
+            <a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/153" target="_blank">View on GitHub →</a>
+        </div>
+        
+        <h1>UCP Risk & Abuse Signals: Building Trust Infrastructure for Agentic Commerce</h1>
+        <p class="subtitle">A new proposal brings fraud prevention and rate limiting primitives to the Universal Commerce Protocol — essential infrastructure for enterprise adoption.</p>
+
+        <div class="author-card">
+            <div class="author-header">Author</div>
+            <div class="author-name">Ilya Grigorik</div>
+            <div class="author-title">Distinguished Engineer & Technical Advisor to CEO, Shopify</div>
+            <div class="author-bio">
+                Former Google (Analytics, Chrome, Search). Founder & CTO of PostRank (acquired by Google). Author of <em>High Performance Browser Networking</em> (O'Reilly). Former co-chair of W3C Web Performance WG. Speaker at 100+ events on web performance.
+                <br><br>
+                Ilya is the second-most active contributor to UCP, responsible for core capabilities including the intent field, multi-parent schema support, cart capability, and two-layer error handling.
+            </div>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>When AI agents start making purchases on behalf of humans, how do merchants know they're not dealing with fraud? How do they rate-limit abusive bots? How do they decide when to require additional verification?</p>
+        
+        <p>These questions are table stakes for any real commerce system. Without answers, enterprise merchants won't adopt agentic commerce — the risk is too high.</p>
+        
+        <div class="highlight-box">
+            <p><strong>The core insight:</strong> There's a difference between <em>completeness</em> (is this checkout structurally valid?) and <em>confidence</em> (can I authorize without friction?). UCP already handles completeness. This proposal adds confidence.</p>
+        </div>
+
+        <h2>What Changed</h2>
+        
+        <h3>1. New <code>signals</code> Object</h3>
+        
+        <p>A transport-agnostic container for environment signals that help merchants assess risk:</p>
+        
+        <pre><code>{
+  "checkout": {
+    "id": "chk_123",
+    "signals": {
+      "buyer_ip": "203.0.113.42",
+      "user_agent": "Mozilla/5.0...",
+      "device_id": "fp_abc123",
+      "ja4": "t13d1516h2_8daaf6152771_b186095e22b6"
+    }
+  }
+}</code></pre>
+
+        <p>The spec defines four well-known signals:</p>
+        
+        <table>
+            <tr>
+                <th>Signal</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><code>buyer_ip</code></td>
+                <td>Geolocation, reputation scoring, rate limiting</td>
+            </tr>
+            <tr>
+                <td><code>device_id</code></td>
+                <td>Device fingerprinting for fraud detection</td>
+            </tr>
+            <tr>
+                <td><code>user_agent</code></td>
+                <td>Client identification, bot detection</td>
+            </tr>
+            <tr>
+                <td><code>ja4</code></td>
+                <td>TLS fingerprint for advanced bot detection</td>
+            </tr>
+        </table>
+        
+        <p>Additional signals can be defined via extensions and negotiated during the platform-business handshake.</p>
+
+        <h3>2. New Message Type: <code>hint</code></h3>
+        
+        <p>A non-blocking message type for expressing what signals affect merchant confidence:</p>
+        
+        <pre><code>{
+  "type": "hint",
+  "path": "$.signals.device_id",
+  "code": "risk",
+  "content": "Device fingerprint may reduce verification friction"
+}</code></pre>
+
+        <p>Two hint codes are defined:</p>
+        <ul>
+            <li><code>risk</code> — Affects fraud prevention and authorization decisions</li>
+            <li><code>abuse</code> — Affects rate limiting and bot detection</li>
+        </ul>
+        
+        <p>Unlike <code>error</code> messages that block checkout progression, <code>hint</code> messages are advisory. A checkout can be <code>ready_for_complete</code> while still having hints — the platform can attempt completion, but should expect higher friction (step-up verification, 3DS challenges, etc.) without the requested signals.</p>
+
+        <h2>The Completeness vs. Confidence Model</h2>
+        
+        <table>
+            <tr>
+                <th>Concern</th>
+                <th>Question</th>
+                <th>Mechanism</th>
+                <th>Blocks Status?</th>
+            </tr>
+            <tr>
+                <td><strong>Completeness</strong></td>
+                <td>Is checkout structurally valid?</td>
+                <td><code>error</code> message</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td><strong>Confidence</strong></td>
+                <td>Can I authorize without friction?</td>
+                <td><code>hint</code> message</td>
+                <td>No</td>
+            </tr>
+        </table>
+        
+        <p>This separation is elegant: validation failures are deterministic (no email = can't complete), while confidence is probabilistic (no device_id = higher probability of step-up, not certainty).</p>
+
+        <h2>Implications for Platform Developers</h2>
+        
+        <p>If you're building a platform that integrates with UCP (like Copilot Checkout), this proposal means:</p>
+        
+        <ol>
+            <li><strong>Collect signals proactively.</strong> When your agent initiates a checkout, gather available environment signals (IP, user-agent, device fingerprints if available) and include them in requests.</li>
+            <li><strong>Handle hints gracefully.</strong> When a merchant returns hints, decide whether to gather the requested signals (if possible) or proceed with higher expected friction.</li>
+            <li><strong>Expect signal negotiation.</strong> Different merchants will request different signals based on their risk models. Your platform should support extensible signal collection.</li>
+        </ol>
+
+        <div class="next-steps">
+            <h3>What's Next</h3>
+            <ul>
+                <li><strong>TC Review:</strong> This proposal needs Tech Council approval before merging into the spec.</li>
+                <li><strong>Privacy considerations:</strong> Fingerprinting signals raise privacy questions that may require additional guidance (consent, retention, jurisdictional rules).</li>
+                <li><strong>Extension ecosystem:</strong> Expect domain-specific signal extensions (travel, financial services, healthcare) with specialized risk signals.</li>
+                <li><strong>Platform implementation:</strong> Major platforms (Google, Microsoft, Shopify) will need to implement signal collection — this becomes a competitive differentiator for conversion rates.</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Analysis by Patrick R. Jordan · <a href="/pulse.html">Repo Pulse</a> · <a href="/">Home</a></p>
+        </footer>
+    </div>
+</body>
+</html>

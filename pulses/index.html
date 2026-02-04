@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repo Pulse Archive — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .archive-list {
+            list-style: none;
+        }
+        .archive-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .archive-list li:last-child {
+            border-bottom: none;
+        }
+        .archive-list a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        .archive-list a:hover {
+            color: var(--accent);
+        }
+        .archive-date {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .current {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/pulse.html" class="back">← Current Pulse</a>
+        <h1>Repo Pulse Archive</h1>
+        <p class="subtitle">Historical snapshots of tracked repository activity.</p>
+
+        <ul class="archive-list">
+            <li>
+                <a href="/pulse.html">February 4, 2026</a>
+                <span class="current">Latest</span>
+            </li>
+            <li>
+                <a href="/pulses/pulse-2026-02-04.html">February 4, 2026</a>
+                <span class="archive-date">First archived edition</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

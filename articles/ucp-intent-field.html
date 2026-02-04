@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Intent Field: Teaching AI Agents to Communicate Shopping Context — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+        }
+        .author-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-header {
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .author-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-title {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .author-bio {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box p {
+            margin-bottom: 0;
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin: 1.5rem 0;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .example-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .example-box h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .next-steps {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .next-steps h3 {
+            margin-top: 0;
+        }
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/pulse.html" class="back">← Back to Repo Pulse</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Feature</span>
+            <span>January 29, 2026</span> · 
+            <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/95" target="_blank">View PR #95 →</a>
+        </div>
+        
+        <h1>UCP Intent Field: Teaching AI Agents to Communicate Shopping Context</h1>
+        <p class="subtitle">A new field enables AI agents to express buyer intent in natural language — unlocking personalization without authentication.</p>
+
+        <div class="author-card">
+            <div class="author-header">Author</div>
+            <div class="author-name">Ilya Grigorik</div>
+            <div class="author-title">Distinguished Engineer & Technical Advisor to CEO, Shopify</div>
+            <div class="author-bio">
+                Former Google (Analytics, Chrome, Search). Founder & CTO of PostRank (acquired by Google). Author of <em>High Performance Browser Networking</em> (O'Reilly). Former co-chair of W3C Web Performance WG.
+                <br><br>
+                Ilya is the second-most active contributor to UCP, shaping core protocol architecture including context signals, schema composition, and error handling.
+            </div>
+        </div>
+
+        <h2>The Problem: Anonymous Agents, Generic Results</h2>
+        
+        <p>When a human shops online, merchants personalize the experience based on browsing history, past purchases, and account preferences. But when an AI agent shops on behalf of a user, none of that context exists — the agent appears as a blank slate.</p>
+        
+        <p>Without personalization signals, merchants return generic results. An agent searching for "shoes" gets the same results whether the user wants running shoes for a marathon or formal shoes for a wedding. This creates friction: more queries, more back-and-forth, worse outcomes.</p>
+        
+        <div class="highlight-box">
+            <p><strong>The key insight:</strong> AI agents know things about user intent that don't require authentication to share. "Looking for a gift under $50" or "need something durable for outdoor use" are valuable signals that don't expose PII.</p>
+        </div>
+
+        <h2>What Changed</h2>
+        
+        <h3>New <code>intent</code> Field in Context</h3>
+        
+        <p>UCP's context object — which carries provisional buyer signals like location, currency, and postal code — now includes an optional <code>intent</code> field:</p>
+        
+        <pre><code>{
+  "context": {
+    "country": "US",
+    "currency": "USD",
+    "postal_code": "94043",
+    "intent": "looking for a gift under $50, something unique and handmade"
+  }
+}</code></pre>
+
+        <p>The intent field is a freeform string that describes the buyer's purpose. Unlike structured filters, it allows natural language expression of complex shopping goals.</p>
+
+        <h3>Non-Identifying Constraint Clarified</h3>
+        
+        <p>The PR also clarifies that context signals "SHOULD be non-identifying" — addressing reviewer concerns about PII leakage in freeform fields. This means:</p>
+        
+        <ul>
+            <li>Agents should not include names, emails, phone numbers, or account IDs in intent</li>
+            <li>Intent describes <em>what</em> the user wants, not <em>who</em> they are</li>
+            <li>Merchants may ignore intent values that appear to contain PII</li>
+        </ul>
+
+        <h2>Use Cases Across the Shopping Journey</h2>
+        
+        <p>Originally proposed for catalog search, the intent field applies across the entire shopping journey:</p>
+        
+        <div class="example-box">
+            <h4>Catalog Search</h4>
+            <pre><code>GET /catalog/search?q=shoes
+Context: { "intent": "need running shoes for trail running, wide fit" }
+
+→ Merchant returns trail running shoes, prioritizes wide-fit options</code></pre>
+        </div>
+        
+        <div class="example-box">
+            <h4>Cart Recommendations</h4>
+            <pre><code>POST /cart
+Context: { "intent": "planning a camping trip next month" }
+
+→ Merchant suggests related items: tent stakes, headlamp, camp stove</code></pre>
+        </div>
+        
+        <div class="example-box">
+            <h4>Checkout Personalization</h4>
+            <pre><code>POST /checkout
+Context: { "intent": "this is a gift, needs to arrive by Dec 24" }
+
+→ Merchant highlights gift wrapping option, prioritizes expedited shipping</code></pre>
+        </div>
+
+        <h2>Why This Matters for AI Agents</h2>
+        
+        <h3>1. Enables Semantic Search Without Login</h3>
+        
+        <p>Today's e-commerce search is keyword-based. An agent might need to translate "something for my dad who likes fishing" into specific product queries. With intent, the agent can pass the natural language goal directly to the merchant, who can apply their own ML models for relevance.</p>
+        
+        <h3>2. Reduces Round-Trips</h3>
+        
+        <p>Without intent, agents must iteratively refine searches based on results. With intent, merchants can factor in the full context upfront, returning better results on the first query.</p>
+        
+        <h3>3. Preserves User Privacy</h3>
+        
+        <p>Intent signals what the user wants without identifying who they are. This is crucial for privacy-conscious users who want personalization without account linking.</p>
+
+        <h2>Technical Details</h2>
+        
+        <h3>Schema Change</h3>
+        
+        <p>The change adds a single property to <code>context.json</code>:</p>
+        
+        <pre><code>"intent": {
+  "type": "string",
+  "description": "Background context describing buyer's intent 
+    (e.g., 'looking for a gift under $50', 'need something durable 
+    for outdoor use'). Informs relevance, recommendations, 
+    and personalization."
+}</code></pre>
+
+        <h3>Backward Compatibility</h3>
+        
+        <p>The field is optional. Merchants that don't support intent simply ignore it. This makes it a non-breaking addition that platforms can adopt incrementally.</p>
+        
+        <h3>Progressive Disclosure</h3>
+        
+        <p>Intent can be refined throughout the session. An agent might start with a broad intent ("shopping for kitchen items") and narrow it as the user provides more context ("specifically looking for a stand mixer, KitchenAid preferred").</p>
+
+        <h2>Relationship to Risk Signals</h2>
+        
+        <p>This commit pairs interestingly with the <a href="/articles/ucp-risk-abuse-signals.html">risk & abuse signals proposal</a>. Together, they show UCP's approach to the personalization-vs-privacy tradeoff:</p>
+        
+        <table>
+            <tr>
+                <th>Signal Type</th>
+                <th>Purpose</th>
+                <th>Identifying?</th>
+            </tr>
+            <tr>
+                <td><code>intent</code></td>
+                <td>Personalization, relevance</td>
+                <td>No (by design)</td>
+            </tr>
+            <tr>
+                <td><code>signals.buyer_ip</code></td>
+                <td>Fraud prevention, rate limiting</td>
+                <td>Potentially (device-level)</td>
+            </tr>
+            <tr>
+                <td><code>signals.device_id</code></td>
+                <td>Bot detection</td>
+                <td>Yes (device fingerprint)</td>
+            </tr>
+        </table>
+        
+        <p>Intent is explicitly non-identifying. Risk signals are potentially identifying but optional. This gives platforms granular control over the privacy-utility tradeoff.</p>
+
+        <div class="next-steps">
+            <h3>What's Next</h3>
+            <ul>
+                <li><strong>Intent taxonomies:</strong> Will there be standardized intent categories, or will it remain freeform? Standardization could help with cross-merchant analytics.</li>
+                <li><strong>Merchant adoption:</strong> Merchants need to update their relevance models to incorporate intent. Shopify is likely to lead here given Ilya's role.</li>
+                <li><strong>Agent prompt patterns:</strong> AI agents need to learn how to extract and express user intent effectively. Expect prompt engineering best practices to emerge.</li>
+                <li><strong>Privacy review:</strong> As intent becomes widely used, expect scrutiny on whether "non-identifying" holds in practice. Could intent be correlated with other signals to identify users?</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Analysis by Patrick R. Jordan · <a href="/pulse.html">Repo Pulse</a> · <a href="/">Home</a></p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Request Signing: Cryptographic Trust for Agentic Commerce — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .lede {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        .author-info h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .author-info a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .author-info a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+        .footer-nav a:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Back to Analysis</a>
+        
+        <div class="meta">February 5, 2026 · <span class="tag">UCP</span></div>
+        <h1>UCP Request Signing: Cryptographic Trust for Agentic Commerce</h1>
+        <p class="lede">As AI agents prepare to handle real money, Google proposes cryptographic signing for UCP requests and responses — laying the foundation for verifiable, tamper-proof transactions.</p>
+
+        <div class="author-box">
+            <div class="author-avatar">IG</div>
+            <div class="author-info">
+                <h3>Ilya Grigorik</h3>
+                <p>Staff Developer Advocate, Google · Creator of UCP<br>
+                <a href="https://github.com/igrigorik" target="_blank">@igrigorik</a> · <a href="https://www.igvita.com/" target="_blank">igvita.com</a></p>
+            </div>
+        </div>
+
+        <h2>Why This Matters</h2>
+        <p>When an AI agent claims to represent a user and requests a $500 purchase, how does the merchant verify that request is legitimate? When a merchant responds with pricing and inventory, how does the agent know the response hasn't been tampered with in transit?</p>
+        
+        <p>These aren't theoretical concerns — they're the fundamental trust questions that must be solved before agentic commerce can scale. <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/156" target="_blank">PR #156</a> proposes cryptographic signing as the answer.</p>
+
+        <div class="callout">
+            <p><strong>The core problem:</strong> Without signing, a man-in-the-middle could intercept UCP traffic and modify prices, inventory levels, or even redirect payments. As agent commerce grows from demos to production, these attack vectors become increasingly valuable targets.</p>
+        </div>
+
+        <h2>What's Being Proposed</h2>
+        
+        <h3>Request Signing</h3>
+        <p>Agents will be able to sign their requests using a private key, allowing merchants to verify:</p>
+        <ul>
+            <li><strong>Authenticity</strong> — The request genuinely originated from the claimed agent</li>
+            <li><strong>Integrity</strong> — The request hasn't been modified in transit</li>
+            <li><strong>Non-repudiation</strong> — The agent cannot later deny making the request</li>
+        </ul>
+
+        <h3>Response Signing</h3>
+        <p>Merchants sign their responses, enabling agents to verify:</p>
+        <ul>
+            <li><strong>Source verification</strong> — The response came from the legitimate merchant endpoint</li>
+            <li><strong>Data integrity</strong> — Pricing, availability, and terms haven't been altered</li>
+            <li><strong>Audit trail</strong> — A cryptographic record of what was offered</li>
+        </ul>
+
+        <h3>Technical Approach</h3>
+        <p>The proposal leverages existing HTTP signature standards (<code>Signature-Input</code> and <code>Signature</code> headers) rather than inventing new mechanisms. This is a pragmatic choice — HTTP Message Signatures (RFC 9421) are well-understood, have existing implementations, and integrate cleanly with CDNs and proxies.</p>
+
+        <pre><code>Signature-Input: sig1=("@method" "@target-uri" "content-type" "content-digest");
+  created=1707148200;keyid="agent-key-123";alg="ecdsa-p256-sha256"
+Signature: sig1=:MEUCIQDXPzxCZ...base64...:</code></pre>
+
+        <h2>Implications for the Ecosystem</h2>
+
+        <h3>For Agent Developers</h3>
+        <p>You'll need key management infrastructure. This likely means:</p>
+        <ul>
+            <li>Key generation and rotation workflows</li>
+            <li>Secure key storage (HSMs for high-value agents)</li>
+            <li>Public key discovery mechanisms (likely via <code>.well-known</code> endpoints)</li>
+        </ul>
+
+        <h3>For Merchants</h3>
+        <p>Signature verification adds processing overhead, but provides crucial protections:</p>
+        <ul>
+            <li>Reject requests from unknown or untrusted agents</li>
+            <li>Rate-limit by cryptographic identity (not just IP)</li>
+            <li>Build reputation systems based on signed transaction history</li>
+        </ul>
+
+        <h3>For the Protocol</h3>
+        <p>This is a breaking change (hence the <code>feat!</code> prefix), but it's optional — merchants can choose whether to require signatures. The gradual adoption path: start with signatures optional, then required for high-value transactions, eventually required for all commerce.</p>
+
+        <h2>What Comes Next</h2>
+        <p>Request signing is just the beginning. Once cryptographic identity is established, UCP can build:</p>
+        <ul>
+            <li><strong>Agent reputation</strong> — Trust scores based on signed transaction history</li>
+            <li><strong>Delegated authority</strong> — Agents signing on behalf of users with limited scopes</li>
+            <li><strong>Dispute resolution</strong> — Cryptographic proof of what was agreed upon</li>
+            <li><strong>Regulatory compliance</strong> — Verifiable audit trails for financial regulators</li>
+        </ul>
+
+        <div class="callout">
+            <p><strong>Timeline:</strong> This PR is currently in review. Given its significance, expect extended discussion before merge. The feature will likely land in UCP 1.1 or 2.0, with a deprecation period for unsigned requests.</p>
+        </div>
+
+        <h2>Key Takeaway</h2>
+        <p>Cryptographic signing transforms UCP from a communication protocol into a <em>trust protocol</em>. Just as HTTPS enabled e-commerce by solving the "is this really Amazon?" problem, UCP signing solves the "is this really a legitimate agent with authority to transact?" problem.</p>
+
+        <p>The companies investing in signing infrastructure now will be positioned to participate in agentic commerce when it matters. Those who wait may find themselves locked out of high-value transactions that require cryptographic verification.</p>
+
+        <div class="footer-nav">
+            <a href="/pulse.html">← Repo Pulse</a>
+            <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/156" target="_blank">View PR on GitHub →</a>
+        </div>
+    </div>
+</body>
+</html>

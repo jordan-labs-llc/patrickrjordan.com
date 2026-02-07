@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Agent-Mesh Trust Layer: Cryptographic Identity for Autonomous Agents — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --purple: #8b5cf6;
+            --red: #ef4444;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .lede {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        .author-info h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .author-info a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .author-info a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        .callout.warning {
+            border-left-color: var(--yellow);
+        }
+        .callout.success {
+            border-left-color: var(--green);
+        }
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .component-list {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .component-list h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .component-item {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+        .component-item:last-child { border-bottom: none; }
+        .component-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            min-width: 180px;
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+        .footer-nav a:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Back to Analysis</a>
+        
+        <div class="meta">February 7, 2026 · <span class="tag">A2A</span></div>
+        <h1>A2A Agent-Mesh Trust Layer: Cryptographic Identity for Autonomous Agents</h1>
+        <p class="lede">A new contribution proposes decentralized identity verification for A2A agents — addressing how autonomous systems can verify each other's identity before delegating sensitive tasks.</p>
+
+        <div class="author-box">
+            <div class="author-avatar">IS</div>
+            <div class="author-info">
+                <h3>imran-siddique</h3>
+                <p>Creator, Agent-Mesh<br>
+                <a href="https://github.com/imran-siddique" target="_blank">@imran-siddique on GitHub</a></p>
+            </div>
+        </div>
+
+        <h2>The Identity Gap in A2A</h2>
+        <p>Google's Agent-to-Agent Protocol defines how AI agents communicate and collaborate — but it stops short of specifying how agents should:</p>
+        
+        <ul>
+            <li><strong>Verify each other's identity</strong> — Is this agent who it claims to be?</li>
+            <li><strong>Establish trust before task delegation</strong> — Should I give this agent access to sensitive data?</li>
+            <li><strong>Prove claimed capabilities</strong> — Can this agent actually do what it advertises?</li>
+        </ul>
+
+        <p><a href="https://github.com/a2aproject/A2A/pull/1455" target="_blank">PR #1455</a> addresses this gap by integrating <a href="https://github.com/imran-siddique/agent-mesh" target="_blank">Agent-Mesh</a>, a cryptographic trust layer built on CMVK (a decentralized identity framework for agents).</p>
+
+        <h2>What Agent-Mesh Adds</h2>
+
+        <div class="component-list">
+            <h4>Core Components</h4>
+            <div class="component-item">
+                <span class="component-name">TrustedAgentCard</span>
+                <span>A2A Agent Cards extended with cryptographic identity fields</span>
+            </div>
+            <div class="component-item">
+                <span class="component-name">CMVKIdentity</span>
+                <span>Decentralized identifiers (DIDs) for agents — no central authority</span>
+            </div>
+            <div class="component-item">
+                <span class="component-name">TrustHandshake</span>
+                <span>Pre-task verification protocol between agents</span>
+            </div>
+            <div class="component-item">
+                <span class="component-name">TrustGatedA2AClient</span>
+                <span>Client wrapper that requires verification before operations</span>
+            </div>
+            <div class="component-item">
+                <span class="component-name">DelegationChain</span>
+                <span>Verifiable capability delegation with trust propagation</span>
+            </div>
+        </div>
+
+        <h3>How It Works</h3>
+
+        <p>Before an agent delegates a task to another agent, it performs a trust handshake:</p>
+
+        <pre><code>from agentmesh.a2a import TrustHandshake, TrustedAgentCard
+
+# Load peer's agent card (includes cryptographic identity)
+peer_card = TrustedAgentCard.from_a2a_json(peer_card_json)
+
+# Verify before delegating task
+handshake = TrustHandshake(my_identity)
+result = await handshake.verify_peer(peer_card)
+
+if result.trusted:
+    # Safe to delegate — peer's identity is verified
+    task = await a2a_client.create_task(peer_card.url, task_spec)</code></pre>
+
+        <p>The verification can check multiple factors:</p>
+        <ul>
+            <li>Cryptographic proof the agent controls its claimed DID</li>
+            <li>Delegation chain validity (if acting on behalf of another agent)</li>
+            <li>Capability attestations from trusted parties</li>
+            <li>Historical reputation signals</li>
+        </ul>
+
+        <h2>Why This Matters</h2>
+
+        <div class="callout success">
+            <p><strong>The enterprise problem:</strong> Organizations deploying A2A agents need to control which external agents can interact with their systems. Without identity verification, any agent can claim to be anything.</p>
+        </div>
+
+        <h3>Attack Scenarios Mitigated</h3>
+
+        <p><strong>Agent impersonation:</strong> A malicious agent claims to be a trusted service provider. Without identity verification, the victim agent has no way to detect the impersonation.</p>
+
+        <p><strong>Capability inflation:</strong> An agent advertises capabilities it doesn't have, hoping to receive tasks (and data) it shouldn't access.</p>
+
+        <p><strong>Delegation chain attacks:</strong> Agent A claims to be acting on behalf of trusted Agent B, but the delegation is forged.</p>
+
+        <h3>Decentralized by Design</h3>
+
+        <p>The CMVK identity model doesn't require a central certificate authority. Agents generate their own cryptographic identities and can accumulate trust through:</p>
+
+        <ul>
+            <li><strong>Direct attestations</strong> — "I trust this agent's identity"</li>
+            <li><strong>Capability attestations</strong> — "This agent can perform X task"</li>
+            <li><strong>Behavioral reputation</strong> — Track record over time</li>
+        </ul>
+
+        <p>This mirrors how human trust works — reputation built through interactions, not central decree.</p>
+
+        <h2>Backward Compatibility</h2>
+
+        <p>The proposal stores trust metadata in an <code>_agentmesh</code> extension field within Agent Cards. Standard A2A implementations can ignore these fields entirely, preserving full interoperability.</p>
+
+        <pre><code>{
+  "name": "Shopping Assistant",
+  "url": "https://shop.example.com/a2a",
+  "capabilities": ["search", "purchase"],
+  "_agentmesh": {
+    "cmvk_did": "did:cmvk:abc123...",
+    "trust_score": 0.95,
+    "attestations": [...]
+  }
+}</code></pre>
+
+        <h2>Open Questions</h2>
+
+        <p>The proposal is a contribution to the A2A ecosystem, not a core spec change. Several questions remain:</p>
+
+        <ul>
+            <li><strong>Trust anchor bootstrapping:</strong> Who are the initial trusted attesters? How do new agents build reputation from zero?</li>
+            <li><strong>Revocation:</strong> How are compromised identities revoked? The PR doesn't detail a revocation mechanism.</li>
+            <li><strong>Performance:</strong> Trust verification adds latency to agent interactions. What's the overhead in practice?</li>
+            <li><strong>Privacy:</strong> Verification could leak information about which agents interact. Is the handshake unlinkable?</li>
+        </ul>
+
+        <div class="callout warning">
+            <p><strong>Contribution vs. spec:</strong> This is filed under <code>contrib/</code>, meaning it's community-contributed infrastructure rather than official A2A. Adoption will depend on whether the core team blesses the approach or alternatives emerge.</p>
+        </div>
+
+        <h2>Implications for A2A Adoption</h2>
+
+        <p>Enterprise adoption of agent-to-agent communication requires answers to identity and trust questions. Whether through Agent-Mesh or an alternative, the A2A ecosystem will need:</p>
+
+        <ol>
+            <li><strong>Standard identity representation</strong> — How agents describe their cryptographic identity</li>
+            <li><strong>Verification protocols</strong> — How agents verify each other before interaction</li>
+            <li><strong>Trust propagation</strong> — How delegation and reputation flow through agent networks</li>
+        </ol>
+
+        <p>This PR is a concrete proposal for all three. Even if the implementation details change, the problems it addresses are real and will need solutions before A2A sees serious enterprise deployment.</p>
+
+        <h2>Key Takeaway</h2>
+
+        <p>As AI agents become autonomous participants in digital ecosystems — making purchases, handling data, performing actions on behalf of users — identity and trust become critical infrastructure. The Agent-Mesh Trust Layer proposal is an early but substantive contribution to this problem space.</p>
+
+        <p>Watch the PR discussion for feedback from the A2A core team and community.</p>
+
+        <div class="footer-nav">
+            <a href="/pulse.html">← Repo Pulse</a>
+            <a href="https://github.com/a2aproject/A2A/pull/1455" target="_blank">View PR on GitHub →</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Adds Baidu Qianfan: Expanding Global AI Provider Support — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --purple: #8b5cf6;
+            --red: #ef4444;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .lede {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        .author-info h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .author-info a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .author-info a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        .callout.success {
+            border-left-color: var(--green);
+        }
+        .callout.warning {
+            border-left-color: var(--yellow);
+        }
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--green);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .provider-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+        .provider-table th, .provider-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .provider-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+        .provider-table tr:last-child td {
+            border-bottom: none;
+        }
+        .new-badge {
+            background: var(--green);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.35rem;
+            border-radius: 3px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+        .footer-nav a:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Back to Analysis</a>
+        
+        <div class="meta">February 7, 2026 · <span class="tag">OpenClaw</span></div>
+        <h1>OpenClaw Adds Baidu Qianfan: Expanding Global AI Provider Support</h1>
+        <p class="lede">The first major Chinese AI platform joins OpenClaw's provider roster, marking continued expansion of the project's global reach.</p>
+
+        <div class="author-box">
+            <div class="author-avatar">IR</div>
+            <div class="author-info">
+                <h3>ide-rea</h3>
+                <p>Contributor · OpenClaw<br>
+                <a href="https://github.com/ide-rea" target="_blank">@ide-rea on GitHub</a></p>
+            </div>
+        </div>
+
+        <h2>What Changed</h2>
+
+        <p><a href="https://github.com/openclaw/openclaw/pull/8868" target="_blank">PR #8868</a>, merged on February 7, 2026, adds Baidu Qianfan as an OpenAI-compatible model provider. This is the first major Chinese AI platform integrated into OpenClaw.</p>
+
+        <h3>Technical Details</h3>
+
+        <ul>
+            <li>New documentation page: <code>docs/providers/qianfan.md</code></li>
+            <li>Provider auto-detection via environment variables or profile configuration</li>
+            <li>New <code>qianfan-api-key</code> authentication choice in onboarding</li>
+            <li>Both interactive and non-interactive credential setup paths</li>
+        </ul>
+
+        <div class="callout">
+            <p><strong>OpenAI-compatible:</strong> Like many providers, Qianfan exposes an OpenAI-compatible API, minimizing the integration complexity. OpenClaw can use existing OpenAI client code with endpoint and auth configuration.</p>
+        </div>
+
+        <h2>Why Baidu Qianfan Matters</h2>
+
+        <h3>About Qianfan</h3>
+
+        <p>Baidu's Qianfan (千帆) is a large-scale AI platform offering access to Baidu's ERNIE models and other foundation models. It's one of the leading AI platforms in China, offering:</p>
+
+        <ul>
+            <li><strong>ERNIE models:</strong> Baidu's flagship LLMs, including ERNIE 4.0 and ERNIE-Bot</li>
+            <li><strong>Model hosting:</strong> Deployment infrastructure for custom fine-tuned models</li>
+            <li><strong>Chinese-first optimization:</strong> Better native Chinese language understanding than Western models</li>
+        </ul>
+
+        <h3>Global Reach Expansion</h3>
+
+        <p>OpenClaw's provider landscape has been heavily Western-focused:</p>
+
+        <table class="provider-table">
+            <thead>
+                <tr>
+                    <th>Provider</th>
+                    <th>Region</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>OpenAI</td>
+                    <td>US</td>
+                    <td>GPT-4o, GPT-4.5</td>
+                </tr>
+                <tr>
+                    <td>Anthropic</td>
+                    <td>US</td>
+                    <td>Claude 4 family</td>
+                </tr>
+                <tr>
+                    <td>Google</td>
+                    <td>US</td>
+                    <td>Gemini 2.x</td>
+                </tr>
+                <tr>
+                    <td>Mistral</td>
+                    <td>EU</td>
+                    <td>Mistral Large, Codestral</td>
+                </tr>
+                <tr>
+                    <td>xAI</td>
+                    <td>US</td>
+                    <td>Grok models</td>
+                </tr>
+                <tr>
+                    <td>Baidu Qianfan<span class="new-badge">NEW</span></td>
+                    <td>China</td>
+                    <td>ERNIE models</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Adding Qianfan opens OpenClaw to users who:</p>
+
+        <ul>
+            <li>Need Chinese language capabilities beyond what Western models offer</li>
+            <li>Operate in regions where Western AI providers have limited availability</li>
+            <li>Prefer to keep data within Chinese infrastructure for compliance</li>
+        </ul>
+
+        <h2>The PR Review Notes</h2>
+
+        <p>The Greptile automated review flagged one issue: an onboarding bug where environment-based credentials aren't properly detected due to a mismatched argument in <code>resolveEnvApiKey</code>. The review noted:</p>
+
+        <div class="callout warning">
+            <p>"This PR is close to mergeable but has a functional onboarding bug around env credential detection that should be fixed first."</p>
+        </div>
+
+        <p>The PR was merged despite this, suggesting the maintainers assessed the bug as non-blocking or plan a quick follow-up fix. Users setting up Qianfan via environment variables should verify their credentials are being picked up correctly.</p>
+
+        <h2>This Week's OpenClaw Activity</h2>
+
+        <p>The Qianfan merge is part of a busy week for OpenClaw:</p>
+
+        <ul>
+            <li><strong>Two patch releases:</strong> 2026.2.6-2 and 2026.2.6-3 shipped with bug fixes</li>
+            <li><strong>BlueBubbles cleanup:</strong> Comprehensive channel fixes merged (<a href="https://github.com/openclaw/openclaw/pull/11093" target="_blank">#11093</a>)</li>
+            <li><strong>Documentation improvements:</strong> Symptom-first troubleshooting hub and deep runbooks added</li>
+            <li><strong>Provider reordering:</strong> xAI and Qianfan provider order updated in onboarding</li>
+        </ul>
+
+        <p>The project continues its rapid iteration pace, with the 173k+ stars community actively contributing.</p>
+
+        <h2>What's Next</h2>
+
+        <p>With Qianfan added, the natural next steps for OpenClaw's provider expansion might include:</p>
+
+        <ul>
+            <li><strong>Alibaba Tongyi Qianwen:</strong> Another major Chinese AI platform</li>
+            <li><strong>ByteDance Doubao:</strong> TikTok parent's AI offerings</li>
+            <li><strong>Tencent Hunyuan:</strong> WeChat-ecosystem AI</li>
+            <li><strong>DeepSeek:</strong> Open-source frontier models from China</li>
+        </ul>
+
+        <p>The OpenAI-compatible API pattern makes these integrations relatively straightforward — mostly documentation, onboarding flows, and provider detection logic.</p>
+
+        <h2>Key Takeaway</h2>
+
+        <p>OpenClaw's addition of Baidu Qianfan is a small but meaningful step toward truly global AI assistant infrastructure. As AI assistant platforms mature, provider diversity becomes a competitive advantage — giving users choice based on language needs, data residency requirements, and regional availability.</p>
+
+        <p>The merge also demonstrates OpenClaw's community-driven model: a contributor opened the PR, automated review caught a minor issue, maintainers merged, and users benefit. The open-source AI assistant ecosystem continues to expand.</p>
+
+        <div class="footer-nav">
+            <a href="/pulse.html">← Repo Pulse</a>
+            <a href="https://github.com/openclaw/openclaw/pull/8868" target="_blank">View PR on GitHub →</a>
+        </div>
+    </div>
+</body>
+</html>

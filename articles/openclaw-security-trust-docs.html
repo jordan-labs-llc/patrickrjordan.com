@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Security & Trust Documentation: The Enterprise Readiness Signal — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --purple: #8b5cf6;
+            --red: #ef4444;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .lede {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        .author-info h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .author-info a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .author-info a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        .callout.success {
+            border-left-color: var(--green);
+        }
+        .callout.warning {
+            border-left-color: var(--yellow);
+        }
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .security-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+        .security-table th, .security-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .security-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+        .security-table tr:last-child td {
+            border-bottom: none;
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+        .footer-nav a:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Back to Analysis</a>
+        
+        <div class="meta">February 8, 2026 · <span class="tag">OpenClaw</span></div>
+        <h1>OpenClaw Security & Trust Documentation: The Enterprise Readiness Signal</h1>
+        <p class="lede">As AI assistants move from side projects to enterprise infrastructure, dedicated security documentation signals a project's maturity. OpenClaw's new security hub shows the community is taking this seriously.</p>
+
+        <div class="author-box">
+            <div class="author-avatar">TJ</div>
+            <div class="author-info">
+                <h3>theonejvo</h3>
+                <p>Contributor · OpenClaw<br>
+                <a href="https://github.com/theonejvo" target="_blank">@theonejvo on GitHub</a></p>
+            </div>
+        </div>
+
+        <h2>What Changed</h2>
+
+        <p>On February 8, 2026, <a href="https://github.com/openclaw/openclaw/commit/74fbbda" target="_blank">commit 74fbbda</a> added comprehensive security and trust documentation to OpenClaw. This isn't just another docs update — it's a milestone that reflects the project's transition from hobbyist tool to enterprise consideration.</p>
+
+        <h3>The New Documentation</h3>
+
+        <p>The security documentation hub covers:</p>
+
+        <ul>
+            <li><strong>Threat model overview:</strong> What OpenClaw protects against (and what it doesn't)</li>
+            <li><strong>Data handling practices:</strong> How user data flows through the system</li>
+            <li><strong>Tool execution security:</strong> Sandboxing, permissions, and approval flows</li>
+            <li><strong>Network security:</strong> How OpenClaw communicates with external services</li>
+            <li><strong>Credential management:</strong> Best practices for API key storage</li>
+            <li><strong>Trust boundaries:</strong> Understanding what's trusted vs. untrusted</li>
+        </ul>
+
+        <div class="callout success">
+            <p><strong>Why this matters:</strong> Security documentation is often the first thing enterprise security teams ask for during vendor evaluation. Its presence (or absence) can determine whether a tool gets past the "interesting" stage into actual deployment.</p>
+        </div>
+
+        <h2>Context: OpenClaw's Security Journey</h2>
+
+        <p>This documentation arrives after a busy period of security work on OpenClaw:</p>
+
+        <table class="security-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Change</th>
+                    <th>Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Feb 6</td>
+                    <td>5 security PRs merged in one day</td>
+                    <td>Coordinated hardening push</td>
+                </tr>
+                <tr>
+                    <td>Feb 7</td>
+                    <td>Exec approvals: monospace command display</td>
+                    <td>Clearer security visibility</td>
+                </tr>
+                <tr>
+                    <td>Feb 8</td>
+                    <td>Security & Trust documentation</td>
+                    <td>Enterprise readiness signal</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>The timing isn't coincidental. As OpenClaw's user base has grown past 173k stars and into production deployments, the pressure for security transparency has increased. Users deploying AI assistants that can execute code, access files, and interact with external services need to understand the security model.</p>
+
+        <h2>What Good Security Docs Look Like</h2>
+
+        <p>The best security documentation answers specific questions rather than making vague assurances:</p>
+
+        <h3>✓ Concrete Threat Model</h3>
+        <p>Rather than "we take security seriously," effective documentation describes specific threats: malicious tool outputs, prompt injection, credential exfiltration, unauthorized file access. OpenClaw's new docs enumerate what the project protects against.</p>
+
+        <h3>✓ Clear Trust Boundaries</h3>
+        <p>AI assistants have complex trust relationships: the LLM provider, tool servers, the user, and the assistant itself. Good documentation maps these boundaries explicitly, showing where data flows and where trust is required.</p>
+
+        <h3>✓ Honest Limitations</h3>
+        <p>The most trustworthy security docs acknowledge what they <em>don't</em> protect against. OpenClaw's documentation includes disclaimers about the limits of sandboxing and the inherent risks of giving AI access to system tools.</p>
+
+        <h2>The Broader Trend</h2>
+
+        <p>OpenClaw isn't alone in this security documentation push. Across the AI infrastructure ecosystem:</p>
+
+        <ul>
+            <li><strong>MCP:</strong> Recently added security requirements for server implementations</li>
+            <li><strong>A2A:</strong> Agent-Mesh Trust Layer proposal addresses inter-agent identity verification</li>
+            <li><strong>UCP:</strong> Request signing proposal adds cryptographic verification to commerce transactions</li>
+        </ul>
+
+        <p>The pattern is clear: as AI agents move from demos to production, security documentation becomes table stakes. Projects that don't provide it will increasingly be excluded from enterprise consideration.</p>
+
+        <h2>Today's Related Changes</h2>
+
+        <p>The security documentation landed alongside several other quality-of-life improvements:</p>
+
+        <ul>
+            <li><strong>Exec approvals monospace rendering:</strong> <a href="https://github.com/openclaw/openclaw/pull/11937" target="_blank">PR #11937</a> displays forwarded commands in monospace font, making it easier to verify exactly what command will execute</li>
+            <li><strong>GitHub Copilot models added:</strong> <a href="https://github.com/openclaw/openclaw/pull/11646" target="_blank">PR #11646</a> adds Copilot models to the xhigh performance tier</li>
+            <li><strong>Date/time utility centralization:</strong> <a href="https://github.com/openclaw/openclaw/pull/11831" target="_blank">PR #11831</a> improves consistency across the codebase</li>
+        </ul>
+
+        <p>These changes collectively show a project maturing: better security visibility, broader model support, and improved code organization.</p>
+
+        <h2>What's Next</h2>
+
+        <p>With security documentation in place, the natural next steps for OpenClaw might include:</p>
+
+        <ul>
+            <li><strong>Security audit:</strong> Third-party review to validate the documented model</li>
+            <li><strong>Compliance documentation:</strong> SOC 2, GDPR, and similar frameworks that enterprises require</li>
+            <li><strong>Bug bounty program:</strong> Crowdsourced security testing</li>
+            <li><strong>Signed releases:</strong> Cryptographic verification of distributed binaries</li>
+        </ul>
+
+        <p>The security documentation sets the foundation for all of these — you can't audit what isn't documented.</p>
+
+        <h2>Key Takeaway</h2>
+
+        <p>OpenClaw's security and trust documentation isn't just a docs update — it's a statement about the project's intended audience. As AI assistants become infrastructure rather than toys, the projects that invest in security transparency will win enterprise trust.</p>
+
+        <p>For users evaluating OpenClaw: read the new security docs. They'll tell you what the project protects and what it doesn't — which is exactly the honesty you need when deciding whether to trust an AI assistant with access to your systems.</p>
+
+        <div class="footer-nav">
+            <a href="/pulse.html">← Repo Pulse</a>
+            <a href="https://github.com/openclaw/openclaw" target="_blank">View OpenClaw on GitHub →</a>
+        </div>
+    </div>
+</body>
+</html>

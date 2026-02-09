@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A 1.0: What Changed from v0.3.0 — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .meta a { color: var(--accent); text-decoration: none; }
+        .meta a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        .lede {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        ul, ol {
+            margin: 0 0 1rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+        .author-box h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--green);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        blockquote {
+            border-left: 3px solid var(--border);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .related {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .related-link {
+            display: block;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .related-link:last-child { border-bottom: none; }
+        .related-link:hover { color: var(--accent); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Spec</span>
+            February 9, 2026 · <a href="https://github.com/a2aproject/A2A/pull/1436" target="_blank">PR #1436</a>
+        </div>
+        
+        <h1>A2A 1.0: What Changed from v0.3.0 and Why It Matters</h1>
+        
+        <p class="lede">Google's Agent-to-Agent Protocol reaches its 1.0 milestone with a comprehensive migration guide. For the growing ecosystem of A2A implementers, this documentation clarifies the path from experimental adoption to production deployment.</p>
+
+        <div class="author-box">
+            <h4>About the Contributor</h4>
+            <p><strong>Darrel</strong> is a spec editor for the A2A project, responsible for maintaining documentation clarity as the protocol evolves. This PR represents weeks of community feedback distillation into actionable migration guidance.</p>
+        </div>
+
+        <h2>Why This Documentation Matters</h2>
+        
+        <p>Protocol specifications often ship breaking changes without clear migration paths. The result: fragmented implementations, frustrated developers, and ecosystem fragmentation. By documenting the v0.3.0 → v1.0 changes explicitly, the A2A team is investing in implementer success.</p>
+        
+        <p>This documentation also serves as a historical record. As the protocol continues to evolve post-1.0, understanding <em>why</em> certain decisions were made becomes increasingly valuable.</p>
+
+        <h2>Key Changes in A2A 1.0</h2>
+        
+        <h3>1. Simplified Request IDs</h3>
+        <p>The most significant breaking change: A2A 1.0 switches to non-complex IDs in requests (<a href="https://github.com/a2aproject/A2A/pull/1389" target="_blank">PR #1389</a>). Previously, request identifiers could be structured objects. Now they're simple strings.</p>
+        
+        <div class="callout">
+            <div class="callout-title">Migration Impact</div>
+            <p>If your implementation relied on structured ID metadata, you'll need to move that information elsewhere. The simplification improves interoperability but may require refactoring ID generation logic.</p>
+        </div>
+
+        <h3>2. Timestamp Clarifications in HTTP Query Parameters</h3>
+        <p>How do you pass timestamps in URLs? <a href="https://github.com/a2aproject/A2A/pull/1425" target="_blank">PR #1425</a> adds explicit guidance on encoding timestamps in HTTP query parameters, eliminating ambiguity around timezone handling and format.</p>
+
+        <h3>3. Messages and Artifacts Clarification</h3>
+        <p>The relationship between messages and artifacts has been clarified (<a href="https://github.com/a2aproject/A2A/pull/1424" target="_blank">PR #1424</a>). This addresses common confusion about when to use each construct and how they relate.</p>
+
+        <h3>4. Streaming Example Fixes</h3>
+        <p>Merged today (<a href="https://github.com/a2aproject/A2A/commit/741ccaa" target="_blank">#1458</a>), the streaming examples now accurately reflect the 1.0 wire format. Documentation drift is a common problem in fast-moving specs; these fixes ensure new implementers start with correct patterns.</p>
+
+        <h2>What This Means for Implementers</h2>
+        
+        <p><strong>For existing v0.3.0 implementations:</strong> Review the migration guide carefully. The ID simplification is the most likely breaking change, but timestamp handling may also affect your HTTP client code.</p>
+        
+        <p><strong>For new implementations:</strong> Start with 1.0. The spec is now stable enough for production use, and the documentation quality signals maintainer commitment to the ecosystem.</p>
+        
+        <p><strong>For protocol designers:</strong> A2A's approach to migration documentation is worth studying. Explicit change tracking, linked PRs, and clear migration guidance reduce the burden on implementers.</p>
+
+        <h2>The Broader Context</h2>
+        
+        <p>A2A 1.0 arrives at a critical moment for agent interoperability. With <a href="/articles/a2a-agent-mesh-trust-layer.html">Agent-Mesh Trust Layer</a> proposals emerging and enterprise adoption accelerating, the protocol needs stability. This documentation signals that stability.</p>
+        
+        <p>Combined with the ongoing <a href="/articles/ucp-request-signing.html">UCP request signing work</a>, we're seeing the agentic commerce stack mature from experimental to production-grade. The next year will test whether these protocols can handle real-world agent coordination at scale.</p>
+
+        <h2>Next Steps</h2>
+        
+        <ul>
+            <li><strong>Read the full migration guide:</strong> <a href="https://github.com/a2aproject/A2A/blob/main/docs/spec/whats-new-v1.md" target="_blank">whats-new-v1.md</a></li>
+            <li><strong>Review your ID handling:</strong> The switch to simple string IDs may require refactoring</li>
+            <li><strong>Update streaming implementations:</strong> Ensure your streaming code matches the corrected examples</li>
+            <li><strong>Watch for SDK updates:</strong> Official SDKs will incorporate these changes in upcoming releases</li>
+        </ul>
+
+        <div class="related">
+            <h3>Related Analysis</h3>
+            <a href="/articles/a2a-agent-mesh-trust-layer.html" class="related-link">A2A Agent-Mesh Trust Layer: Cryptographic Identity for Autonomous Agents</a>
+            <a href="/articles/a2a-1-0-rc-refinements.html" class="related-link">A2A 1.0 Release Candidate: The Final Push</a>
+            <a href="/articles/ucp-request-signing.html" class="related-link">UCP Request Signing: Cryptographic Trust for Agentic Commerce</a>
+        </div>
+    </div>
+</body>
+</html>

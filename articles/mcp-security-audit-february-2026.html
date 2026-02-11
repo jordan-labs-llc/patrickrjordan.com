@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Security Audits Reveal Vulnerabilities Across Core Servers — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --red: #ef4444;
+            --yellow: #f59e0b;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout-critical {
+            border-left: 4px solid var(--red);
+        }
+        .callout-warning {
+            border-left: 4px solid var(--yellow);
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h4 {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+        .author-box p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .finding-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+        .finding-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .finding-title {
+            font-weight: 600;
+        }
+        .severity {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .severity-high {
+            background: var(--red);
+            color: white;
+        }
+        .severity-medium {
+            background: var(--yellow);
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>MCP Security Audits Reveal Vulnerabilities Across Core Servers</h1>
+        
+        <div class="meta">
+            <span class="tag">MCP</span>
+            <span class="tag">Security</span>
+            February 11, 2026 · starbuck100 ·
+            <a href="https://github.com/modelcontextprotocol/servers/issues/3314" target="_blank">Issue #3314</a>,
+            <a href="https://github.com/modelcontextprotocol/servers/issues/3315" target="_blank">#3315</a>,
+            <a href="https://github.com/modelcontextprotocol/servers/issues/3317" target="_blank">#3317</a>
+        </div>
+
+        <p>A security researcher has systematically audited several core MCP (Model Context Protocol) servers and disclosed multiple vulnerabilities in quick succession. The findings span SQL injection in the SQLite server, path traversal concerns in the filesystem server, and memory handling issues — raising important questions about security practices in the growing MCP ecosystem.</p>
+
+        <div class="callout callout-critical">
+            <div class="callout-title">⚠️ Active Vulnerabilities</div>
+            <p style="margin-bottom: 0;">These issues are currently open. If you're running affected MCP servers, review the linked issues for mitigation guidance. Patches are expected soon.</p>
+        </div>
+
+        <h2>The Findings</h2>
+
+        <div class="finding-card">
+            <div class="finding-header">
+                <span class="finding-title">SQL Injection in mcp-server-sqlite</span>
+                <span class="severity severity-high">High</span>
+            </div>
+            <p style="margin-bottom: 0.5rem;"><a href="https://github.com/modelcontextprotocol/servers/issues/3314" target="_blank">Issue #3314</a> — The SQLite server, designed to let AI agents query local databases, contains SQL injection vulnerabilities that could allow malicious queries to bypass intended restrictions.</p>
+        </div>
+
+        <div class="finding-card">
+            <div class="finding-header">
+                <span class="finding-title">2 Findings in mcp-server-filesystem</span>
+                <span class="severity severity-medium">Medium</span>
+            </div>
+            <p style="margin-bottom: 0.5rem;"><a href="https://github.com/modelcontextprotocol/servers/issues/3317" target="_blank">Issue #3317</a> — The filesystem server, which provides file access to AI agents, has two security findings. Path traversal is a common concern in file-serving code.</p>
+        </div>
+
+        <div class="finding-card">
+            <div class="finding-header">
+                <span class="finding-title">1 Finding in @modelcontextprotocol/server-memory</span>
+                <span class="severity severity-medium">Medium</span>
+            </div>
+            <p style="margin-bottom: 0.5rem;"><a href="https://github.com/modelcontextprotocol/servers/issues/3315" target="_blank">Issue #3315</a> — The memory server, used for persistent agent state, has a security finding that could affect data integrity or confidentiality.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+
+        <p>MCP has exploded in popularity since Anthropic open-sourced it. With over 78,000 stars on GitHub, the reference servers are now running in thousands of development and production environments. These aren't theoretical vulnerabilities in obscure code — they're in tools that developers are actively using to build AI-powered applications.</p>
+
+        <p>The attack surface is particularly concerning because MCP servers are designed to give AI agents access to external resources:</p>
+
+        <ul>
+            <li><strong>SQLite server:</strong> Allows agents to query local databases</li>
+            <li><strong>Filesystem server:</strong> Gives agents file read/write access</li>
+            <li><strong>Memory server:</strong> Persists agent state between sessions</li>
+        </ul>
+
+        <p>If an AI agent can be manipulated (through prompt injection or other means), vulnerabilities in these servers could escalate that access beyond intended boundaries.</p>
+
+        <div class="author-box">
+            <h4>About the Researcher</h4>
+            <p>The security researcher <strong>starbuck100</strong> appears to be conducting a systematic audit of MCP servers, filing multiple detailed vulnerability reports over the past few days. This kind of security research is valuable for maturing open-source ecosystems — responsible disclosure gives maintainers time to patch before exploitation.</p>
+        </div>
+
+        <h2>What Changed Technically</h2>
+
+        <h3>SQL Injection (SQLite Server)</h3>
+
+        <p>SQL injection vulnerabilities typically occur when user input (in this case, AI agent input) is concatenated directly into SQL queries rather than using parameterized queries. For example:</p>
+
+        <pre><code>// Vulnerable pattern
+const query = `SELECT * FROM users WHERE name = '${userInput}'`;
+
+// Safe pattern
+const query = `SELECT * FROM users WHERE name = ?`;
+db.run(query, [userInput]);</code></pre>
+
+        <p>The SQLite server's exposure is particularly noteworthy because it's designed to let AI agents run arbitrary SQL queries. The question isn't whether agents can run queries, but whether proper input sanitization prevents them from escaping intended constraints.</p>
+
+        <h3>Filesystem Concerns</h3>
+
+        <p>Filesystem servers are classically vulnerable to path traversal attacks, where input like <code>../../etc/passwd</code> could access files outside the intended directory. The npm ecosystem has also been dealing with a vulnerability in the <code>qs</code> query string parsing library — <a href="https://github.com/modelcontextprotocol/servers/commit/87a996b" target="_blank">a separate commit on Feb 8</a> ran <code>npm audit fix</code> to address this.</p>
+
+        <h2>The Broader Pattern</h2>
+
+        <p>This isn't the first round of security concerns for MCP. Last week, <a href="https://github.com/modelcontextprotocol/servers/issues/3313" target="_blank">Issue #3313</a> reported 3 security findings in the Puppeteer server (browser automation). The pattern suggests that as MCP gains enterprise adoption, security researchers are paying closer attention — which is healthy.</p>
+
+        <p>The maintainers have been responsive: the <code>qs</code> vulnerability was patched within days. We expect similar turnaround for these new findings.</p>
+
+        <h2>What's Next</h2>
+
+        <ul>
+            <li><strong>Immediate:</strong> Maintainers will likely prioritize the SQL injection fix given its severity. The filesystem and memory server issues may follow.</li>
+            <li><strong>Short-term:</strong> Expect more security audits across the MCP server ecosystem. If starbuck100's pattern continues, other servers may receive similar scrutiny.</li>
+            <li><strong>Medium-term:</strong> The MCP project may need to establish security guidelines for server implementations, similar to OAuth security best practices. As the ecosystem grows, individual maintainers won't have the expertise or bandwidth for thorough security reviews.</li>
+        </ul>
+
+        <div class="callout">
+            <div class="callout-title">Mitigation for Users</div>
+            <ul style="margin-bottom: 0;">
+                <li>Review the linked issues for any workarounds provided by the researcher</li>
+                <li>Consider restricting MCP server access to trusted, local environments only</li>
+                <li>Update to patched versions as they become available</li>
+                <li>Monitor the <a href="https://github.com/modelcontextprotocol/servers/issues" target="_blank">MCP servers issue tracker</a> for security announcements</li>
+            </ul>
+        </div>
+
+        <h2>Implications for the Industry</h2>
+
+        <p>The MCP security findings highlight a broader challenge: AI infrastructure is growing faster than security practices can keep up. When a reference implementation has SQL injection in 2026, it's a reminder that even well-intentioned open-source projects need dedicated security investment.</p>
+
+        <p>For organizations building on MCP, this is a good moment to ask: what's our security posture around AI tool use? If an agent can call external APIs, run database queries, and access the filesystem, what's the blast radius of a compromised agent?</p>
+
+        <p>The good news is that transparency and responsible disclosure are working. These vulnerabilities were found, reported, and will be patched — before (as far as we know) being exploited in the wild. That's the ecosystem working as intended.</p>
+    </div>
+</body>
+</html>

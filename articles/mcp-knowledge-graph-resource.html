@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Memory Server: Knowledge Graph as Resource — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--purple);
+            border: 1px solid var(--purple);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--purple);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <span class="tag">MCP</span>
+        <h1>MCP Memory Server: Exposing Knowledge Graphs as Resources</h1>
+        
+        <div class="meta">
+            February 12, 2026 · Source: <a href="https://github.com/modelcontextprotocol/servers/pull/3323" target="_blank">modelcontextprotocol/servers#3323</a>
+        </div>
+
+        <div class="author-box">
+            <h3>About the Contributor</h3>
+            <p><strong>RaidLZ</strong> is an MCP ecosystem contributor focused on memory and knowledge management implementations. This PR represents a shift in how the memory server exposes data — from imperative tool calls to declarative resource access.</p>
+        </div>
+
+        <h2>What Happened</h2>
+        <p>A new pull request proposes exposing the MCP memory server's internal knowledge graph as an <a href="https://spec.modelcontextprotocol.io/specification/2024-11-05/server/resources/" target="_blank">MCP Resource</a>. Currently, the memory server uses tools like <code>create_entities</code>, <code>create_relations</code>, and <code>search_nodes</code> to interact with the knowledge graph. This change would also expose the graph as a readable resource.</p>
+
+        <div class="callout">
+            <p>MCP distinguishes between <strong>Tools</strong> (actions the model can take) and <strong>Resources</strong> (data the model can read). Exposing the knowledge graph as a resource enables a fundamentally different interaction pattern.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        <p>The distinction between tools and resources is subtle but architecturally significant:</p>
+
+        <p><strong>Tool-based access (current):</strong></p>
+        <ul>
+            <li>Model must explicitly call <code>search_nodes</code> or <code>read_graph</code></li>
+            <li>Each access requires a tool call turn</li>
+            <li>Knowledge retrieval is active and intentional</li>
+        </ul>
+
+        <p><strong>Resource-based access (proposed):</strong></p>
+        <ul>
+            <li>Graph can be included in context automatically</li>
+            <li>Enables "always available" memory semantics</li>
+            <li>Clients can prefetch and cache the resource</li>
+            <li>Reduces turn count for knowledge-dependent tasks</li>
+        </ul>
+
+        <p>This isn't just an API change — it's a philosophical shift in how AI systems relate to their persistent memory. Tool-based memory is like asking someone a question. Resource-based memory is like having information already in working memory.</p>
+
+        <h2>What Changed Technically</h2>
+        <p>The PR adds a new resource endpoint that exposes the knowledge graph:</p>
+
+        <pre><code>{
+  "uri": "memory://knowledge-graph",
+  "name": "Knowledge Graph",
+  "mimeType": "application/json",
+  "description": "The complete knowledge graph with entities and relations"
+}</code></pre>
+
+        <p>Clients can subscribe to this resource and receive updates when the graph changes. The resource includes:</p>
+        <ul>
+            <li>All entities with their properties and observations</li>
+            <li>All relations between entities</li>
+            <li>Metadata about graph structure</li>
+        </ul>
+
+        <p>Importantly, the existing tool-based interface remains — this is additive, not a replacement.</p>
+
+        <h2>Implications</h2>
+        <p><strong>For MCP client developers:</strong> You can now choose between active (tool) and passive (resource) memory access patterns. For agents that need constant context awareness, resource subscriptions reduce latency.</p>
+
+        <p><strong>For knowledge graph applications:</strong> This opens the door to treating MCP memory servers as real-time knowledge bases. Combined with resource subscriptions, you could build collaborative memory systems where multiple agents share a knowledge graph.</p>
+
+        <p><strong>For the MCP ecosystem:</strong> This sets a precedent for other servers. SQLite, filesystem, and other data-heavy servers could expose queryable resources alongside their tool interfaces.</p>
+
+        <h2>Context: Memory Growth Concerns</h2>
+        <p>This PR arrives alongside <a href="https://github.com/modelcontextprotocol/servers/pull/3321" target="_blank">#3321</a>, which addresses unbounded memory growth in the sequential-thinking server. The two are related: as knowledge graphs grow, exposing them as resources requires careful consideration of size limits and pagination.</p>
+
+        <p>The memory growth fix implements a sliding window for thought history. Similar strategies may be needed for knowledge graph resources at scale.</p>
+
+        <h2>What's Next</h2>
+        <p>Watch for:</p>
+        <ul>
+            <li>Size limits and pagination for large knowledge graphs</li>
+            <li>Selective resource exposure (e.g., expose only relevant subgraphs)</li>
+            <li>Other MCP servers adopting the resource pattern for data access</li>
+            <li>Client implementations that leverage resource subscriptions for real-time memory sync</li>
+        </ul>
+
+        <p>The tool/resource dichotomy is one of MCP's underutilized features. This PR demonstrates what's possible when servers embrace both paradigms.</p>
+    </div>
+</body>
+</html>

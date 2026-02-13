@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Cryptographic Identity Verification — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .date {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .author-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .author-card h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .author-card p {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .author-card a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .author-card a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .source-link {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-size: 0.875rem;
+        }
+        .source-link strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .implications {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .implications h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Security</span>
+            <span class="date">February 13, 2026</span>
+        </div>
+        
+        <h1>A2A Cryptographic Identity Verification: Trust at the Protocol Layer</h1>
+        <p class="subtitle">A new proposal addresses a fundamental gap in agent-to-agent communication: how do autonomous systems verify each other's identity before delegating sensitive tasks?</p>
+
+        <div class="author-card">
+            <h3>Contributor</h3>
+            <p><strong>imran-siddique</strong> — An active A2A contributor focused on security infrastructure. Previous contributions include the Agent-Mesh Trust Layer proposal for decentralized identity verification. <a href="https://github.com/imran-siddique" target="_blank">GitHub →</a></p>
+        </div>
+
+        <h2>The Problem</h2>
+        <p>As the A2A protocol matures toward 1.0, a critical security gap remains: agents can communicate with each other, but there's no standard way to cryptographically verify <em>who</em> they're communicating with. In a world where agents will increasingly delegate tasks to other agents — booking flights, transferring funds, accessing sensitive data — this identity problem becomes existential.</p>
+        
+        <p>Without cryptographic identity verification:</p>
+        <ul>
+            <li>Malicious agents can impersonate trusted services</li>
+            <li>Man-in-the-middle attacks can intercept and modify agent communications</li>
+            <li>Enterprises cannot audit which agents performed which actions</li>
+            <li>Agent-to-agent trust is reduced to application-layer workarounds</li>
+        </ul>
+
+        <h2>The Proposal</h2>
+        <p><a href="https://github.com/a2aproject/A2A/issues/1472" target="_blank">Issue #1472</a> proposes adding cryptographic identity verification directly to the A2A protocol. The core idea: agents should be able to present verifiable credentials that prove their identity, capabilities, and authorization — similar to how TLS certificates work for web servers, but tailored for autonomous agent scenarios.</p>
+
+        <p>Key elements of the proposal:</p>
+        <ul>
+            <li><strong>Agent Certificates:</strong> X.509-style certificates that bind an agent's public key to its identity and capabilities</li>
+            <li><strong>Capability Attestations:</strong> Signed claims about what an agent is authorized to do (e.g., "can access payment APIs up to $1000")</li>
+            <li><strong>Delegation Chains:</strong> Cryptographic proof that Agent A authorized Agent B to act on its behalf</li>
+            <li><strong>Revocation Infrastructure:</strong> Mechanisms to invalidate compromised or retired agent credentials</li>
+        </ul>
+
+        <h2>Technical Approach</h2>
+        <p>The proposal builds on established cryptographic standards rather than inventing new primitives:</p>
+
+        <pre><code>// Example: Agent identity in A2A message
+{
+  "agent": {
+    "id": "urn:a2a:agent:booking-service-alpha",
+    "certificate": "-----BEGIN CERTIFICATE-----...",
+    "capabilities": [
+      {
+        "type": "travel_booking",
+        "constraints": {"max_price": "5000 USD"},
+        "attestation": "signed-by-issuer..."
+      }
+    ],
+    "delegation_chain": [
+      {"from": "urn:a2a:agent:travel-corp", "signature": "..."}
+    ]
+  }
+}</code></pre>
+
+        <p>The proposal deliberately avoids blockchain-based solutions, citing complexity and latency concerns. Instead, it leverages existing PKI infrastructure while adding agent-specific extensions.</p>
+
+        <h2>Why This Matters Now</h2>
+        <p>The timing is significant. A2A 1.0 is imminent, and features added now become foundational. Adding cryptographic identity later would require breaking changes or awkward compatibility layers.</p>
+
+        <p>Several parallel developments make this proposal especially relevant:</p>
+        <ul>
+            <li><strong>UCP Request Signing:</strong> The Universal Commerce Protocol is independently adding cryptographic signing, signaling industry consensus on the need for verifiable agent actions</li>
+            <li><strong>Enterprise Adoption:</strong> Large organizations are piloting agent systems but citing identity/audit gaps as blockers</li>
+            <li><strong>Regulatory Signals:</strong> EU AI Act requirements around AI system traceability push toward verifiable agent identity</li>
+        </ul>
+
+        <div class="implications">
+            <h3>🔮 Implications & Next Steps</h3>
+            <ul>
+                <li><strong>Enterprise Adoption Accelerator:</strong> Cryptographic identity verification directly addresses compliance and audit requirements that block enterprise deployments</li>
+                <li><strong>Trust Network Effects:</strong> As more agents adopt verifiable identities, the value of the identity network compounds — similar to SSL adoption in the early 2000s</li>
+                <li><strong>Interoperability with UCP:</strong> If A2A and UCP both implement compatible signing mechanisms, agents could seamlessly prove their identity across protocol boundaries</li>
+                <li><strong>Watch for:</strong> TSC (Technical Steering Committee) response — this proposal requires significant spec changes and may shape the 1.0 vs. 1.1 boundary</li>
+            </ul>
+        </div>
+
+        <h2>Community Reception</h2>
+        <p>The proposal is new (filed February 13), but early signals are positive. The A2A TSC has been receptive to security-focused proposals, and this aligns with the Extension Governance Framework discussions about how to handle cross-cutting concerns.</p>
+
+        <p>Potential challenges include:</p>
+        <ul>
+            <li><strong>Certificate Authority Model:</strong> Who issues agent certificates? Centralized CAs have scaling and trust issues; decentralized models add complexity</li>
+            <li><strong>Performance Overhead:</strong> Cryptographic verification adds latency to every agent interaction</li>
+            <li><strong>Bootstrap Problem:</strong> How do agents establish initial trust before certificates exist?</li>
+        </ul>
+
+        <div class="source-link">
+            <strong>Source</strong>
+            <a href="https://github.com/a2aproject/A2A/issues/1472" target="_blank">github.com/a2aproject/A2A/issues/1472</a> — Add cryptographic identity verification for A2A agent communications
+        </div>
+    </div>
+</body>
+</html>

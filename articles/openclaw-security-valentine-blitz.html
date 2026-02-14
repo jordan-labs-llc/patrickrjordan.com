@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Valentine's Day Security Blitz — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .summary {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .summary h2 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .summary p {
+            color: var(--text);
+            font-size: 1rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .commit-list {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .commit-item {
+            font-size: 0.875rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+        .commit-item:last-child {
+            border-bottom: none;
+        }
+        .commit-sha {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+        .commit-msg {
+            flex: 1;
+        }
+        .highlight {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight p:last-child {
+            margin-bottom: 0;
+        }
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        <span class="tag">OpenClaw</span>
+        <h1>OpenClaw Valentine's Day Security Blitz: 20+ Fixes in a Single Day</h1>
+        <p class="meta">February 14, 2026 • 6 min read</p>
+
+        <div class="summary">
+            <h2>Summary</h2>
+            <p>Peter Steinberger led a coordinated security hardening effort on February 14, 2026, landing over 20 security-related commits to the OpenClaw repository. The fixes span webhook routing, shell injection prevention, TLS hardening, and credential management — signaling preparation for a significant release milestone.</p>
+        </div>
+
+        <div class="author-box">
+            <h3>Key Contributor</h3>
+            <p><strong>Peter Steinberger</strong> is a prolific contributor to OpenClaw and a recognized expert in iOS/macOS security. His work spans multiple areas of the codebase, with particular focus on hardening the credential management and inter-process communication layers. This concentrated security push demonstrates the project's commitment to enterprise-grade security standards.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>AI assistants like OpenClaw operate with significant system access — executing commands, managing credentials, and communicating with external services. A security vulnerability in any of these areas could have cascading consequences. This coordinated fix effort addresses attack vectors across the entire stack:</p>
+
+        <ul>
+            <li><strong>Webhook routing ambiguity</strong> — preventing message hijacking between channels</li>
+            <li><strong>Shell injection</strong> — eliminating command injection in credential operations</li>
+            <li><strong>TLS pinning</strong> — hardening discovery routing against MITM attacks</li>
+            <li><strong>Process isolation</strong> — scoping cleanup operations to prevent cross-process interference</li>
+        </ul>
+
+        <h2>What Changed</h2>
+
+        <p>The security fixes cluster into four main categories:</p>
+
+        <h3>1. Webhook and Routing Security</h3>
+
+        <p>Several commits address ambiguity in how messages are routed between channels:</p>
+
+        <div class="commit-list">
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/188c4cd" target="_blank">188c4cd</a></span>
+                <span class="commit-msg">fix(security): reject ambiguous webhook target matches</span>
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/61d59a8" target="_blank">61d59a8</a></span>
+                <span class="commit-msg">fix(googlechat): reject ambiguous webhook routing</span>
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/226bf74" target="_blank">226bf74</a></span>
+                <span class="commit-msg">docs(telegram): document allowlist id requirement</span>
+            </div>
+        </div>
+
+        <p>The core issue: when multiple channels share similar webhook patterns, an attacker could craft requests that match multiple targets. The fix requires explicit, unambiguous matches — if a webhook could route to more than one handler, it's rejected entirely.</p>
+
+        <h3>2. Shell Injection Prevention</h3>
+
+        <p>The macOS keychain integration previously used shell commands that could be vulnerable to injection:</p>
+
+        <div class="commit-list">
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/66d7178" target="_blank">66d7178</a></span>
+                <span class="commit-msg">fix(security): eliminate shell from Claude CLI keychain refresh</span>
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/9dce3d8" target="_blank">9dce3d8</a></span>
+                <span class="commit-msg">fix(security): prevent shell injection in macOS keychain credential write (#15924)</span>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <p><strong>The fix:</strong> Instead of constructing shell commands with string interpolation, the code now uses direct API calls or properly escaped argument arrays. This eliminates an entire class of injection vulnerabilities.</p>
+        </div>
+
+        <h3>3. TLS and Discovery Hardening</h3>
+
+        <div class="commit-list">
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/d583782" target="_blank">d583782</a></span>
+                <span class="commit-msg">fix(security): harden discovery routing and TLS pins</span>
+            </div>
+        </div>
+
+        <p>The discovery service — which helps nodes find and authenticate with gateways — now enforces stricter TLS certificate pinning. This prevents man-in-the-middle attacks where an attacker could intercept the initial discovery handshake.</p>
+
+        <h3>4. Process and Cleanup Isolation</h3>
+
+        <div class="commit-list">
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/eb60e2e" target="_blank">eb60e2e</a></span>
+                <span class="commit-msg">fix(security): harden CLI cleanup kill and matching</span>
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/6084d13" target="_blank">6084d13</a></span>
+                <span class="commit-msg">fix(security): scope CLI cleanup to owned child PIDs</span>
+            </div>
+        </div>
+
+        <p>When OpenClaw spawns child processes and later cleans them up, it must be careful not to affect unrelated processes. The new code strictly validates process ownership before sending signals.</p>
+
+        <h2>Refactoring for Maintainability</h2>
+
+        <p>Alongside the security fixes, several refactoring commits consolidate shared utilities:</p>
+
+        <div class="commit-list">
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/d82c5ea" target="_blank">d82c5ea</a></span>
+                <span class="commit-msg">refactor(utils): share safe json stringify</span>
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/64df787" target="_blank">64df787</a></span>
+                <span class="commit-msg">refactor(channels): share account summary helpers</span>
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha"><a href="https://github.com/openclaw/openclaw/commit/cc233da" target="_blank">cc233da</a></span>
+                <span class="commit-msg">refactor(pairing): share json state helpers</span>
+            </div>
+        </div>
+
+        <p>This consolidation reduces the surface area for security bugs — when JSON serialization or state management is handled in one place, it's easier to audit and harden.</p>
+
+        <h2>Next Steps and Implications</h2>
+
+        <p>This coordinated effort suggests several things about OpenClaw's roadmap:</p>
+
+        <ol>
+            <li><strong>Release preparation</strong> — Security audits typically precede major releases. The breadth of these changes suggests a milestone is imminent.</li>
+            <li><strong>Enterprise focus</strong> — The attention to credential management and process isolation reflects enterprise deployment requirements.</li>
+            <li><strong>Community contribution</strong> — Note that Aether AI contributed the keychain injection fix (#15924), showing healthy external security research engagement.</li>
+        </ol>
+
+        <p>For OpenClaw users, these changes will be included in the next release. For those running from main, the security improvements are available immediately. Organizations with strict security requirements should review the specific commits relevant to their deployment model.</p>
+
+        <h2>Related Links</h2>
+
+        <ul>
+            <li><a href="https://github.com/openclaw/openclaw" target="_blank">OpenClaw Repository</a></li>
+            <li><a href="https://github.com/openclaw/openclaw/commits/main" target="_blank">Recent Commits</a></li>
+            <li><a href="/articles/openclaw-canvas-security.html">Previous: OpenClaw Canvas Security Hardening</a></li>
+        </ul>
+
+        <footer>
+            <p><a href="/">← Back to Home</a> · <a href="/pulse.html">Repo Pulse</a></p>
+        </footer>
+    </div>
+</body>
+</html>

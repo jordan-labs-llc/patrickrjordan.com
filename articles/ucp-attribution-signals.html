@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Attribution Signals Extension Proposal — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--green);
+            color: white;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .summary {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .summary h2 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .summary p {
+            color: var(--text);
+            font-size: 1rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+        }
+        .highlight {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight p:last-child {
+            margin-bottom: 0;
+        }
+        .diagram {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        <span class="tag">UCP</span>
+        <h1>UCP Attribution Signals Extension: Tracking Conversions in Agentic Commerce</h1>
+        <p class="meta">February 14, 2026 • 7 min read</p>
+
+        <div class="summary">
+            <h2>Summary</h2>
+            <p>A new Enhancement Proposal (EP) has been submitted to the Universal Commerce Protocol proposing standardized attribution signals. This addresses a critical gap: when an AI agent completes a purchase on behalf of a user, how does the merchant know which touchpoints influenced the conversion? The economics of agentic commerce depend on solving this.</p>
+        </div>
+
+        <div class="author-box">
+            <h3>About the Proposal</h3>
+            <p><strong>Issue #180</strong> was opened by <strong>sanderslee2</strong> on February 14, 2026. The proposal addresses attribution tracking in AI-mediated transactions — a problem that affects every stakeholder in the commerce ecosystem: merchants, advertisers, platforms, and agent developers.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Traditional e-commerce attribution works through tracking pixels, cookies, and click-through URLs. When a user clicks an ad, visits a product page, and completes checkout, the merchant can trace the conversion back to the original marketing touchpoint.</p>
+
+        <p>Agentic commerce breaks this model entirely:</p>
+
+        <ul>
+            <li><strong>No browser session</strong> — AI agents don't load tracking pixels or accept cookies</li>
+            <li><strong>No click-through</strong> — the user might say "buy me running shoes" without ever seeing an ad</li>
+            <li><strong>Multi-step reasoning</strong> — the agent might aggregate recommendations from multiple sources before deciding</li>
+            <li><strong>Persistent memory</strong> — a recommendation from weeks ago might influence today's purchase</li>
+        </ul>
+
+        <div class="highlight">
+            <p><strong>The core problem:</strong> If merchants can't attribute conversions, they can't pay for advertising. If they can't pay for advertising, the economic model that funds product discovery breaks down.</p>
+        </div>
+
+        <h2>What the Proposal Covers</h2>
+
+        <p>The Attribution Signals Extension proposes adding optional metadata fields to UCP checkout sessions that capture conversion context:</p>
+
+        <h3>1. Source Signals</h3>
+
+        <p>Identifying where the purchase intent originated:</p>
+
+        <pre><code>{
+  "attribution": {
+    "source_type": "agent_recommendation",
+    "source_id": "copilot:shopping-assistant",
+    "source_context": {
+      "query": "running shoes for marathon training",
+      "timestamp": "2026-02-14T08:00:00Z"
+    }
+  }
+}</code></pre>
+
+        <h3>2. Influence Chain</h3>
+
+        <p>Capturing the sequence of touchpoints that contributed to the decision:</p>
+
+        <pre><code>{
+  "attribution": {
+    "influences": [
+      {
+        "type": "product_review",
+        "source": "running-magazine.com",
+        "timestamp": "2026-02-10T...",
+        "weight": 0.3
+      },
+      {
+        "type": "price_comparison",
+        "source": "agent:internal",
+        "timestamp": "2026-02-14T...",
+        "weight": 0.5
+      },
+      {
+        "type": "user_preference",
+        "source": "user:brand_affinity",
+        "weight": 0.2
+      }
+    ]
+  }
+}</code></pre>
+
+        <h3>3. Privacy Controls</h3>
+
+        <p>Critical to the proposal: users control what attribution data is shared:</p>
+
+        <table>
+            <tr>
+                <th>Level</th>
+                <th>Description</th>
+                <th>Data Shared</th>
+            </tr>
+            <tr>
+                <td><code>none</code></td>
+                <td>No attribution data</td>
+                <td>—</td>
+            </tr>
+            <tr>
+                <td><code>aggregate</code></td>
+                <td>Category-level only</td>
+                <td>Source type, general category</td>
+            </tr>
+            <tr>
+                <td><code>detailed</code></td>
+                <td>Full influence chain</td>
+                <td>All touchpoints with weights</td>
+            </tr>
+        </table>
+
+        <h2>Technical Implications</h2>
+
+        <p>The proposal raises several technical questions that will need resolution:</p>
+
+        <h3>Agent Identity and Trust</h3>
+
+        <p>If attribution signals come from agents, how do merchants verify they're legitimate? A malicious agent could claim false attribution to steal advertising revenue. This ties into the broader <a href="/articles/a2a-cryptographic-identity.html">A2A cryptographic identity work</a>.</p>
+
+        <h3>Cross-Protocol Attribution</h3>
+
+        <p>An agent might discover products via MCP (querying a product catalog), reason about them using A2A (asking a specialist agent for advice), and complete the purchase via UCP. Attribution needs to span all three protocols.</p>
+
+        <div class="diagram">
+User Request          MCP Query           A2A Consultation       UCP Checkout
+     │                   │                      │                     │
+     ▼                   ▼                      ▼                     ▼
+ "buy shoes"  ──▶  catalog:search  ──▶  specialist:running  ──▶  merchant:checkout
+                         │                      │                     │
+                         ▼                      ▼                     ▼
+                   source_type:           influence:             attribution:
+                   catalog_search         agent_advice           [full chain]
+        </div>
+
+        <h3>Retroactive Attribution</h3>
+
+        <p>User preferences and brand affinities might have formed months or years ago. Should those be part of the attribution chain? The proposal suggests a "recency decay" model where older influences have diminishing weight.</p>
+
+        <h2>Industry Implications</h2>
+
+        <p>This proposal has significant implications for multiple stakeholders:</p>
+
+        <h3>For Advertisers</h3>
+
+        <p>Attribution signals could enable a new model of AI-native advertising. Instead of buying clicks, advertisers might pay for "recommendation influence" — compensation when an agent cites their content as a factor in a purchase decision.</p>
+
+        <h3>For Agent Developers</h3>
+
+        <p>Agents that provide high-quality recommendations could receive attribution payments, creating an economic model for valuable shopping assistance beyond subscription fees.</p>
+
+        <h3>For Merchants</h3>
+
+        <p>Understanding which agent interactions drive conversions helps optimize the UCP integration. If most conversions come from voice assistants, that channel deserves more attention than chat-based agents.</p>
+
+        <h2>Next Steps</h2>
+
+        <p>The proposal is in early discussion phase. Key milestones to watch:</p>
+
+        <ol>
+            <li><strong>Tech Council review</strong> — The newly renamed TC (formerly Technical Committee) will evaluate the proposal's scope and compatibility with UCP's core spec</li>
+            <li><strong>Privacy working group</strong> — Attribution inherently involves tracking; privacy-preserving approaches need careful design</li>
+            <li><strong>Cross-protocol coordination</strong> — MCP and A2A teams should weigh in on how attribution flows across protocol boundaries</li>
+        </ol>
+
+        <p>The proposal acknowledges these challenges and suggests a phased approach: start with simple source attribution, then expand to influence chains as the model matures.</p>
+
+        <h2>Related Links</h2>
+
+        <ul>
+            <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/180" target="_blank">Enhancement Proposal #180: Attribution Signals Extension</a></li>
+            <li><a href="https://github.com/Universal-Commerce-Protocol/ucp" target="_blank">UCP Repository</a></li>
+            <li><a href="/articles/ucp-intent-field.html">Previous: UCP Intent Field Addition</a></li>
+            <li><a href="/articles/a2a-cryptographic-identity.html">Related: A2A Cryptographic Identity Verification</a></li>
+        </ul>
+
+        <footer>
+            <p><a href="/">← Back to Home</a> · <a href="/pulse.html">Repo Pulse</a></p>
+        </footer>
+    </div>
+</body>
+</html>

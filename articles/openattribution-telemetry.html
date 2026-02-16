@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAttribution Telemetry: Tracking Content Influence in AI Commerce — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+        .author-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .author-card h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .author-card .name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-card .role {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem 0;
+        }
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem 0;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-size: 0.8rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .highlight {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .highlight h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .highlight ul {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--yellow);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout strong {
+            color: var(--text);
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-nav a {
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Attribution</span>
+            <span class="tag">Content Economics</span>
+            February 16, 2026
+        </div>
+        
+        <h1>OpenAttribution Telemetry: Tracking Content Influence in AI Commerce</h1>
+        
+        <div class="author-card">
+            <h3>Contributor</h3>
+            <div class="name">Alex Springer</div>
+            <div class="role">OpenAttribution.org • London, UK</div>
+        </div>
+
+        <p>When an AI shopping assistant recommends a product based on a Wirecutter review, who gets credit for the sale? Today, the answer is: nobody knows. The content creator has no visibility, the merchant can't attribute the conversion, and the AI agent operates as a black box.</p>
+
+        <p><a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/185" target="_blank">Issue #185</a> proposes <code>org.openattribution.telemetry</code> — a UCP vendor extension that embeds content citation data directly into checkout sessions. This isn't about tracking users; it's about tracking which content influenced their decisions.</p>
+
+        <h2>The Problem: Invisible Influence</h2>
+
+        <p>Alex Springer's proposal articulates a market failure that threatens the AI commerce ecosystem:</p>
+
+        <blockquote>
+            Content creators — reviewers, guide authors, comparison sites — invest significantly in producing the expert content that AI shopping agents rely on to generate recommendations. This content is the raw material of AI-assisted commerce: without reviews, there are no credible recommendations; without guides, there is no informed comparison.
+        </blockquote>
+
+        <p>The issue is stark: if creators can't measure whether their content drives purchases, they have no business case for allowing AI agents to access it. The rational response is to restrict access — which threatens the content supply chain that makes AI commerce valuable in the first place.</p>
+
+        <h2>How It Works</h2>
+
+        <p>The extension adds an <code>attribution</code> object to UCP checkout sessions, recording which content was retrieved and cited during the conversation:</p>
+
+<pre><code>{
+  "id": "chk_123",
+  "line_items": ["..."],
+  "attribution": {
+    "content_scope": "electronics-reviews",
+    "prior_session_ids": ["550e8400-e29b-41d4-a716-446655440999"],
+    "content_retrieved": [
+      {
+        "content_url": "https://www.wirecutter.com/reviews/best-wireless-headphones",
+        "timestamp": "2026-01-15T10:30:01Z"
+      }
+    ],
+    "content_cited": [
+      {
+        "content_url": "https://www.wirecutter.com/reviews/best-wireless-headphones",
+        "timestamp": "2026-01-15T10:30:05Z",
+        "citation_type": "paraphrase",
+        "excerpt_tokens": 85,
+        "position": "primary"
+      }
+    ],
+    "conversation_summary": {
+      "turn_count": 3,
+      "primary_intent": "comparison",
+      "topics": ["headphones", "noise-cancelling"],
+      "total_content_retrieved": 5,
+      "total_content_cited": 2
+    }
+  }
+}</code></pre>
+
+        <h3>Key Design Choices</h3>
+
+        <div class="highlight">
+            <h4>📊 Attribution Signals</h4>
+            <ul>
+                <li><strong>content_retrieved vs content_cited:</strong> Distinguishes between content that was fetched and content that actually influenced the recommendation</li>
+                <li><strong>citation_type:</strong> Captures how content was used — direct quote, paraphrase, or even contradiction (content retrieved but disagreed with)</li>
+                <li><strong>position:</strong> Was this the primary source or supporting evidence?</li>
+                <li><strong>prior_session_ids:</strong> Links multi-day purchase journeys — research on Monday, purchase on Thursday</li>
+            </ul>
+        </div>
+
+        <h3>Privacy Levels</h3>
+
+        <p>The extension defines four granularity levels for data sharing:</p>
+
+        <ul>
+            <li><strong>full:</strong> Complete attribution data including excerpts</li>
+            <li><strong>summary:</strong> Aggregated metrics without specific content</li>
+            <li><strong>intent:</strong> Topic and intent data only</li>
+            <li><strong>minimal:</strong> Just the fact that content influenced the purchase</li>
+        </ul>
+
+        <p>This addresses the privacy tension — merchants and content creators can negotiate appropriate data sharing levels without compromising user privacy.</p>
+
+        <h2>Why This Matters</h2>
+
+        <h3>For Content Creators</h3>
+
+        <p>Attribution telemetry provides something that doesn't exist today: measurable ROI for AI-accessible content. Wirecutter could know that their headphone review influenced 10,000 purchases last month — data that justifies content investment and enables partnership negotiations.</p>
+
+        <h3>For Merchants</h3>
+
+        <p>Merchants gain insight into which content partnerships drive conversions. If TechRadar reviews convert better than CNET reviews, that informs content strategy and affiliate relationships.</p>
+
+        <h3>For the Ecosystem</h3>
+
+        <p>Without attribution, the content ecosystem risks collapse. If creators can't demonstrate value, they'll block AI access. If merchants can't measure content ROI, they won't pay for partnerships. Attribution telemetry is the feedback loop that makes the system sustainable.</p>
+
+        <div class="callout">
+            <strong>The Negative Attribution Signal:</strong> Interestingly, the extension supports <code>contradiction</code> as a citation type — content that was retrieved but explicitly disagreed with. This captures cases where AI agents use content to justify <em>not</em> recommending a product, which is also valuable signal for creators and merchants.
+        </div>
+
+        <h2>Fraud Considerations</h2>
+
+        <p>The proposal addresses a critical concern: what stops an AI agent from claiming false citations to inflate attribution?</p>
+
+        <p>Several mitigations are built in:</p>
+
+        <ul>
+            <li><strong>content_hash:</strong> SHA256 hash enables verification that cited content matches the original</li>
+            <li><strong>Timestamp ordering:</strong> An agent can't cite content before retrieving it</li>
+            <li><strong>Citation quality signals:</strong> These are metadata for consumers to weight, not trusted assertions</li>
+            <li><strong>Consumer-side detection:</strong> Rate limiting and anomaly detection happen at the platform level</li>
+        </ul>
+
+        <p>The key insight: the extension provides attribution <em>signals</em>, not attribution <em>decisions</em>. Consumers apply their own confidence weighting and fraud detection.</p>
+
+        <h2>Relationship to Previous Attribution Work</h2>
+
+        <p>This proposal builds on <a href="/articles/ucp-attribution-signals.html">Issue #180: Attribution Signals Extension</a> from two days ago. Where that proposal focused on merchant-side conversion attribution, OpenAttribution Telemetry tackles content-side influence attribution. They're complementary — a complete attribution picture requires both.</p>
+
+        <h2>Implementation Status</h2>
+
+        <p>The proposal is more than a concept document. According to the enhancement proposal:</p>
+
+        <ul>
+            <li>Reference implementation published (Python SDK, FastAPI server)</li>
+            <li>JSON schemas available</li>
+            <li>Apache 2.0 licensed</li>
+            <li>Repository: <a href="https://github.com/openattribution-org/telemetry" target="_blank">openattribution-org/telemetry</a></li>
+        </ul>
+
+        <p>This level of completeness suggests serious intent. The OpenAttribution organization appears purpose-built for this problem.</p>
+
+        <h2>What to Watch</h2>
+
+        <ul>
+            <li><strong>Publisher adoption:</strong> Will major review sites implement attribution endpoints?</li>
+            <li><strong>Agent compliance:</strong> Will AI assistants agree to report attribution data?</li>
+            <li><strong>Revenue models:</strong> How will attribution data translate to compensation?</li>
+            <li><strong>Privacy debates:</strong> Where's the line between attribution and surveillance?</li>
+        </ul>
+
+        <div class="highlight">
+            <h4>🔗 Links</h4>
+            <ul>
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/185" target="_blank">Issue #185: Content Citation and Attribution Telemetry</a></li>
+                <li><a href="https://github.com/openattribution-org/telemetry" target="_blank">OpenAttribution Telemetry Repository</a></li>
+                <li><a href="/articles/ucp-attribution-signals.html">Related: UCP Attribution Signals Extension</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-nav">
+            <a href="/articles/">← All Articles</a>
+            <a href="/pulse.html">Repo Pulse →</a>
+        </div>
+    </div>
+</body>
+</html>

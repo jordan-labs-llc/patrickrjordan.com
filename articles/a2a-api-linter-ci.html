@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Adds API Linter to CI: Protocol Quality Gets Automated — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--green);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .author-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .author-detail {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">CI/CD</span>
+            February 17, 2026
+        </div>
+        
+        <h1>A2A Adds API Linter to CI: Protocol Quality Gets Automated</h1>
+        <p class="subtitle">As the Agent-to-Agent Protocol matures past 1.0, Google adds automated proto file validation — a sign the spec is ready for enterprise implementation.</p>
+
+        <div class="author-box">
+            <h4>Author</h4>
+            <div class="author-name">Darrel</div>
+            <div class="author-detail">A2A specification contributor · Infrastructure automation</div>
+        </div>
+
+        <h2>What Changed</h2>
+        <p>The A2A repository now runs <a href="https://github.com/a2aproject/A2A/pull/1257" target="_blank">Google's API Linter</a> on every pull request. Any proto file changes that violate Google's API design guidelines will fail CI before merge.</p>
+
+        <p>This sounds mundane — most mature APIs have automated linting. But for a protocol that just shipped 1.0 and is being implemented across the industry, it signals a transition from "experimental spec" to "production infrastructure."</p>
+
+        <h2>What the Linter Catches</h2>
+        <p>Google's API Linter enforces hundreds of rules from the <a href="https://google.aip.dev/" target="_blank">API Improvement Proposals (AIP)</a> guidelines. For A2A's proto files, this means:</p>
+
+        <ul>
+            <li><strong>Naming consistency:</strong> Fields follow <code>snake_case</code>, RPCs follow <code>PascalCase</code></li>
+            <li><strong>Field numbering:</strong> No gaps or reused field numbers that break wire compatibility</li>
+            <li><strong>Comment requirements:</strong> All public fields must have documentation</li>
+            <li><strong>Resource patterns:</strong> Resource names follow consistent patterns</li>
+            <li><strong>Deprecation rules:</strong> Deprecated fields are marked correctly</li>
+        </ul>
+
+        <p>The <a href="https://github.com/a2aproject/A2A/commit/cd16c52" target="_blank">companion commit</a> that adjusted <code>ListTasksRequest.tenant</code> field numbering shows the linter already catching issues.</p>
+
+        <h2>Why This Matters</h2>
+
+        <h3>For Implementers</h3>
+        <p>When you're building an A2A client or server, you want confidence that:</p>
+        <ul>
+            <li>The spec won't have subtle inconsistencies that cause integration bugs</li>
+            <li>Breaking changes will be caught before release</li>
+            <li>Every field will have documentation</li>
+        </ul>
+
+        <p>Automated linting provides that confidence in a way that human review cannot.</p>
+
+        <h3>For the Ecosystem</h3>
+        <p>A2A is designed for AI agents to communicate across organizational boundaries. Inconsistent proto definitions would cascade into incompatible implementations. The linter prevents this at the source.</p>
+
+        <div class="callout">
+            <p><strong>Context:</strong> A2A 1.0 shipped in January. Within a month, the project has added a DeepLearning.AI course, HTTP caching guidance, and now automated spec validation. This is rapid maturation.</p>
+        </div>
+
+        <h3>For Contributors</h3>
+        <p>New contributors get immediate feedback on whether their proto changes meet guidelines. No more back-and-forth in code review about naming conventions — the CI catches it automatically.</p>
+
+        <h2>Technical Details</h2>
+        <p>The workflow adds a new CI job that runs on all PRs:</p>
+
+        <pre><code>name: API Linter
+on:
+  pull_request:
+    paths:
+      - '**/*.proto'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: googleapis/api-linter-action@v1
+        with:
+          args: --config .api-linter.yaml proto/**/*.proto</code></pre>
+
+        <p>The configuration allows project-specific rule customization where A2A intentionally diverges from Google's internal conventions.</p>
+
+        <h2>Related Changes</h2>
+        <p>Today's A2A activity also includes several spec fixes from Yaroslav (@yarolegovich):</p>
+        <ul>
+            <li><a href="https://github.com/a2aproject/A2A/pull/1487" target="_blank">#1487</a>: Remove duplicated ID from create task push config request</li>
+            <li><a href="https://github.com/a2aproject/A2A/pull/1486" target="_blank">#1486</a>: Pluralize configs in <code>ListTaskPushNotificationConfigs</code></li>
+            <li><a href="https://github.com/a2aproject/A2A/pull/1485" target="_blank">#1485</a>: Add metadata to <code>CancelTaskRequest</code></li>
+        </ul>
+
+        <p>These are exactly the kind of refinements you'd expect as implementations hit edge cases — and exactly what the linter will help prevent in future changes.</p>
+
+        <h2>What's Next</h2>
+        <p>Expect continued polish as A2A moves toward 1.1. The <a href="https://github.com/a2aproject/A2A/commit/fde2bd8" target="_blank">llms-full.txt script update</a> suggests the team is also thinking about how to make the spec more consumable by AI agents themselves — a nice bit of dogfooding.</p>
+
+        <div class="nav-links">
+            <a href="/articles/a2a-deeplearning-course.html">← Previous: A2A DeepLearning.AI Course</a>
+            <a href="/pulse.html">View Repo Pulse →</a>
+        </div>
+    </div>
+</body>
+</html>

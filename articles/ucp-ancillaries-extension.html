@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Ancillaries Extension: Add-Ons Get First-Class Protocol Support — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .author-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .author-detail {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Vertical Extension</span>
+            February 17, 2026
+        </div>
+        
+        <h1>UCP Ancillaries Extension: Add-Ons Get First-Class Protocol Support</h1>
+        <p class="subtitle">The second vertical extension in as many days shows UCP's extensibility model is gaining momentum — now tackling the complex world of optional add-ons.</p>
+
+        <div class="author-box">
+            <h4>Author</h4>
+            <div class="author-name">Tobias Alldén</div>
+            <div class="author-detail">@alldentobias on GitHub · Travel technology contributor</div>
+        </div>
+
+        <h2>What's Happening</h2>
+        <p>Just one day after the UCP-Hotels extension landed, a new vertical extension appears: <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/189" target="_blank">UCP-Ancillaries</a>. This extension tackles a problem that plagues every commerce experience — the add-ons, upgrades, and optional services that often generate significant revenue but rarely get clean data models.</p>
+
+        <p>The timing is notable. UCP is establishing a pattern: vertical extensions that bring domain expertise from practitioners, not just protocol theorists.</p>
+
+        <h2>Why Ancillaries Matter</h2>
+        <p>Think about the last time you bought something complex online:</p>
+        <ul>
+            <li><strong>Airlines:</strong> seat selection, baggage, lounge access, priority boarding, WiFi</li>
+            <li><strong>Hotels:</strong> late checkout, breakfast packages, parking, spa credits</li>
+            <li><strong>Rental cars:</strong> insurance, GPS, child seats, additional drivers</li>
+            <li><strong>Events:</strong> VIP upgrades, parking passes, merchandise bundles</li>
+            <li><strong>E-commerce:</strong> gift wrapping, extended warranties, installation services</li>
+        </ul>
+
+        <p>These "ancillary" products typically account for 20-40% of revenue in travel, and they're growing. But the data models are chaotic — each vendor represents add-ons differently, making AI agents struggle to compare or recommend them intelligently.</p>
+
+        <h2>Technical Approach</h2>
+        <p>The extension introduces a structured <code>Ancillary</code> type that can attach to any UCP product:</p>
+
+        <pre><code>{
+  "ancillaries": [
+    {
+      "id": "seat-12a",
+      "type": "seat_selection",
+      "category": "premium",
+      "price": { "amount": 45.00, "currency": "USD" },
+      "availability": "available",
+      "constraints": {
+        "purchaseWindow": "before_checkin",
+        "refundable": false,
+        "bundlesWith": ["priority_boarding"]
+      },
+      "attributes": {
+        "seatLocation": "window",
+        "extraLegroom": true,
+        "row": 12
+      }
+    }
+  ]
+}</code></pre>
+
+        <div class="callout">
+            <p><strong>Key design principle:</strong> Ancillaries are explicitly typed and categorized, but also carry an extensible <code>attributes</code> block for domain-specific data. This balances standardization with flexibility.</p>
+        </div>
+
+        <h3>Constraint Modeling</h3>
+        <p>One sophisticated aspect is the constraint system. Ancillaries often have complex rules:</p>
+        <ul>
+            <li>Can only be purchased before a certain point (booking, checkin, departure)</li>
+            <li>Bundle with or exclude other ancillaries</li>
+            <li>Vary in availability by customer tier or ticket class</li>
+            <li>Have different refund policies than the primary product</li>
+        </ul>
+
+        <p>The extension models these explicitly, letting AI agents reason about upsell opportunities and constraints without hitting walls mid-transaction.</p>
+
+        <h2>Why This Matters</h2>
+
+        <h3>For AI Agents</h3>
+        <p>An AI agent helping you book travel can now:</p>
+        <ul>
+            <li>Compare seat selection prices across airlines in a standardized format</li>
+            <li>Understand which add-ons are refundable and which aren't</li>
+            <li>Recommend bundles that actually save money</li>
+            <li>Warn about time-sensitive purchase windows</li>
+        </ul>
+
+        <p>Without structured ancillary data, agents have to either skip add-ons entirely or rely on fragile screen-scraping.</p>
+
+        <h3>For Merchants</h3>
+        <p>Revenue from ancillaries is often higher-margin than base products. Having a standard way to expose these to AI agents means:</p>
+        <ul>
+            <li>Better upsell conversion rates</li>
+            <li>Accurate representation of high-value add-ons</li>
+            <li>Reduced cart abandonment from surprise fees at checkout</li>
+        </ul>
+
+        <h3>For the Protocol</h3>
+        <p>Two vertical extensions in two days establishes UCP's extensibility model as production-ready. Contributors from travel, hospitality, and e-commerce are bringing real domain expertise, not just theoretical schemas.</p>
+
+        <h2>Relationship to Hotels Extension</h2>
+        <p>The <a href="/articles/ucp-hotels-extension.html">UCP-Hotels extension</a> that landed yesterday included some ancillary concepts (breakfast, parking, etc.), but those were hotel-specific. The Ancillaries extension provides a <em>cross-vertical</em> framework that can apply to any product type.</p>
+
+        <p>Expect future vertical extensions (flights, rental cars, events) to leverage this shared ancillary model rather than reinventing it.</p>
+
+        <h2>What's Next</h2>
+        <p>The PR is in <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/189" target="_blank">active review</a>, with discussion around:</p>
+        <ul>
+            <li>Standardized category taxonomy vs. open-ended types</li>
+            <li>Handling ancillary bundles and packages</li>
+            <li>Post-purchase modification of ancillaries</li>
+            <li>Integration with the Attribution Signals extension for conversion tracking</li>
+        </ul>
+
+        <p>The Tech Council will likely want to coordinate this with the Hotels extension to ensure clean interoperability.</p>
+
+        <div class="callout">
+            <p><strong>Pattern emerging:</strong> UCP is evolving from a generic commerce protocol to a rich ecosystem of vertical extensions, each bringing domain expertise. The core remains stable while verticals adapt it to real-world complexity.</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="/articles/ucp-hotels-extension.html">← Previous: UCP-Hotels Extension</a>
+            <a href="/pulse.html">View Repo Pulse →</a>
+        </div>
+    </div>
+</body>
+</html>

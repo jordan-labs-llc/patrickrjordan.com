@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Agent Identity and Trust Framework Proposal — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .tag-yellow {
+            background: #f59e0b;
+            color: black;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-warning {
+            border-left-color: #f59e0b;
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-section h3 {
+            margin-top: 0;
+            font-size: 1rem;
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+        .footer-nav a {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        .level-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .level-table th, .level-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .level-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag tag-yellow">Proposal</span>
+            <span class="tag">Security</span>
+            February 18, 2026
+        </div>
+        
+        <h1>A2A Agent Identity and Trust Framework Proposal</h1>
+        <p class="subtitle">A comprehensive proposal addresses the "who are you?" problem for autonomous agents — proposing verification levels, trust signals, and delegation chain security for the Agent-to-Agent Protocol.</p>
+
+        <div class="author-section">
+            <h3>About the Contributor</h3>
+            <p><strong>abdelsfane</strong> has been an active contributor to the A2A community, previously proposing security-focused enhancements. This proposal builds on the <a href="/articles/a2a-cryptographic-identity.html">cryptographic identity work from February 13</a>, offering a more comprehensive framework approach.</p>
+        </div>
+
+        <h2>The Problem</h2>
+        
+        <p>The A2A protocol currently recommends TLS certificate validation and allows optional JWS signatures on AgentCards for agent identity. These mechanisms verify the <em>domain</em> hosting an agent but do not verify the <em>agent itself</em>. In a world where autonomous agents delegate tasks to each other, this gap creates serious security concerns:</p>
+        
+        <ul>
+            <li><strong>No verified agent identity</strong> — AgentProvider fields are self-asserted with no verification</li>
+            <li><strong>No trust evaluation framework</strong> — agents have no standardized way to assess other agents</li>
+            <li><strong>No delegation chain security</strong> — when Agent A delegates to Agent B who delegates to Agent C, there's no trust propagation or authorization boundaries</li>
+            <li><strong>No AgentCard revocation mechanism</strong> — compromised agents can't be removed from the ecosystem</li>
+            <li><strong>No application-layer message integrity</strong> — TLS secures transport but not message content</li>
+        </ul>
+        
+        <p>These aren't edge cases. As A2A moves past 1.0 and into production deployments, these gaps become blockers for enterprises that need to know which agents they're trusting with sensitive operations.</p>
+
+        <h2>The Proposal: Three Verification Levels</h2>
+        
+        <p>The proposal introduces a tiered verification system that balances accessibility with security:</p>
+        
+        <table class="level-table">
+            <thead>
+                <tr>
+                    <th>Level</th>
+                    <th>Verification</th>
+                    <th>Use Case</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Self-Asserted</strong></td>
+                    <td>Agent claims identity via AgentCard</td>
+                    <td>Development, testing, low-risk operations</td>
+                </tr>
+                <tr>
+                    <td><strong>Domain-Verified</strong></td>
+                    <td>DNS/TLS proves domain control</td>
+                    <td>Standard production deployments</td>
+                </tr>
+                <tr>
+                    <td><strong>Organization-Verified</strong></td>
+                    <td>Third-party attestation of legal entity</td>
+                    <td>Enterprise, financial, healthcare</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p>Consuming agents can set minimum verification requirements based on operation sensitivity. A weather lookup might accept self-asserted; a financial transaction might require organization-verified.</p>
+
+        <h2>Key Components</h2>
+        
+        <h3>1. Standardized Trust Signals</h3>
+        
+        <p>Beyond verification levels, the framework proposes standardized signals that agents can use to evaluate each other:</p>
+        
+        <ul>
+            <li><strong>Reputation scores</strong> — aggregated from past interactions</li>
+            <li><strong>Capability attestations</strong> — verified claims about what an agent can do</li>
+            <li><strong>Compliance certifications</strong> — SOC 2, HIPAA, etc.</li>
+            <li><strong>Insurance/bonding status</strong> — for high-value operations</li>
+        </ul>
+        
+        <p>These signals would be communicated via the existing AgentExtension and metadata fields, maintaining backwards compatibility.</p>
+
+        <h3>2. Mandatory AgentCard Signing</h3>
+        
+        <div class="callout callout-warning">
+            <strong>Breaking Change:</strong> The proposal recommends mandatory AgentCard signing for production deployments. This would require all production agents to cryptographically sign their AgentCards, enabling verification of card integrity and origin.
+        </div>
+        
+        <p>Currently, JWS signatures on AgentCards are optional. The proposal argues this should flip: unsigned cards would be acceptable only for development/testing.</p>
+
+        <h3>3. Revocation Endpoints</h3>
+        
+        <p>When an agent is compromised or decommissioned, there's currently no standardized way to revoke its identity. The proposal adds:</p>
+        
+        <ul>
+            <li>A revocation check endpoint that verifiers can query</li>
+            <li>Revocation lists that can be cached for performance</li>
+            <li>Grace periods for propagation</li>
+        </ul>
+
+        <h3>4. Delegation Chain Security</h3>
+        
+        <p>When agents delegate tasks to each other, the proposal introduces:</p>
+        
+        <ul>
+            <li><strong>Authorization boundaries</strong> — explicit limits on what delegated agents can do</li>
+            <li><strong>Trust propagation rules</strong> — how trust flows through delegation chains</li>
+            <li><strong>Chain-of-custody tracking</strong> — auditable records of delegation paths</li>
+        </ul>
+        
+        <p>This is particularly important for enterprise deployments where a company's agent might delegate to third-party specialists but needs to maintain governance.</p>
+
+        <h3>5. Message Signing</h3>
+        
+        <p>Beyond AgentCard signing, the proposal adds message-level signing for individual A2A requests and responses. This provides:</p>
+        
+        <ul>
+            <li>Non-repudiation — proof of who sent what</li>
+            <li>Integrity — detection of tampering</li>
+            <li>Auditability — cryptographic evidence for compliance</li>
+        </ul>
+
+        <h2>Comparison with UCP Signing</h2>
+        
+        <p>Interestingly, this proposal lands the same day that <a href="/articles/ucp-message-signing-merged.html">UCP's message signing specification merged</a>. The approaches share philosophical similarities:</p>
+        
+        <ul>
+            <li>Both use existing protocol structures (AgentExtension/metadata vs. UCP profiles)</li>
+            <li>Both support tiered trust levels</li>
+            <li>Both address key discovery and revocation</li>
+        </ul>
+        
+        <p>The key difference: UCP focuses on commerce transactions (agent-to-business), while A2A focuses on agent-to-agent delegation. A complete agentic ecosystem will need both.</p>
+
+        <h2>Implementation Considerations</h2>
+        
+        <p>The proposal acknowledges several challenges:</p>
+        
+        <ul>
+            <li><strong>Performance:</strong> Verification checks add latency; caching strategies are essential</li>
+            <li><strong>Adoption:</strong> Existing agents would need upgrades; migration period required</li>
+            <li><strong>Governance:</strong> Who operates verification authorities? How are disputes resolved?</li>
+            <li><strong>Privacy:</strong> Trust signals could leak operational information; selective disclosure needed</li>
+        </ul>
+        
+        <p>The full proposal includes design rationale documents addressing these tradeoffs.</p>
+
+        <h2>What's Next</h2>
+        
+        <p>The proposal is currently open for community discussion. Key questions being debated:</p>
+        
+        <ul>
+            <li>Should mandatory signing apply only to AgentCards, or extend to all messages?</li>
+            <li>What's the right balance between decentralized and centralized verification?</li>
+            <li>How should this interact with existing identity systems (DID, OAuth, etc.)?</li>
+        </ul>
+        
+        <div class="callout">
+            <strong>Related:</strong> See also <a href="/articles/a2a-cryptographic-identity.html">A2A Cryptographic Identity Verification</a> (February 13) and <a href="/articles/a2a-agent-mesh-trust-layer.html">A2A Agent-Mesh Trust Layer</a> (February 7) for earlier identity proposals.
+        </div>
+
+        <div class="footer-nav">
+            <a href="https://github.com/a2aproject/A2A/issues/1497" target="_blank">View Issue #1497 →</a>
+            <a href="/pulse.html">← Back to Pulse</a>
+        </div>
+    </div>
+</body>
+</html>

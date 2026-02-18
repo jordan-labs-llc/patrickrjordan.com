@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Message Signing Merges: Cryptographic Trust Arrives — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-section h3 {
+            margin-top: 0;
+            font-size: 1rem;
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+        .footer-nav a {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        .diagram {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Security</span>
+            <span class="tag">Merged</span>
+            February 18, 2026
+        </div>
+        
+        <h1>UCP Message Signing Merges: Cryptographic Trust Arrives</h1>
+        <p class="subtitle">After weeks of refinement, Ilya Grigorik's comprehensive signature specification lands in the Universal Commerce Protocol — establishing cryptographic foundations for enterprise-grade agentic commerce.</p>
+
+        <div class="author-section">
+            <h3>About the Contributor</h3>
+            <p><strong>Ilya Grigorik</strong> is a Principal Engineer at Google and one of the architects of the Universal Commerce Protocol. He previously led Google's web performance initiatives, authored "High Performance Browser Networking" (O'Reilly), and was instrumental in standardizing HTTP/2 and QUIC. His work on UCP brings the same rigor to agentic commerce that he brought to web performance.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>When AI agents start moving real money, trust becomes non-negotiable. How does a business know the request actually came from the agent that claims to have sent it? How does an agent verify the response wasn't tampered with in transit? These aren't theoretical concerns — they're blockers for enterprise adoption.</p>
+        
+        <p>PR #156, merged February 17, 2026, answers these questions with a comprehensive cryptographic signing framework. The specification is substantial: 599 lines of new documentation in <code>signatures.md</code> alone, plus updates across the entire specification surface.</p>
+
+        <h2>The Architecture</h2>
+        
+        <p>The signature framework establishes a layered architecture that works consistently across UCP's transport bindings:</p>
+        
+        <div class="diagram">SHARED FOUNDATION
+├── Canonicalization: JCS (RFC 8785)
+├── Algorithms: ES256 (required), ES384, ES512
+├── Key Format: JWK (RFC 7517)
+├── Key Discovery: signing_keys[] in /.well-known/ucp
+└── Replay Protection: idempotency-key (business layer)
+        │
+        ├── REST BINDING (RFC 9421)
+        │   Headers: Signature, Signature-Input, UCP-Content-Digest-JCS
+        │
+        └── MCP BINDING (RFC 7515 Appendix F)
+            Fields: meta.signature, meta.idempotency-key, meta.ucp-agent</div>
+
+        <h3>Key Discovery via Profiles</h3>
+        
+        <p>One of the cleverer aspects of the design is how it reuses existing UCP infrastructure. Rather than creating a separate key discovery mechanism, signing keys are published in the same <code>/.well-known/ucp</code> profile that already handles capability negotiation. This means:</p>
+        
+        <ul>
+            <li>The same fetch that enables capability negotiation also resolves signing keys</li>
+            <li>Businesses publish keys at their profile URL</li>
+            <li>Platforms (agents) publish keys that verifiers can discover via the <code>UCP-Agent</code> header</li>
+            <li>No new infrastructure required — just new fields in existing structures</li>
+        </ul>
+
+        <h3>Transport-Specific Bindings</h3>
+        
+        <p>UCP supports both REST and MCP transports. Rather than forcing a single signing mechanism, the spec adapts to each transport's idioms:</p>
+        
+        <p><strong>REST</strong> uses RFC 9421 HTTP Message Signatures — the modern standard for signing HTTP requests. Covered components include <code>@method</code>, <code>@path</code>, <code>@authority</code>, <code>content-digest</code>, <code>ucp-agent</code>, and <code>idempotency-key</code>.</p>
+        
+        <p><strong>MCP</strong> uses detached JWS (RFC 7515 Appendix F), with the signature stored in <code>meta.signature</code>. The entire message is signed, excluding only the signature field itself.</p>
+
+        <h2>What Changed Technically</h2>
+        
+        <p>The PR touched 12 files across the specification:</p>
+        
+        <ul>
+            <li><strong>New:</strong> <code>docs/specification/signatures.md</code> (599 lines) — the core signing specification</li>
+            <li><strong>Modified:</strong> <code>overview.md</code> — new Identity & Authentication section defining profile trust model</li>
+            <li><strong>Modified:</strong> <code>order.md</code> — webhook signing now uses RFC 9421</li>
+            <li><strong>Modified:</strong> <code>checkout-rest.md</code>, <code>checkout-mcp.md</code> — Message Signing sections</li>
+            <li><strong>Modified:</strong> <code>rest.openapi.json</code> — new signature headers in OpenAPI schema</li>
+            <li><strong>Modified:</strong> <code>mcp.openrpc.json</code> — signature field added to meta</li>
+        </ul>
+        
+        <div class="callout">
+            <strong>Multiple Auth Mechanisms Supported:</strong> The spec explicitly supports HTTP Message Signatures, API keys, OAuth 2.0, and mTLS. Businesses choose what fits their security model — but identity must always bind to the <code>UCP-Agent</code> header regardless of mechanism.
+        </div>
+
+        <h2>Profile Trust Model</h2>
+        
+        <p>The specification introduces a two-tier trust model for profile discovery:</p>
+        
+        <ol>
+            <li><strong>Pre-approved platforms:</strong> A registry of trusted agent platforms with cached identity (no network lookup needed)</li>
+            <li><strong>Dynamic discovery:</strong> For unrecognized platforms, bounded by security constraints:
+                <ul>
+                    <li>LRU cache to prevent repeated lookups</li>
+                    <li>Global rate limits on discovery requests</li>
+                    <li>Exponential backoff on failures</li>
+                    <li>Async 503 + Retry-After for overload</li>
+                </ul>
+            </li>
+        </ol>
+        
+        <p>Profile hosting requirements are strict: HTTPS-only, no redirects, <code>Cache-Control</code> with <code>public</code> and <code>max-age >= 60s</code>. Profiles are stable identity documents, not per-request configuration.</p>
+
+        <h2>Evolution of the PR</h2>
+        
+        <p>The commit history shows how the specification evolved through working group discussion:</p>
+        
+        <ul>
+            <li><strong>Initial proposal:</strong> Custom <code>Request-Signature</code> and <code>X-Detached-JWT</code> headers</li>
+            <li><strong>First revision:</strong> Migrate to RFC 9421 for REST binding</li>
+            <li><strong>Second revision:</strong> Drop JCS canonicalization for request bodies; use raw bytes via <code>Content-Digest</code> (RFC 9530)</li>
+            <li><strong>Third revision:</strong> Support multiple auth mechanisms, not just signatures</li>
+            <li><strong>Fourth revision:</strong> Add <code>@authority</code> to signed components (cross-host replay prevention)</li>
+            <li><strong>Final revision:</strong> Define complete identity & key discovery protocol</li>
+        </ul>
+        
+        <p>Each iteration addressed real implementation concerns — this wasn't design by committee, but refinement through practical feedback.</p>
+
+        <h2>Implications for the Ecosystem</h2>
+        
+        <h3>For Agent Developers</h3>
+        <p>Agents must now publish signing keys if they want to participate in signed transactions. The <code>UCP-Agent</code> header becomes even more critical — it's the identity anchor that verifiers use to discover your public keys.</p>
+        
+        <h3>For Businesses</h3>
+        <p>The flexibility of auth mechanisms means businesses aren't forced into a single approach. Enterprise shops can continue using API keys or OAuth while adding signature verification. The spec explicitly supports this: "Implementations SHOULD maintain allowlists of trusted profiles."</p>
+        
+        <h3>For the Protocol</h3>
+        <p>This closes the security gap that was blocking enterprise adoption. With cryptographic signing, UCP transactions become verifiable and tamper-evident — prerequisites for handling sensitive commerce operations.</p>
+
+        <h2>What's Next</h2>
+        
+        <p>The signing spec establishes the cryptographic foundation, but implementation is the next hurdle. Expect to see:</p>
+        
+        <ul>
+            <li>SDK updates across Python, TypeScript, and Go implementations</li>
+            <li>Reference implementations of key discovery</li>
+            <li>Profile registry bootstrapping for major agent platforms</li>
+            <li>Interoperability testing as early adopters implement the spec</li>
+        </ul>
+
+        <div class="callout">
+            <strong>Related:</strong> This PR builds on the earlier <a href="/articles/ucp-request-signing.html">signing proposal from February 5</a>. The original enhancement proposal (#135) from Ilya Grigorik outlined the problem; PR #156 is the solution.
+        </div>
+
+        <div class="footer-nav">
+            <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/156" target="_blank">View PR #156 →</a>
+            <a href="/pulse.html">← Back to Pulse</a>
+        </div>
+    </div>
+</body>
+</html>

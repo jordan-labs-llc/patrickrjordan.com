@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Filesystem Server Gets Cross-Platform Path Fixes — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .author-info h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .content h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        .content h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+        }
+        .content p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .content a:hover { text-decoration: underline; }
+        .content ul, .content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+        .content code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        .content pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        .content pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .related {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .related-link {
+            display: block;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+        .related-link:hover {
+            border-color: var(--accent);
+        }
+        .related-link span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">MCP</span>
+            <span class="tag">Cross-Platform</span>
+            February 19, 2026
+        </div>
+        
+        <h1>MCP Filesystem Server Gets Cross-Platform Path Fixes: Production Readiness in Action</h1>
+        
+        <div class="author-box">
+            <div class="author-avatar">ES</div>
+            <div class="author-info">
+                <h3>Ellis Shang & Contributors</h3>
+                <p>MCP filesystem server maintainers. Ellis Shang contributed the Windows fix; wingding12 contributed the macOS symlink fix. Ola Hungerford (olaservo) coordinated the merges.</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <p>Two subtle but important fixes landed in the MCP filesystem server this week: proper Windows absolute path parsing and macOS symlink resolution. For developers building cross-platform AI agents, these fixes address the kind of edge cases that cause mysterious failures in production.</p>
+
+            <h2>Why This Matters</h2>
+            
+            <p>The Model Context Protocol filesystem server is one of the most commonly deployed MCP servers — it gives AI agents the ability to read, write, and navigate local files. When it works, agents can help with code, manage documents, and interact with local tools. When path handling breaks, agents fail silently or access wrong files.</p>
+
+            <p>Cross-platform path handling is notoriously tricky:</p>
+            
+            <ul>
+                <li><strong>Windows</strong> uses backslashes, drive letters, and UNC paths</li>
+                <li><strong>macOS</strong> uses forward slashes but has symlinks and case-insensitive filesystems</li>
+                <li><strong>Linux</strong> uses forward slashes with case-sensitive paths</li>
+            </ul>
+            
+            <p>The Node.js URL API that MCP uses for file paths handles most cases well, but edge cases around <code>file://</code> URL parsing revealed platform-specific bugs.</p>
+
+            <h2>What Changed</h2>
+
+            <h3>Windows: fileURLToPath for Absolute Paths</h3>
+            
+            <p>Ellis Shang's <a href="https://github.com/modelcontextprotocol/servers/commit/1b96551" target="_blank">fix (#3205)</a> addresses Windows absolute path parsing. The filesystem server uses <code>file://</code> URLs internally, but converting these back to native paths requires Node's <code>fileURLToPath()</code> function.</p>
+
+            <p>Without this fix, a path like <code>C:\Users\Documents\file.txt</code> could be misinterpreted when passed through URL parsing, potentially causing:</p>
+            
+            <ul>
+                <li>File not found errors for valid paths</li>
+                <li>Security issues if path components were incorrectly decoded</li>
+                <li>Silent failures when agents tried to access files</li>
+            </ul>
+
+            <div class="callout">
+                <div class="callout-title">💡 Technical Detail</div>
+                <p>The fix specifically uses <code>fileURLToPath()</code> from Node's <code>url</code> module, which correctly handles the drive letter colon (which has special meaning in URLs) and backslash conversion. Direct string manipulation would miss edge cases like URL-encoded characters in paths.</p>
+            </div>
+
+            <h3>macOS: Symlink Path Resolution</h3>
+            
+            <p>wingding12's <a href="https://github.com/modelcontextprotocol/servers/commit/a83b145" target="_blank">fix (#3254)</a> addresses macOS symlink resolution. When the filesystem server's allowed directories contain symlinks (common in development setups), the server needs to resolve these correctly to enforce security boundaries.</p>
+
+            <p>The issue: macOS symlinks weren't being resolved to their canonical paths, meaning:</p>
+            
+            <ul>
+                <li>Security checks could be bypassed via symlinks</li>
+                <li>Path comparisons could fail for legitimate requests</li>
+                <li>Agents could get inconsistent behavior depending on how paths were accessed</li>
+            </ul>
+
+            <h2>Implications for Agent Developers</h2>
+
+            <p>If you're running AI agents in production across different operating systems, these fixes matter:</p>
+
+            <ol>
+                <li><strong>Update your MCP servers</strong> — these fixes are in the latest release</li>
+                <li><strong>Test cross-platform</strong> — if you develop on Mac but deploy on Windows (or vice versa), test on both</li>
+                <li><strong>Watch for path edge cases</strong> — symlinks, network drives, and special characters remain areas where bugs can hide</li>
+            </ol>
+
+            <h2>Broader Pattern: Production Hardening</h2>
+
+            <p>This week's MCP changes also included:</p>
+            
+            <ul>
+                <li><strong>SECURITY.md update</strong> — switching to GitHub Security Advisories for vulnerability reporting</li>
+                <li><strong>npm audit fixes</strong> — resolving a qs vulnerability in the filesystem server</li>
+                <li><strong>Documentation improvements</strong> — clearer installation instructions for the time server</li>
+            </ul>
+
+            <p>The pattern is clear: as MCP moves from early adoption to mainstream use, the project is investing in the unglamorous but essential work of production hardening. Cross-platform compatibility, security processes, and documentation aren't exciting features, but they're what separates experimental tools from reliable infrastructure.</p>
+
+            <h2>Looking Forward</h2>
+            
+            <p>The MCP servers repository continues to see active community contribution — new third-party servers are being proposed weekly, from agent governance tools to payment gateways. As the ecosystem grows, expect more attention to cross-platform compatibility and edge cases that only surface at scale.</p>
+
+            <p>For agent developers: keep your MCP servers updated, and report any platform-specific issues you encounter. The maintainers are clearly responsive to these kinds of fixes.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related Articles</h3>
+            <a href="/articles/mcp-security-audit-february-2026.html" class="related-link">
+                MCP Security Audits Reveal Vulnerabilities Across Core Servers
+                <span>February 11, 2026</span>
+            </a>
+            <a href="/articles/mcp-everything-server-tests.html" class="related-link">
+                MCP Everything Server Gets Comprehensive Tests
+                <span>February 8, 2026</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

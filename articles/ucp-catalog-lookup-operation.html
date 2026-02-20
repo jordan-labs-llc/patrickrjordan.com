@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Catalog Lookup: Direct Product Retrieval for AI Agents — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--green);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .lede {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a { color: var(--accent); }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag" style="background: var(--accent);">Feature</span>
+            February 20, 2026
+        </div>
+        
+        <h1>UCP Catalog Lookup: Direct Product Retrieval for AI Agents</h1>
+        
+        <p class="lede">A new proposal from Ilya Grigorik adds a <code>get product</code> operation to UCP's catalog capabilities — enabling AI agents to retrieve specific products directly rather than searching. A seemingly simple addition with significant implications for agentic commerce efficiency.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>Ilya Grigorik</strong> is a Google engineer leading technical work on the Universal Commerce Protocol. Previously known for his work on web performance and HTTP/2 at Google, Grigorik now focuses on enabling AI agents to conduct commerce on behalf of users. He's authored multiple foundational UCP proposals including message signing, risk signals, and the intent field.</p>
+        </div>
+
+        <h2>What This Change Adds</h2>
+        
+        <p>Issue <a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/195" target="_blank">#195</a> proposes adding a <code>get product</code> operation to the <code>catalog.lookup</code> capability. Today, when an AI agent knows exactly which product it wants, it still has to use a search-based flow — inefficient for direct product references.</p>
+
+        <p>The new operation would allow agents to request a specific product directly:</p>
+
+        <pre><code>{
+  "operation": "catalog.lookup",
+  "action": "get_product",
+  "product_id": "SKU-12345-XL-BLUE",
+  "merchant_id": "merchant.example.com"
+}</code></pre>
+
+        <h2>Why This Matters</h2>
+
+        <p>On the surface, this is a minor API addition. In practice, it unlocks several important patterns:</p>
+
+        <ul>
+            <li><strong>Direct linking:</strong> AI agents can reference products by ID from external sources (shopping lists, saved items, comparison results) and retrieve current availability and pricing directly</li>
+            <li><strong>Reduced latency:</strong> Skip the search-rank-filter flow when the product is already known</li>
+            <li><strong>Cart reconstruction:</strong> When resuming an abandoned session, agents can re-fetch product details without re-searching</li>
+            <li><strong>Cross-merchant comparison:</strong> After identifying products across merchants, get precise details for final comparison</li>
+        </ul>
+
+        <div class="callout">
+            <strong>The pattern:</strong> Search to discover, lookup to retrieve. This mirrors how humans shop — browse first, bookmark for later. AI agents need the same separation of concerns.
+        </div>
+
+        <h2>Technical Implications</h2>
+
+        <p>For merchants implementing UCP, this introduces a new code path:</p>
+
+        <ol>
+            <li><strong>ID resolution:</strong> Merchants must handle product IDs from various sources — their own catalog, GTINs, MPNs, or UPC codes</li>
+            <li><strong>Access control:</strong> Direct lookup may need different authorization than search (bulk lookups could enable catalog scraping)</li>
+            <li><strong>Availability freshness:</strong> Unlike search results (which can be slightly stale), direct lookups may need real-time inventory</li>
+        </ol>
+
+        <h2>What's Next</h2>
+
+        <p>This proposal is currently open for discussion. The key questions being debated:</p>
+
+        <ul>
+            <li>Should multiple product IDs be supported in a single request (batch lookup)?</li>
+            <li>How should variant handling work — can you look up a parent product and get available variants?</li>
+            <li>What happens when a product ID is no longer valid (discontinued, out of stock, renamed)?</li>
+        </ul>
+
+        <p>Expect this to merge within the next few weeks as the spec details are finalized. For UCP implementers, this is a good time to review your product ID strategy.</p>
+
+        <p style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-secondary);">
+            <strong>Source:</strong> <a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/195" target="_blank">Universal-Commerce-Protocol/ucp#195</a>
+        </p>
+    </div>
+</body>
+</html>

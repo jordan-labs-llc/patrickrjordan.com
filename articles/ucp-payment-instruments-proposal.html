@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Payment Instruments: First-Class Support for Payment Method Constraints — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        .summary {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .highlight-box {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .links {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .links h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Feature</span>
+            February 21, 2026
+        </div>
+        
+        <h1>UCP Payment Instruments: First-Class Support for Payment Method Constraints</h1>
+        
+        <p class="summary">A proposal adds <code>available_instruments</code> to UCP payment handler configurations — enabling handlers to declare which payment methods they support and with what constraints. Essential infrastructure for installments, BNPL, and multi-payment orchestration.</p>
+
+        <h2>The Problem</h2>
+        
+        <p>Today, UCP payment handlers can technically specify which payment instruments they accept, but it's done through an unstructured <code>config</code> blob. Each payment provider defines their own schema, leading to fragmentation:</p>
+        
+        <pre><code>// Provider A's approach
+{
+  "config": {
+    "accepted_cards": ["visa", "mastercard"],
+    "allow_apple_pay": true
+  }
+}
+
+// Provider B's approach
+{
+  "config": {
+    "payment_methods": {
+      "cards": { "brands": ["visa", "mc", "amex"] },
+      "wallets": ["applepay"]
+    }
+  }
+}</code></pre>
+        
+        <p>This divergence creates problems for AI agents. An agent can't reliably determine which payment methods a checkout supports without understanding each provider's proprietary schema.</p>
+
+        <h2>The Solution</h2>
+        
+        <p>The proposal introduces a standardized <code>available_instruments</code> array at the payment handler level:</p>
+        
+        <pre><code>{
+  "payment_handler": {
+    "id": "stripe-handler",
+    "available_instruments": [
+      {
+        "type": "card",
+        "constraints": {
+          "brands": ["visa", "mastercard", "amex"]
+        }
+      },
+      {
+        "type": "digital_wallet",
+        "constraints": {
+          "providers": ["apple_pay", "google_pay"]
+        }
+      }
+    ]
+  }
+}</code></pre>
+        
+        <div class="highlight-box">
+            <strong>Key insight:</strong> This isn't just about listing payment methods — it's about enabling <em>conditional payment logic</em>. When a merchant wants to offer installments only on credit cards above $100, or BNPL only for certain product categories, they need a structured way to express those constraints.
+        </div>
+
+        <h2>Why This Matters for Agentic Commerce</h2>
+        
+        <p>The proposal explicitly calls out the future use case: payment terms and purchase options. Consider an "Affirm" style buy-now-pay-later flow:</p>
+        
+        <ol>
+            <li>Merchant offers 4-payment installment plan</li>
+            <li>Plan is only available for credit cards (not debit)</li>
+            <li>Plan is only available for orders over $50</li>
+            <li>AI agent needs to understand these constraints to present correct options to user</li>
+        </ol>
+        
+        <p>Without structured instrument constraints, this logic lives in ad-hoc provider configs. With <code>available_instruments</code>, it becomes queryable protocol-level information.</p>
+
+        <h2>Technical Details</h2>
+        
+        <p>The PR introduces:</p>
+        
+        <ul>
+            <li><strong>Base schema:</strong> <code>available_payment_instrument.json</code> defines the structure all instrument types must follow</li>
+            <li><strong>Card-specific extension:</strong> <code>card_payment_instrument.json</code> adds card brand constraints</li>
+            <li><strong>Optional field:</strong> When <code>available_instruments</code> is absent, all instruments are considered available (backward compatible)</li>
+            <li><strong>Documentation updates:</strong> Schema authoring guide and payment handler guide updated with examples</li>
+        </ul>
+        
+        <p>The constraint pattern is extensible. Future instrument types (crypto, BNPL providers, regional payment methods) can define their own constraint schemas following the base pattern.</p>
+
+        <h2>Implications</h2>
+        
+        <p>This change is foundational for several upcoming UCP features:</p>
+        
+        <ul>
+            <li><strong>Payment terms:</strong> "Pay in 4" requires knowing which instruments support installments</li>
+            <li><strong>Multi-payment orchestration:</strong> Split payments across multiple methods need constraint validation</li>
+            <li><strong>Regional payment methods:</strong> iDEAL (Netherlands), PIX (Brazil), UPI (India) have different constraints</li>
+            <li><strong>Dynamic checkout:</strong> AI agents can filter available options based on user's saved payment methods</li>
+        </ul>
+        
+        <p>The PR is currently open and under review. Given its non-breaking nature and clear use case, expect it to merge relatively quickly.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>raginpirate</strong> is an active UCP contributor focusing on payment infrastructure. Their recent work includes the checkout ID deprecation changes and transition schema improvements — core plumbing that enables protocol evolution.</p>
+        </div>
+
+        <div class="links">
+            <h3>Related Links</h3>
+            <ul>
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/187" target="_blank">Pull Request #187: feat: add available_instruments to payment handler configurations</a></li>
+                <li><a href="https://ucp.dev/specification/overview" target="_blank">UCP Specification</a></li>
+                <li><a href="/articles/ucp-message-signing-merged.html">Related: UCP Message Signing Merges</a></li>
+                <li><a href="/pulse.html">Repo Pulse — Daily tracking</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

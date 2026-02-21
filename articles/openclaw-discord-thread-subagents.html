@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Discord Thread-Bound Subagents: AI Teams Get Their Own Workspaces — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        .summary {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .highlight-box {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .links {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .links h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Feature</span>
+            February 21, 2026
+        </div>
+        
+        <h1>OpenClaw Discord Thread-Bound Subagents: AI Teams Get Their Own Workspaces</h1>
+        
+        <p class="summary">A significant UX improvement lands in OpenClaw: sub-agents spawned for specialized tasks can now get their own Discord threads, creating organized workspaces that persist across restarts and clean up automatically.</p>
+
+        <h2>What Changed</h2>
+        
+        <p>When an AI assistant needs to delegate work to a specialized sub-agent (say, a coding agent or research agent), that sub-agent previously shared the same conversation space as the parent. Messages would interleave, making it hard to track which agent said what.</p>
+        
+        <p>The new thread-binding feature changes this entirely. Now when spawning a sub-agent:</p>
+        
+        <pre><code>sessions_spawn({
+  task: "Research competitor pricing",
+  thread: true,
+  mode: "session"
+})</code></pre>
+        
+        <p>OpenClaw automatically creates a dedicated Discord thread for that sub-agent. All messages to and from the sub-agent route through that thread, creating a clean separation of concerns.</p>
+
+        <h2>Why This Matters</h2>
+        
+        <div class="highlight-box">
+            <strong>The core insight:</strong> Multi-agent systems need clear boundaries. When multiple AI agents work together, users need to understand who they're talking to and what each agent is doing. Thread-binding makes these boundaries visible and manageable.
+        </div>
+        
+        <p>Consider a real scenario: You ask your AI assistant to help with a complex project. The assistant spawns three sub-agents — one for research, one for coding, one for document drafting. Without thread binding, you'd see a chaotic mix of messages from all four agents in a single chat. With thread binding, each sub-agent gets its own thread where you can check progress, ask questions, and see their work in isolation.</p>
+        
+        <p>Two operational modes provide flexibility:</p>
+        
+        <ul>
+            <li><strong>Run mode</strong> (<code>mode: "run"</code>): Thread closes when the task completes. Good for one-off delegations.</li>
+            <li><strong>Session mode</strong> (<code>mode: "session"</code>): Thread stays open for follow-up conversation. Good for ongoing collaboration.</li>
+        </ul>
+
+        <h2>Technical Details</h2>
+        
+        <p>The implementation includes several production-ready features:</p>
+        
+        <ul>
+            <li><strong>Persistence across restarts:</strong> Thread bindings survive gateway restarts, so sub-agents reconnect to their threads automatically.</li>
+            <li><strong>TTL-based cleanup:</strong> Configurable time-to-live ensures stale bindings don't accumulate. Default is 24 hours.</li>
+            <li><strong>Multi-account safe:</strong> Bindings are scoped by Discord account and thread, so multiple accounts on the same gateway work correctly.</li>
+            <li><strong>Lifecycle hooks:</strong> The Discord plugin hooks into spawning/spawned/ended lifecycle events to manage thread creation and cleanup.</li>
+        </ul>
+        
+        <p>Configuration is opt-in via gateway config:</p>
+        
+        <pre><code>channels:
+  discord:
+    threadBindings:
+      spawnSubagentSessions: true
+      ttlHours: 24</code></pre>
+
+        <h2>Implications for Multi-Agent UX</h2>
+        
+        <p>This feature points to a broader trend in AI assistant design: as agents become capable of spawning and coordinating sub-agents, the UX needs to evolve beyond single-threaded conversation. Thread binding is one approach — giving each agent its own space.</p>
+        
+        <p>Other platforms are exploring similar patterns. Slack's canvas feature, Microsoft Teams' copilot integration, and various project management tools are all experimenting with how to surface multi-agent work to users in comprehensible ways.</p>
+        
+        <p>OpenClaw's implementation is notable for being deeply integrated into the platform rather than bolted on. The lifecycle hooks, persistence layer, and routing changes suggest this is foundational infrastructure that will support more sophisticated multi-agent patterns in the future.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>onutc</strong> is a contributor to the OpenClaw project, focusing on channel integrations and session management. This PR represents their largest contribution to date, touching session lifecycle, Discord integration, and subagent routing.</p>
+        </div>
+
+        <div class="links">
+            <h3>Related Links</h3>
+            <ul>
+                <li><a href="https://github.com/openclaw/openclaw/pull/21805" target="_blank">Pull Request #21805: feat: thread-bound subagents on Discord</a></li>
+                <li><a href="https://github.com/openclaw/openclaw" target="_blank">OpenClaw Repository</a></li>
+                <li><a href="/pulse.html">Repo Pulse — Daily tracking</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

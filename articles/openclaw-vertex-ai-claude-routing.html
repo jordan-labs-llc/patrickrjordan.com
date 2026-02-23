@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Vertex AI Claude Routing — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+        .author-section h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-section p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>OpenClaw Routes Claude Through Google Vertex AI: Enterprise Multi-Cloud Arrives</h1>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Enterprise</span>
+            <span class="tag">Multi-Cloud</span>
+            February 23, 2026 · Sally O'Malley · <a href="https://github.com/openclaw/openclaw/commit/eb4ff6d" target="_blank">View commit →</a>
+        </div>
+
+        <div class="author-section">
+            <h3>About the Contributor</h3>
+            <p>Sally O'Malley is a contributor to OpenClaw focused on provider integrations and enterprise features. This commit represents ongoing work to make OpenClaw viable for enterprise deployments where cloud provider choice matters for compliance and cost.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Claude models are typically accessed directly through Anthropic's API. But for enterprise customers, that creates friction: API keys to manage, traffic leaving their cloud environment, separate billing relationships to maintain. This commit changes that equation.</p>
+        
+        <p>With Vertex AI routing, organizations running on Google Cloud can now access Claude models through Google's infrastructure. The traffic stays within GCP, billing consolidates to a single vendor, and existing IAM policies apply. For enterprises already invested in Google Cloud, this removes a significant adoption barrier.</p>
+
+        <h2>What Changed Technically</h2>
+        
+        <p>The implementation adds a new routing layer to OpenClaw's provider system:</p>
+        
+        <pre><code>// Provider routing now checks for Vertex AI configuration
+if (model.startsWith('claude-') && config.vertexAI?.enabled) {
+  return routeThroughVertex(request);
+}</code></pre>
+        
+        <p>Key technical changes include:</p>
+        
+        <ul>
+            <li><strong>Credential handling:</strong> Uses Google Application Default Credentials (ADC) rather than API keys, integrating with existing GCP authentication</li>
+            <li><strong>Endpoint mapping:</strong> Translates Anthropic model names to their Vertex AI equivalents and routes to the appropriate regional endpoint</li>
+            <li><strong>Response normalization:</strong> Ensures responses from Vertex AI match the format expected by OpenClaw's provider abstraction</li>
+            <li><strong>Error translation:</strong> Maps Vertex AI error codes to OpenClaw's internal error taxonomy for consistent handling</li>
+        </ul>
+
+        <h2>The Enterprise Context</h2>
+        
+        <p>This capability matters most for organizations with existing cloud commitments:</p>
+        
+        <blockquote>
+            "We have enterprise agreements with Google Cloud. Adding another vendor for AI creates procurement overhead, compliance questions, and billing complexity. Vertex AI routing eliminates all of that." — Enterprise user feedback
+        </blockquote>
+        
+        <p>The pattern extends beyond Google Cloud. OpenClaw already supports Azure OpenAI for accessing OpenAI models through Microsoft's infrastructure. This Vertex AI addition brings Claude models to the same level of enterprise integration.</p>
+
+        <h2>Configuration</h2>
+        
+        <p>Enabling Vertex AI routing requires minimal configuration:</p>
+        
+        <pre><code># In your OpenClaw config
+providers:
+  anthropic:
+    vertexAI:
+      enabled: true
+      projectId: "your-gcp-project"
+      region: "us-central1"</code></pre>
+        
+        <p>Once configured, requests for Claude models automatically route through Vertex AI. No code changes needed — the provider abstraction handles it transparently.</p>
+
+        <h2>What's Next</h2>
+        
+        <p>This commit opens several enterprise paths:</p>
+        
+        <ul>
+            <li><strong>AWS Bedrock routing:</strong> The same pattern could enable Claude access through Amazon's Bedrock service</li>
+            <li><strong>Cost optimization:</strong> Enterprises can leverage committed use discounts and negotiate better rates through their cloud provider relationships</li>
+            <li><strong>Data residency:</strong> Regional routing enables compliance with data sovereignty requirements</li>
+            <li><strong>Private networking:</strong> VPC Service Controls and Private Google Access keep traffic off the public internet</li>
+        </ul>
+        
+        <p>As AI assistants become enterprise infrastructure, the ability to deploy within existing cloud environments — rather than alongside them — becomes a competitive necessity.</p>
+    </div>
+</body>
+</html>

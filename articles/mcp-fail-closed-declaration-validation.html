@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Declaration Validation: Fail Closed on Unknown Manifests — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .tag-security {
+            border-color: var(--red);
+            color: var(--red);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .callout-security {
+            border-left-color: var(--red);
+        }
+        ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">MCP</span>
+            <span class="tag tag-security">Security</span>
+            February 24, 2026 · davidahmann
+        </div>
+        
+        <h1>MCP Declaration Validation: Reference Servers Adopt "Fail Closed" Security Posture</h1>
+
+        <p>A new PR to the Model Context Protocol servers repository adds strict validation for tool/resource/prompt declarations at startup. When an MCP server encounters an unknown declaration in its manifest, it now fails immediately rather than silently ignoring it. This "fail closed" approach is a meaningful security hardening for the growing MCP ecosystem.</p>
+
+        <div class="author-box">
+            <h3>About the Contributor</h3>
+            <p>davidahmann has been contributing to MCP infrastructure, previously adding a <a href="https://github.com/modelcontextprotocol/servers/pull/3385" target="_blank">deterministic CI check-state classifier</a> to improve build reliability. This PR continues a theme of hardening MCP's reference implementations for production use.</p>
+        </div>
+
+        <h2>The Problem: Silent Acceptance of Bad Configuration</h2>
+
+        <p>MCP servers load configuration at startup that declares what tools, resources, and prompts they expose. Before this change, if the configuration contained typos or unknown entries, servers would silently ignore them:</p>
+
+        <pre><code>{
+  "tools": ["read_file", "write_flie"],  // typo: "flie"
+  "toools": ["search"]  // typo: "toools"
+}</code></pre>
+
+        <p>In this example, <code>write_flie</code> would be silently skipped (unrecognized tool), and <code>toools</code> would be silently ignored (unrecognized section). The server would start successfully but with fewer capabilities than intended.</p>
+
+        <div class="callout callout-security">
+            <strong>Security implication:</strong> Silent failures mask misconfiguration. A security-critical tool that's typo'd away creates a false sense of protection — operators think a capability is active when it isn't.
+        </div>
+
+        <h2>What Changed Technically</h2>
+
+        <p>The PR adds declaration manifest validation across four core MCP servers:</p>
+
+        <ul>
+            <li><strong>everything</strong> — the reference "kitchen sink" server</li>
+            <li><strong>filesystem</strong> — file operations server</li>
+            <li><strong>fetch</strong> — HTTP request server (Python)</li>
+            <li><strong>git</strong> — Git operations server (Python)</li>
+        </ul>
+
+        <p>Validation now fails deterministically on:</p>
+
+        <ul>
+            <li>Unknown sections (e.g., <code>toools</code> instead of <code>tools</code>)</li>
+            <li>Non-array section values</li>
+            <li>Non-string entries within arrays</li>
+            <li>Unknown declaration names (e.g., <code>write_flie</code>)</li>
+        </ul>
+
+        <p>Each server has targeted tests validating these failure modes.</p>
+
+        <h2>Why "Fail Closed" Matters</h2>
+
+        <p>The security principle of "fail closed" (also called "fail secure") means that when something goes wrong, the system defaults to a secure state. In networking, a fail-closed firewall blocks traffic when it can't determine if the traffic is allowed. In MCP, a fail-closed validator blocks startup when configuration is ambiguous.</p>
+
+        <p>The alternative — "fail open" — would be to accept the configuration and hope for the best. This is convenient for development but dangerous in production, where silent misconfiguration can create security gaps.</p>
+
+        <h2>Ecosystem Maturity Signal</h2>
+
+        <p>This PR is part of a broader pattern in the MCP ecosystem:</p>
+
+        <ul>
+            <li><a href="/articles/mcp-security-audit-february-2026.html">Security audits</a> revealed vulnerabilities in core servers</li>
+            <li><a href="/articles/mcp-filesystem-cross-platform-fixes.html">Cross-platform fixes</a> hardened path handling</li>
+            <li>SECURITY.md updates moved to <a href="https://github.com/modelcontextprotocol/servers/commit/5e3735d" target="_blank">GitHub Security Advisories</a></li>
+        </ul>
+
+        <p>As MCP moves from experimental to production use, reference implementations are adopting enterprise security practices. Fail-closed validation is table stakes for deployments where misconfiguration can expose sensitive data.</p>
+
+        <h2>Implications for MCP Server Authors</h2>
+
+        <p>If you maintain an MCP server, consider adopting this pattern:</p>
+
+        <ol>
+            <li><strong>Define a schema</strong> for your declaration manifest</li>
+            <li><strong>Validate strictly</strong> at startup — unknown fields are errors</li>
+            <li><strong>Fail loudly</strong> with clear error messages explaining what's wrong</li>
+            <li><strong>Test validation</strong> with intentionally malformed configs</li>
+        </ol>
+
+        <p>The investment in strict validation pays off in operational reliability — it's much easier to fix a startup error than to debug why a tool isn't working in production.</p>
+
+        <p><strong>Source:</strong> <a href="https://github.com/modelcontextprotocol/servers/pull/3391" target="_blank">modelcontextprotocol/servers#3391</a></p>
+    </div>
+</body>
+</html>

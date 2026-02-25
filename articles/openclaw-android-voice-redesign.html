@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Android Voice Mode Redesign — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .author-box p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .author-box p:last-child { margin-bottom: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <span class="tag">OpenClaw</span>
+        <span class="tag">Android</span>
+        <span class="tag">UX</span>
+        
+        <h1>OpenClaw Android Voice Mode Redesign: Full-Height Conversations Arrive</h1>
+        
+        <div class="meta">
+            February 25, 2026 · Ayaan Zaidi · 
+            <a href="https://github.com/openclaw/openclaw/commit/10a1593" target="_blank">View commits →</a>
+        </div>
+
+        <p>Today's OpenClaw Android release brings a comprehensive voice mode overhaul — ten commits that transform how users interact with their AI assistant through speech. The changes signal a maturation of mobile voice interfaces from novelty to primary input method.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>Ayaan Zaidi</strong> is an Android developer contributing to OpenClaw's mobile experience. This series of commits represents the most significant voice UX changes since the Android app's initial release.</p>
+        </div>
+
+        <h2>What Changed</h2>
+
+        <p>The update spans multiple system layers:</p>
+
+        <ul>
+            <li><strong>Full-height conversation layout</strong> — Voice mode now uses the entire screen for the conversation view, replacing the previous compact overlay</li>
+            <li><strong>Live transcript streaming</strong> — User speech appears in real-time as the mic manager processes audio</li>
+            <li><strong>Voice state in ViewModel</strong> — Conversation state is now properly exposed to the UI layer for reactive updates</li>
+            <li><strong>Settings cleanup</strong> — Legacy voice wake controls removed in favor of the new architecture</li>
+            <li><strong>Permissions refresh on resume</strong> — Settings screen now rechecks permissions when returning from system settings</li>
+            <li><strong>Stuck send recovery</strong> — Automatic recovery when voice sends hang due to missing final transcription events</li>
+        </ul>
+
+        <div class="callout">
+            <p><strong>Design philosophy shift:</strong> The old voice mode treated speech as an alternative input method — a way to type without a keyboard. The new design treats voice as a first-class conversational interface with its own UX paradigm.</p>
+        </div>
+
+        <h2>Technical Implementation</h2>
+
+        <p>The key architectural change is exposing voice conversation state to the ViewModel:</p>
+
+        <pre><code>// VoiceConversationState now drives UI updates
+sealed class VoiceConversationState {
+    object Idle : VoiceConversationState()
+    data class Listening(val partialTranscript: String) : VoiceConversationState()
+    data class Processing(val finalTranscript: String) : VoiceConversationState()
+    data class Responding(val turn: ConversationTurn) : VoiceConversationState()
+}</code></pre>
+
+        <p>This enables the UI to react smoothly to voice state changes without polling or callback spaghetti. The transcript streams from mic manager events rather than waiting for final results — giving users immediate feedback that they're being heard.</p>
+
+        <h2>Bug Fixes Bundled</h2>
+
+        <p>Several reliability issues addressed alongside the redesign:</p>
+
+        <ul>
+            <li><strong>Mic manager sync on toggle</strong> — Fixed race condition when rapidly toggling voice mode</li>
+            <li><strong>Canvas rehydration on node connect</strong> — Stopped unnecessary canvas rebuilds when node connections change</li>
+            <li><strong>Missing finals recovery</strong> — When the speech recognition engine doesn't send a final event, the system now detects the timeout and recovers</li>
+        </ul>
+
+        <h2>Why This Matters</h2>
+
+        <p>Voice interfaces are having a moment. OpenAI's Advanced Voice Mode, Google's Gemini Live, and numerous startup experiments are exploring what AI conversation looks like when freed from the keyboard. OpenClaw's mobile apps need to compete on this axis.</p>
+
+        <p>The full-height layout is particularly notable. Previous voice UIs (including OpenClaw's) often treated voice as an overlay — a modal that appears over the main interface. The new design makes voice mode a peer to text mode, with its own dedicated screen real estate.</p>
+
+        <p>For power users who drive their AI assistant primarily through voice (in the car, while cooking, during workouts), this is a meaningful upgrade. The conversation doesn't feel like it's fighting for space anymore.</p>
+
+        <h2>Next Steps</h2>
+
+        <p>The commit messages hint at ongoing Android rebuild work. Areas to watch:</p>
+
+        <ul>
+            <li><strong>Onboarding flow</strong> — Earlier commits mention onboarding updates, suggesting the new voice mode will be prominently featured for new users</li>
+            <li><strong>Settings consolidation</strong> — Legacy voice wake controls removed, implying a cleaner settings structure is coming</li>
+            <li><strong>Node integration</strong> — The canvas rehydration fix suggests deeper work on how Android clients sync with gateway state</li>
+        </ul>
+
+        <p>As AI assistants become daily-driver tools rather than occasional novelties, voice UX quality becomes a competitive differentiator. This update moves OpenClaw Android in the right direction.</p>
+
+        <div class="meta" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+            <a href="/pulse.html">← Back to Repo Pulse</a>
+        </div>
+    </div>
+</body>
+</html>

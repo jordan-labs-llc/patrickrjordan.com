@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A DID-Based Agent Identity Verification — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .author-box p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .author-box p:last-child { margin-bottom: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <span class="tag">A2A</span>
+        <span class="tag">Identity</span>
+        <span class="tag">Security</span>
+        
+        <h1>A2A DID-Based Agent Identity: Decentralized Verification via AIP</h1>
+        
+        <div class="meta">
+            February 25, 2026 · The-Nexus-Guard · 
+            <a href="https://github.com/a2aproject/A2A/issues/1511" target="_blank">View proposal →</a>
+        </div>
+
+        <p>A new Agent Improvement Proposal (AIP) arrives at A2A with potentially significant implications: using Decentralized Identifiers (DIDs) to establish cryptographic agent identity. The proposal builds on the W3C DID specification to give autonomous agents verifiable, self-sovereign identity credentials.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>The-Nexus-Guard</strong> brings decentralized identity expertise to the agent ecosystem. This proposal follows earlier A2A identity discussions from abdelsfane and imran-siddique, consolidating around the DID standard.</p>
+        </div>
+
+        <h2>The Identity Problem in Agent-to-Agent Communication</h2>
+
+        <p>When two autonomous agents communicate, how does each verify the other's identity? Traditional approaches have limitations:</p>
+
+        <ul>
+            <li><strong>API keys</strong> — Prove you're authorized to use a service, not who you are</li>
+            <li><strong>OAuth tokens</strong> — Tied to a centralized identity provider</li>
+            <li><strong>TLS certificates</strong> — Prove server identity, but agents are often clients</li>
+            <li><strong>Shared secrets</strong> — Don't scale, require pre-arrangement</li>
+        </ul>
+
+        <p>For enterprise multi-agent systems where agents from different organizations collaborate, none of these cleanly solve the "who are you, and who do you work for?" question.</p>
+
+        <h2>DIDs as Agent Identity</h2>
+
+        <p>Decentralized Identifiers provide a foundation for self-sovereign identity. A DID looks like:</p>
+
+        <pre><code>did:web:agents.example.com:finance-assistant</code></pre>
+
+        <p>The proposal extends A2A's agent card with DID-based identity:</p>
+
+        <pre><code>{
+  "name": "Finance Assistant",
+  "url": "https://agents.example.com/finance",
+  "identity": {
+    "did": "did:web:agents.example.com:finance-assistant",
+    "verificationMethod": "did:web:agents.example.com:finance-assistant#key-1",
+    "proofFormat": "JsonWebSignature2020"
+  },
+  "skills": [...]
+}</code></pre>
+
+        <div class="callout">
+            <p><strong>Why <code>did:web</code>?</strong> The proposal recommends the web-based DID method for initial adoption — it maps naturally to existing DNS infrastructure. More exotic methods (<code>did:ion</code>, <code>did:ethr</code>) can be added as extensions.</p>
+        </div>
+
+        <h2>Verification Flow</h2>
+
+        <p>When Agent A wants to verify Agent B's identity:</p>
+
+        <ol>
+            <li>Agent A receives Agent B's agent card with DID</li>
+            <li>Agent A resolves the DID document from the well-known endpoint</li>
+            <li>Agent A extracts the public key from the verification method</li>
+            <li>Agent B signs messages with its private key</li>
+            <li>Agent A verifies signatures against the resolved public key</li>
+        </ol>
+
+        <p>This creates cryptographic proof that messages actually come from the claimed agent, without requiring a centralized authority.</p>
+
+        <h2>Trust Delegation</h2>
+
+        <p>The proposal also addresses delegation chains — when Agent C acts on behalf of Agent B, which acts on behalf of Organization A:</p>
+
+        <pre><code>{
+  "delegationChain": [
+    {
+      "delegator": "did:web:org-a.com:root",
+      "delegate": "did:web:org-a.com:dept-finance",
+      "scope": ["financial-queries", "budget-reports"],
+      "proof": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9..."
+    },
+    {
+      "delegator": "did:web:org-a.com:dept-finance",
+      "delegate": "did:web:agents.example.com:finance-assistant",
+      "scope": ["budget-reports"],
+      "proof": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9..."
+    }
+  ]
+}</code></pre>
+
+        <p>Each link in the chain is cryptographically signed, creating a verifiable trail from the acting agent back to the authorizing organization.</p>
+
+        <h2>Relation to Earlier Proposals</h2>
+
+        <p>This AIP builds on previous A2A identity work:</p>
+
+        <ul>
+            <li><a href="/articles/a2a-identity-trust-proposal.html">A2A Agent Identity and Trust Framework</a> (abdelsfane, Feb 18) — Proposed verification levels and trust signals</li>
+            <li><a href="/articles/a2a-cryptographic-identity.html">A2A Cryptographic Identity Verification</a> (imran-siddique, Feb 13) — Initial exploration of cryptographic identity</li>
+        </ul>
+
+        <p>The DID-based approach consolidates these discussions around an existing W3C standard rather than inventing A2A-specific identity primitives.</p>
+
+        <h2>Implementation Considerations</h2>
+
+        <p>Several practical challenges the proposal acknowledges:</p>
+
+        <ul>
+            <li><strong>Key management</strong> — Agents need secure key storage, rotation procedures, and revocation mechanisms</li>
+            <li><strong>Resolution latency</strong> — DID resolution adds network calls to the verification path</li>
+            <li><strong>Offline scenarios</strong> — Cached DID documents create freshness vs. availability tradeoffs</li>
+            <li><strong>Bootstrap problem</strong> — How do agents get their initial DIDs and keys?</li>
+        </ul>
+
+        <h2>Why This Matters</h2>
+
+        <p>As agent ecosystems grow beyond single-organization deployments, identity becomes critical. Consider:</p>
+
+        <ul>
+            <li><strong>Multi-vendor agent orchestration</strong> — A user's personal assistant delegates to specialized agents from different providers</li>
+            <li><strong>Enterprise compliance</strong> — Audit trails require knowing which agent did what, on whose authority</li>
+            <li><strong>Trust boundaries</strong> — Agents need to verify they're talking to legitimate counterparties before sharing sensitive data</li>
+        </ul>
+
+        <p>DIDs provide a foundation that doesn't require a single identity provider to rule them all. Each organization can issue and manage its own agent identities while still enabling cross-organization verification.</p>
+
+        <h2>Next Steps</h2>
+
+        <p>The proposal is in early discussion phase. Key questions for the community:</p>
+
+        <ul>
+            <li>Should DID support be required for A2A compliance, or an optional extension?</li>
+            <li>Which DID methods should be supported initially?</li>
+            <li>How should delegation scope be defined and enforced?</li>
+            <li>What's the migration path for existing A2A deployments?</li>
+        </ul>
+
+        <p>Watch <a href="https://github.com/a2aproject/A2A/issues/1511" target="_blank">GitHub issue #1511</a> for community discussion.</p>
+
+        <div class="meta" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+            <a href="/pulse.html">← Back to Repo Pulse</a>
+        </div>
+    </div>
+</body>
+</html>

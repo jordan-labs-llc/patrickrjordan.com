@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Deterministic Capability Ordering: Why Tool Registration Order Matters — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .highlight {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .highlight-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>MCP Deterministic Capability Ordering: Why Tool Registration Order Matters</h1>
+        
+        <div class="meta">
+            <span class="tag">MCP</span>
+            <span class="tag">Protocol</span>
+            February 26, 2026 · davidahmann · 
+            <a href="https://github.com/modelcontextprotocol/servers/pull/3411" target="_blank">PR #3411</a>, 
+            <a href="https://github.com/modelcontextprotocol/servers/issues/3410" target="_blank">Issue #3410</a>
+        </div>
+
+        <p>A pair of contributions from davidahmann addresses a subtle but important protocol concern: when an MCP server exposes capabilities during initialization, should the order be deterministic? The answer is yes — and it matters more than you might think.</p>
+
+        <h2>Author Background</h2>
+        
+        <p>davidahmann has been contributing to MCP's protocol infrastructure, with recent work including collision-resistant request IDs for long-running operations (<a href="https://github.com/modelcontextprotocol/servers/pull/3405" target="_blank">PR #3405</a>). Their focus appears to be on protocol reliability and predictability — exactly the qualities enterprise deployments require.</p>
+
+        <h2>The Problem</h2>
+
+        <p>When an MCP server starts up, it tells clients what capabilities it supports — tools, resources, prompts. The issue: if the order of these capabilities varies between restarts, several problems emerge:</p>
+
+        <ul>
+            <li><strong>Testing becomes flaky:</strong> Snapshot tests that compare capability lists fail randomly</li>
+            <li><strong>Caching breaks:</strong> Clients that cache capabilities based on response structure see unnecessary invalidations</li>
+            <li><strong>Debugging is harder:</strong> Comparing logs between runs becomes tedious when ordering differs</li>
+            <li><strong>Client assumptions break:</strong> Some clients may (incorrectly but understandably) assume stable ordering</li>
+        </ul>
+
+        <div class="highlight">
+            <div class="highlight-title">🎯 The Subtle Issue</div>
+            <p style="margin-bottom: 0;">In JavaScript, object property order is technically guaranteed for string keys in insertion order (since ES2015). But when building objects dynamically from async operations, the insertion order may vary based on which operation completes first.</p>
+        </div>
+
+        <h2>What Changed</h2>
+
+        <h3>Issue #3410: Specification Clarification</h3>
+        
+        <p>The issue proposes adding explicit language to initialization response documentation specifying that capability ordering should be deterministic. This makes the implicit expectation explicit.</p>
+
+        <h3>PR #3411: Reference Implementation</h3>
+        
+        <p>The PR adds assertions to ensure tool registration maintains deterministic ordering in reference server implementations. When tools are registered dynamically, the server now explicitly sorts or orders them before exposure.</p>
+
+        <pre><code>// Pseudocode for the pattern
+function getCapabilities() {
+  const tools = Object.keys(registeredTools)
+    .sort()  // Ensure deterministic order
+    .map(name => registeredTools[name]);
+  return { tools };
+}</code></pre>
+
+        <h2>Why This Matters</h2>
+
+        <p>Protocol details like ordering may seem trivial, but they accumulate into either confidence or chaos:</p>
+
+        <p><strong>For implementers:</strong> Deterministic behavior means fewer "works on my machine" issues. When debugging an MCP integration, you can compare responses across environments knowing the format is stable.</p>
+
+        <p><strong>For testing:</strong> CI/CD pipelines can use snapshot testing reliably. When a capability list changes, it's a real change — not random reordering.</p>
+
+        <p><strong>For caching:</strong> Clients can safely hash capability responses for cache keys, knowing identical capabilities produce identical hashes.</p>
+
+        <p><strong>For the ecosystem:</strong> As MCP servers proliferate across the ecosystem, consistent behavior patterns reduce integration friction. A client that works with one MCP server should work with another.</p>
+
+        <h2>Broader Pattern</h2>
+
+        <p>This contribution reflects a maturation pattern we're seeing across agentic protocols: specification tightening. Early protocol versions prioritize feature velocity — getting capabilities working. Later versions refine behavior, closing gaps where "implementation-defined" becomes "standardized."</p>
+
+        <p>We saw similar refinements in:</p>
+        <ul>
+            <li>A2A's recent blocking → polling rename (clarifying ambiguous terminology)</li>
+            <li>UCP's transition schema work (enabling backwards-compatible changes)</li>
+            <li>MCP's filesystem server cross-platform fixes (consistent behavior across OSes)</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+
+        <p>If merged, reference servers will enforce deterministic ordering. The specification clarification will guide third-party implementations to follow suit. Over time, clients can rely on this behavior without defensive coding.</p>
+
+        <p>For teams building MCP integrations: audit your own implementations for non-deterministic patterns. Async operations that build response objects are the usual culprits.</p>
+    </div>
+</body>
+</html>

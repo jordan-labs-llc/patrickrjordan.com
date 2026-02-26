@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Gateway Security: Path Canonicalization and Exec Approvals — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .highlight {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .highlight-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>OpenClaw Gateway Security: Path Canonicalization and Exec Approvals</h1>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Security</span>
+            February 26, 2026 · Peter Steinberger · 
+            <a href="https://github.com/openclaw/openclaw/commit/08e3357" target="_blank">08e3357</a>, 
+            <a href="https://github.com/openclaw/openclaw/commit/258d615" target="_blank">258d615</a>, 
+            <a href="https://github.com/openclaw/openclaw/commit/4894d90" target="_blank">4894d90</a>
+        </div>
+
+        <p>Peter Steinberger continues his systematic security hardening of OpenClaw with six commits today addressing gateway path handling, exec approvals, and typing lifecycle management. These changes close subtle attack vectors that could emerge as AI assistants handle increasingly sensitive operations.</p>
+
+        <h2>Author Background</h2>
+        
+        <p>Peter Steinberger is one of OpenClaw's most prolific contributors, particularly around security architecture. His work includes the Valentine's Day security blitz (20+ fixes), the core auto-updater, and ongoing infrastructure hardening. As the creator of PSPDFKit, he brings enterprise-grade security thinking to the open-source AI assistant space.</p>
+
+        <h2>What Changed</h2>
+
+        <h3>Shared Path Canonicalization</h3>
+        
+        <p>The first commit (<code>08e3357</code>) refactors gateway security path canonicalization into a shared utility. Previously, path normalization logic was duplicated across multiple components — a recipe for inconsistency.</p>
+
+        <div class="highlight">
+            <div class="highlight-title">🔐 Why Path Canonicalization Matters</div>
+            <p style="margin-bottom: 0;">When an AI assistant accesses files, the path <code>/home/user/../user/secrets</code> and <code>/home/user/secrets</code> are the same file. Without consistent canonicalization, a crafted path could bypass security checks that only look at the literal string.</p>
+        </div>
+
+        <p>By centralizing this logic, all gateway components now apply identical path normalization — closing potential bypass vectors.</p>
+
+        <h3>Plugin Route Auth Hardening</h3>
+        
+        <p>Commit <code>258d615</code> hardens authentication path canonicalization specifically for plugin routes. Plugins extend OpenClaw's capabilities but also expand its attack surface. This change ensures authentication checks use canonicalized paths, preventing path traversal attacks against plugin endpoints.</p>
+
+        <h3>Exec Approvals Refactoring</h3>
+        
+        <p>The most substantial change (<code>4894d90</code>) unifies the <code>system.run</code> binding and generates host environment policy. This addresses a subtle but important security concern: when an AI assistant executes commands, which environment variables should it have access to?</p>
+
+        <pre><code>// Before: scattered binding logic
+// After: unified policy generation
+refactor(exec-approvals): unify system.run binding 
+and generate host env policy</code></pre>
+
+        <p>The change includes comprehensive test coverage (<code>8a51891</code>) for v1 binding precedence and mismatch mapping — ensuring the security model behaves predictably.</p>
+
+        <h3>Typing Lifecycle Hardening</h3>
+        
+        <p>Commit <code>37a138c</code> fixes typing lifecycle and cross-channel suppression. When an AI assistant shows "typing..." indicators, those need to be properly managed across different communication channels. A bug here could leak information about which channels are active or cause UI confusion.</p>
+
+        <h2>Why This Matters</h2>
+
+        <p>These changes reflect a maturing security posture:</p>
+
+        <ul>
+            <li><strong>Defense in depth:</strong> Multiple layers of path validation prevent single-point failures</li>
+            <li><strong>Least privilege:</strong> Explicit environment policy generation limits what exec operations can access</li>
+            <li><strong>Consistency:</strong> Shared utilities eliminate "same but different" implementations that create gaps</li>
+        </ul>
+
+        <p>As AI assistants gain capabilities to execute code, access files, and interact with external systems, the security surface expands dramatically. These aren't theoretical concerns — they're the foundation for enterprise deployments where a compromised AI assistant could access sensitive corporate data.</p>
+
+        <h2>Implications</h2>
+
+        <p>For OpenClaw users, these changes are transparent — existing configurations continue to work. The security improvements happen at the infrastructure level.</p>
+
+        <p>For the broader AI assistant ecosystem, this work demonstrates what "production-ready" security looks like: systematic identification of attack vectors, comprehensive test coverage, and shared utilities that enforce consistency. As other projects mature, expect similar hardening patterns.</p>
+
+        <p>The pace of security work on OpenClaw — multiple commits daily addressing different aspects of the security model — suggests the project is preparing for deployment scenarios where security is non-negotiable.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Auto-Enables OpenAI Responses Compaction: Context Window Optimization Arrives — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .related {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related h3 {
+            margin-top: 0;
+        }
+        .related-link {
+            display: block;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .related-link:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <h1>OpenClaw Auto-Enables OpenAI Responses Compaction: Context Window Optimization Arrives</h1>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Performance</span>
+            February 27, 2026 · Peter Steinberger · 
+            <a href="https://github.com/openclaw/openclaw/commit/8da3a9a" target="_blank">View Commit</a>
+        </div>
+
+        <h2>The Change</h2>
+        
+        <p>Peter Steinberger's commit <code>8da3a9a</code> automatically enables OpenAI's server-side response compaction when using the Responses API — a feature that intelligently summarizes previous conversation turns to preserve context window space while maintaining conversation coherence.</p>
+
+        <p>This addresses a longstanding operational challenge: as AI conversations grow longer, they consume increasingly expensive context window tokens. Without compaction, users either hit context limits (causing conversation breaks) or pay premium prices for extended context models.</p>
+
+        <h2>Author Background</h2>
+        
+        <p><strong>Peter Steinberger</strong> is a core maintainer of OpenClaw and has been leading the project's infrastructure evolution. His recent work has focused on security hardening (path canonicalization, exec approvals) and operational improvements. This commit continues his pattern of making OpenClaw's defaults smarter without requiring user configuration.</p>
+
+        <h2>Technical Details</h2>
+        
+        <p>The implementation leverages OpenAI's Responses API compaction feature, which works by:</p>
+        
+        <ul>
+            <li><strong>Automatic Summarization:</strong> When conversation history approaches context limits, the API summarizes older turns while preserving key information</li>
+            <li><strong>Server-Side Processing:</strong> Compaction happens on OpenAI's infrastructure, not client-side — reducing complexity for OpenClaw</li>
+            <li><strong>Opaque Identifier Preservation:</strong> A related commit (<code>0fe6cf0</code>) by Rodrigo Uroz ensures that summaries preserve opaque identifiers, preventing broken references in compacted conversations</li>
+        </ul>
+
+        <div class="callout">
+            <div class="callout-title">Why Server-Side Matters</div>
+            <p>Client-side compaction requires the AI assistant to summarize its own context — a meta-task that itself consumes tokens and can introduce errors. Server-side compaction offloads this to OpenAI's infrastructure, which can optimize more aggressively because it has access to model internals.</p>
+        </div>
+
+        <h2>Why It Matters</h2>
+        
+        <p>This change has three significant implications:</p>
+
+        <h3>1. Cost Reduction</h3>
+        <p>Long-running sessions with AI assistants can accumulate substantial context. By compacting older turns, users pay for fewer tokens while maintaining conversation continuity. For power users running always-on assistants, this directly reduces operational costs.</p>
+
+        <h3>2. Better UX for Long Conversations</h3>
+        <p>Previously, hitting context limits meant either starting fresh (losing conversation history) or manually truncating context (risking lost information). Auto-compaction enables genuinely long-running assistant relationships without artificial breaks.</p>
+
+        <h3>3. Infrastructure Complexity Reduction</h3>
+        <p>OpenClaw previously needed client-side strategies for context management. Delegating this to OpenAI's API reduces code complexity and potential bugs in OpenClaw's context handling logic.</p>
+
+        <h2>The Identifier Preservation Fix</h2>
+        
+        <p>The companion commit from Rodrigo Uroz (<code>0fe6cf0</code>) addresses a subtle but important issue: when conversations are compacted, summaries must preserve opaque identifiers (like file references, session IDs, or tool call IDs) that appear in the original conversation.</p>
+
+        <p>Without this fix, a compacted conversation might lose reference to a file the user uploaded or a tool the assistant invoked — breaking continuity in ways that are difficult to debug.</p>
+
+        <h2>Next Steps</h2>
+        
+        <p>This auto-enablement applies specifically to OpenAI Responses API usage. Other providers may require different strategies:</p>
+        
+        <ul>
+            <li><strong>Anthropic:</strong> Claude's API doesn't currently offer server-side compaction — OpenClaw would need client-side strategies</li>
+            <li><strong>Local Models:</strong> Self-hosted models have different context management patterns; compaction may need to be more aggressive</li>
+            <li><strong>Observability:</strong> Future work might add metrics showing how much context is being compacted, helping users understand their conversation patterns</li>
+        </ul>
+
+        <div class="related">
+            <h3>Related Articles</h3>
+            <a href="/articles/openclaw-gateway-security-hardening-feb26.html" class="related-link">OpenClaw Gateway Security: Path Canonicalization and Exec Approvals</a>
+            <a href="/articles/openclaw-android-voice-redesign.html" class="related-link">OpenClaw Android Voice Mode Redesign: Full-Height Conversations Arrive</a>
+        </div>
+    </div>
+</body>
+</html>

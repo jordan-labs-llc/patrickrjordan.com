@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Bidirectional Streaming Proposal: gRPC Gets Native Agent Communication — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .related {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related h3 {
+            margin-top: 0;
+        }
+        .related-link {
+            display: block;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .related-link:last-child {
+            border-bottom: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <h1>A2A Bidirectional Streaming Proposal: gRPC Gets Native Agent Communication</h1>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Streaming</span>
+            February 27, 2026 · HungYangChang · 
+            <a href="https://github.com/a2aproject/A2A/pull/1549" target="_blank">View PR #1549</a>
+        </div>
+
+        <h2>The Proposal</h2>
+        
+        <p>HungYangChang opens PR #1549 proposing native bidirectional streaming support over gRPC for the Agent-to-Agent Protocol. This is a breaking change (marked <code>feat!</code>) that would fundamentally alter how agents communicate in real-time scenarios.</p>
+
+        <p>Currently, A2A uses a request-response pattern where agents send messages and poll for responses. Bidirectional streaming would enable agents to maintain persistent connections with simultaneous send/receive capabilities — essential for collaborative, multi-turn interactions between autonomous agents.</p>
+
+        <h2>Author Background</h2>
+        
+        <p><strong>HungYangChang</strong> is contributing to the A2A ecosystem with a focus on performance-critical use cases. This proposal emerges from practical experience implementing agent communication where polling latency becomes a bottleneck.</p>
+
+        <h2>Why gRPC Bidirectional Streaming?</h2>
+        
+        <p>The A2A protocol currently supports multiple transport mechanisms, but lacks native streaming for real-time agent interactions. gRPC bidirectional streaming provides:</p>
+
+        <table>
+            <tr>
+                <th>Capability</th>
+                <th>Current A2A</th>
+                <th>With Bidirectional Streaming</th>
+            </tr>
+            <tr>
+                <td>Message Latency</td>
+                <td>Poll-based (100ms+ typical)</td>
+                <td>Sub-millisecond push</td>
+            </tr>
+            <tr>
+                <td>Connection Overhead</td>
+                <td>New connection per message</td>
+                <td>Single persistent stream</td>
+            </tr>
+            <tr>
+                <td>Backpressure</td>
+                <td>Client-managed</td>
+                <td>Native gRPC flow control</td>
+            </tr>
+            <tr>
+                <td>Interruption</td>
+                <td>Requires separate cancel request</td>
+                <td>Stream close signals interruption</td>
+            </tr>
+        </table>
+
+        <h2>Technical Details</h2>
+        
+        <p>The proposal would add a new streaming RPC to the A2A protocol definition:</p>
+
+        <pre><code>service AgentService {
+  // Existing unary methods
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+  
+  // New bidirectional streaming
+  rpc StreamMessages(stream AgentMessage) returns (stream AgentMessage);
+}</code></pre>
+
+        <p>Key design considerations in the proposal:</p>
+
+        <ul>
+            <li><strong>Message Framing:</strong> Each message in the stream includes task context, enabling multiplexed conversations over a single connection</li>
+            <li><strong>Error Propagation:</strong> gRPC status codes map to A2A error types, with stream-level errors distinct from message-level errors</li>
+            <li><strong>Graceful Degradation:</strong> Implementations can fall back to unary RPCs if streaming isn't supported by the counterparty</li>
+        </ul>
+
+        <div class="callout">
+            <div class="callout-title">Breaking Change Implications</div>
+            <p>The <code>feat!</code> designation indicates this is a breaking change. Implementations targeting A2A 1.0 compatibility would need updates to support bidirectional streaming. The proposal includes a migration path where streaming is optional — agents negotiate capabilities during discovery.</p>
+        </div>
+
+        <h2>Use Cases Enabled</h2>
+        
+        <h3>1. Collaborative Reasoning</h3>
+        <p>Two agents working on a complex problem can exchange intermediate results in real-time, building on each other's partial solutions without the latency of polling.</p>
+
+        <h3>2. Human-in-the-Loop Supervision</h3>
+        <p>A supervisory agent monitoring multiple worker agents can receive status updates instantly and inject corrections without waiting for poll intervals.</p>
+
+        <h3>3. Agentic Workflows with Dependencies</h3>
+        <p>When Agent B's work depends on Agent A's output, streaming enables A to push results as they become available, rather than B polling repeatedly.</p>
+
+        <h2>Challenges to Address</h2>
+        
+        <p>The PR discussion highlights several open questions:</p>
+
+        <ul>
+            <li><strong>Connection Lifecycle:</strong> How long should streams stay open? What triggers reconnection?</li>
+            <li><strong>Load Balancing:</strong> Long-lived gRPC streams complicate load balancer behavior; the proposal needs to address connection distribution</li>
+            <li><strong>State Management:</strong> If a stream disconnects mid-conversation, how is state reconciled?</li>
+            <li><strong>Security:</strong> Persistent connections increase attack surface; the proposal should address authentication refresh and connection auditing</li>
+        </ul>
+
+        <h2>Ecosystem Implications</h2>
+        
+        <p>If adopted, bidirectional streaming would represent a significant evolution in A2A's capabilities:</p>
+
+        <ul>
+            <li><strong>SDK Updates:</strong> All official A2A SDKs would need streaming support</li>
+            <li><strong>Infrastructure:</strong> Deployment patterns shift — agents need to handle long-lived connections</li>
+            <li><strong>Observability:</strong> Monitoring tools need stream-aware tracing, not just request/response logging</li>
+        </ul>
+
+        <p>This proposal is still in active discussion. The A2A maintainers are evaluating whether streaming should be a core protocol feature or remain an optional extension.</p>
+
+        <div class="related">
+            <h3>Related Articles</h3>
+            <a href="/articles/a2a-did-agent-identity.html" class="related-link">A2A DID-Based Agent Identity: Decentralized Verification via AIP</a>
+            <a href="/articles/a2a-blocking-to-polling-rename.html" class="related-link">A2A Renames "Blocking" to "Polling": Why Terminology Matters</a>
+            <a href="/articles/a2a-1-0-whats-changed.html" class="related-link">A2A 1.0: What Changed from v0.3.0 and Why It Matters</a>
+        </div>
+    </div>
+</body>
+</html>

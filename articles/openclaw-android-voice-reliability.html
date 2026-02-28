@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Android Voice Reliability: Production-Grade Voice Mode Arrives — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .author-section h3 {
+            margin-top: 0;
+            font-size: 1rem;
+        }
+        .author-section p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+        .commit-list {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .commit-list h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .commit-list ul {
+            margin-bottom: 0;
+            font-size: 0.875rem;
+        }
+        .links-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .links-section h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Android</span>
+            <span class="tag">Voice</span>
+            February 28, 2026
+        </div>
+        
+        <h1>OpenClaw Android Voice Reliability: Production-Grade Voice Mode Arrives</h1>
+        <p class="subtitle">Six commits land today addressing token rotation, retry logic, mute handling, and conversation state — transforming voice from demo feature to daily driver.</p>
+
+        <div class="author-section">
+            <h3>About the Author</h3>
+            <p><strong>Ayaan Zaidi</strong> is a core contributor to OpenClaw's mobile applications. His recent work has focused on Android voice mode, onboarding flows, and the companion node architecture. This week's commits represent a coordinated effort to address user-reported voice reliability issues across diverse network conditions.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Voice interaction with AI assistants is compelling in demos but frustrating in practice. Spotty connections, awkward pauses, and lost context plague most implementations. OpenClaw's Android app has supported voice mode for months, but real-world usage exposed edge cases that made it unreliable for daily use.</p>
+
+        <p>Today's commits represent a systematic reliability overhaul — the kind of polish that separates novelty features from production-ready tools.</p>
+
+        <div class="callout">
+            <p><strong>The user impact:</strong> Voice mode that actually works when you're walking, on unstable WiFi, or switching between muted and unmuted states. Small improvements that compound into a dramatically better experience.</p>
+        </div>
+
+        <h2>What Changed Technically</h2>
+
+        <div class="commit-list">
+            <h4>Today's Voice Commits (Feb 28, 2026)</h4>
+            <ul>
+                <li><strong>land android onboarding and voice reliability updates</strong> — Umbrella PR consolidating improvements</li>
+                <li><strong>rotate playback token per assistant reply</strong> — Fresh tokens prevent stale audio issues</li>
+                <li><strong>retry talk config after transient failures</strong> — Graceful recovery from network hiccups</li>
+                <li><strong>cancel in-flight speech when speaker muted</strong> — Immediate response to user mute action</li>
+                <li><strong>reduce mic conversation update churn</strong> — Performance optimization for continuous listening</li>
+            </ul>
+        </div>
+
+        <h3>Token Rotation</h3>
+        <p>Voice streaming requires authentication tokens. Previously, a single token was reused across an entire conversation. If it expired mid-reply, playback would fail silently. The fix: rotate tokens per assistant reply, ensuring each audio stream has fresh credentials.</p>
+
+        <h3>Retry Logic</h3>
+        <p>Mobile networks are unreliable. A brief signal drop shouldn't require the user to restart voice mode. The new retry logic automatically recovers from transient failures — the voice configuration refreshes and conversation continues without user intervention.</p>
+
+        <h3>Mute Handling</h3>
+        <p>When a user mutes the speaker, they expect immediate silence. Previously, in-flight audio would continue playing until its buffer emptied. Now, muting cancels pending speech instantly — a small detail that makes the interaction feel responsive.</p>
+
+        <h3>Conversation Update Churn</h3>
+        <p>Continuous microphone listening generates frequent state updates. Excessive UI refreshes drain battery and cause visual jitter. The optimization reduces unnecessary update cycles while maintaining accurate conversation state.</p>
+
+        <h2>Context: OpenClaw's Mobile Evolution</h2>
+
+        <p>This fits a pattern in OpenClaw's recent development:</p>
+
+        <ul>
+            <li><strong>Feb 25:</strong> Android voice mode redesign with full-height layout</li>
+            <li><strong>Feb 20:</strong> iOS TLS hardening for remote gateways</li>
+            <li><strong>Feb 15:</strong> Cross-platform security hardening wave</li>
+        </ul>
+
+        <p>OpenClaw's mobile apps are maturing from companion utilities to primary interfaces. Voice mode is central to this vision — hands-free interaction while driving, cooking, or walking makes the AI assistant genuinely useful in contexts where typing isn't practical.</p>
+
+        <h2>What's Next</h2>
+
+        <p>Based on the commit patterns, likely next steps include:</p>
+
+        <ul>
+            <li><strong>iOS voice parity:</strong> Similar reliability improvements for the iOS app</li>
+            <li><strong>Wake word detection:</strong> "Hey OpenClaw" activation without touching the device</li>
+            <li><strong>Offline transcription:</strong> On-device speech recognition for privacy and latency</li>
+        </ul>
+
+        <p>The broader trend: AI assistants are moving from chat windows to ambient presence. Reliable voice is table stakes for that transition.</p>
+
+        <div class="links-section">
+            <h3>Related Links</h3>
+            <ul>
+                <li><a href="https://github.com/openclaw/openclaw" target="_blank">OpenClaw Repository</a></li>
+                <li><a href="/articles/openclaw-android-voice-redesign.html">OpenClaw Android Voice Mode Redesign (Feb 25)</a></li>
+                <li><a href="/pulse.html">Repo Pulse — Daily Activity Tracking</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

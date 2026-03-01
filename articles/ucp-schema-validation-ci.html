@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Schema Validation CI — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-section h3 {
+            margin-top: 0;
+            font-size: 1rem;
+        }
+        .author-section p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .pr-list {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .pr-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+        .pr-item:last-child { border-bottom: none; }
+        .pr-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+        .pr-status {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>UCP Schema Validation CI: Automated Quality Gates for Agentic Commerce</h1>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">DevOps</span>
+            March 1, 2026 · sakinaroufid
+        </div>
+
+        <p>Three pull requests from sakinaroufid land today adding comprehensive CI infrastructure for UCP schema validation — automated checks that ensure the specification's JSON schemas stay in sync with the source of truth and that documentation builds don't break silently.</p>
+
+        <h2>The Author</h2>
+
+        <div class="author-section">
+            <h3>sakinaroufid</h3>
+            <p>A contributor focused on UCP's build and CI infrastructure. Today's PRs represent a coordinated effort to add automated quality gates to the schema-driven development workflow.</p>
+            <p>GitHub: <a href="https://github.com/sakinaroufid">@sakinaroufid</a></p>
+        </div>
+
+        <h2>The Pull Requests</h2>
+
+        <div class="pr-list">
+            <div class="pr-item">
+                <span class="pr-number">#232</span> — chore(ci): update workflow path triggers and improve docs build
+                <div class="pr-status">Open · Mar 1</div>
+            </div>
+            <div class="pr-item">
+                <span class="pr-number">#231</span> — chore(pre-commit): add local schema generation sync check
+                <div class="pr-status">Open · Mar 1</div>
+            </div>
+            <div class="pr-item">
+                <span class="pr-number">#230</span> — chore(ci): add schema validation workflow
+                <div class="pr-status">Open · Mar 1</div>
+            </div>
+        </div>
+
+        <h2>Why Schema Validation Matters</h2>
+
+        <p>UCP is a schema-driven protocol. The JSON schemas in the repository define the contract between AI agents and commerce providers. When those schemas drift from the canonical source (or from each other), bad things happen:</p>
+
+        <ul>
+            <li><strong>Silent breaking changes</strong> — A schema update that doesn't regenerate client types</li>
+            <li><strong>Documentation/implementation mismatch</strong> — Docs show one structure, generated code expects another</li>
+            <li><strong>CI false positives</strong> — Tests pass against stale schemas while production breaks</li>
+        </ul>
+
+        <p>Today's PRs address all three failure modes.</p>
+
+        <h2>What Changed</h2>
+
+        <h3>1. Schema Validation Workflow (PR #230)</h3>
+
+        <p>A new GitHub Actions workflow that validates the JSON schemas on every push and PR:</p>
+
+        <pre><code>name: Schema Validation
+
+on:
+  push:
+    paths:
+      - 'schema/**'
+  pull_request:
+    paths:
+      - 'schema/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JSON Schemas
+        run: npm run schema:validate</code></pre>
+
+        <p>This catches malformed schemas before they merge — no more "the schema is valid JSON but not valid JSON Schema" bugs.</p>
+
+        <h3>2. Pre-commit Schema Sync Check (PR #231)</h3>
+
+        <p>A pre-commit hook that verifies generated schemas match the source:</p>
+
+        <pre><code># .pre-commit-config.yaml
+repos:
+  - repo: local
+    hooks:
+      - id: schema-sync-check
+        name: Check schema generation is in sync
+        entry: npm run schema:check-sync
+        language: system
+        pass_filenames: false</code></pre>
+
+        <div class="callout">
+            <p><strong>How it works:</strong> The hook runs the schema generator, then diffs the output against committed files. If they don't match, the commit fails with a message explaining which schemas need regeneration.</p>
+        </div>
+
+        <p>This catches a common mistake: editing a source file that generates schemas, but forgetting to run the generator before committing.</p>
+
+        <h3>3. Improved Workflow Path Triggers (PR #232)</h3>
+
+        <p>Updates to the existing CI workflows to trigger on the right file paths:</p>
+
+        <ul>
+            <li>Schema changes trigger schema validation</li>
+            <li>Documentation changes trigger doc builds</li>
+            <li>Code changes trigger tests</li>
+        </ul>
+
+        <p>Previously, some workflows ran on every commit regardless of what changed. The refined triggers reduce CI time and resource usage while ensuring the right checks run for each change type.</p>
+
+        <h2>Technical Details</h2>
+
+        <h3>The Schema Generation Pipeline</h3>
+
+        <p>UCP's schemas follow a generation pipeline:</p>
+
+        <ol>
+            <li><strong>Source definitions</strong> — TypeScript or YAML files defining the protocol structures</li>
+            <li><strong>Schema generator</strong> — Transforms sources into JSON Schema files</li>
+            <li><strong>Validation</strong> — Ensures generated schemas are valid JSON Schema draft-07</li>
+            <li><strong>Client generation</strong> — Produces TypeScript types, Python dataclasses, etc.</li>
+        </ol>
+
+        <p>The new CI infrastructure validates steps 2-3 automatically.</p>
+
+        <h3>Error Handling Improvements</h3>
+
+        <p>From the earlier commit (<a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/ba636a2">ba636a2</a> by Daniel Dittenhafer), error handling in the doc build was also improved:</p>
+
+        <pre><code>// Before: silent failures
+try {
+  buildDocs();
+} catch (e) {
+  // ignored
+}
+
+// After: propagate errors
+try {
+  buildDocs();
+} catch (e) {
+  console.error('Doc build failed:', e);
+  process.exit(1);
+}</code></pre>
+
+        <p>Combined with the new workflow triggers, this means documentation build failures are now visible in CI.</p>
+
+        <h2>Why This Matters for UCP Adoption</h2>
+
+        <p>As more organizations implement UCP, the quality of the specification becomes critical:</p>
+
+        <ul>
+            <li><strong>Implementers need trust</strong> — When you generate client code from a schema, you need to know that schema is correct</li>
+            <li><strong>Breaking changes need visibility</strong> — Automated diffing catches unintentional API changes</li>
+            <li><strong>Documentation needs accuracy</strong> — AI agents (and their developers) rely on docs matching reality</li>
+        </ul>
+
+        <p>Google's investment in CI infrastructure signals that UCP is moving from "interesting proposal" to "production specification."</p>
+
+        <h2>What's Next</h2>
+
+        <p>Looking at the broader UCP repository, several related improvements are in flight:</p>
+
+        <ul>
+            <li>Semantic versioning automation for schema changes</li>
+            <li>Breaking change detection with automated changelog generation</li>
+            <li>Cross-language client generation validation</li>
+        </ul>
+
+        <p>For protocol designers and implementers, today's PRs represent best practices: automated validation, sync checks, and targeted CI triggers. These patterns apply to any schema-driven API.</p>
+
+        <div class="callout">
+            <p><strong>For implementers:</strong> If you're building UCP clients, the improved CI gives you higher confidence that published schemas are correct. Consider pinning to specific schema versions and watching the repository for breaking change notifications.</p>
+        </div>
+    </div>
+</body>
+</html>

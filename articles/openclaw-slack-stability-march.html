@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Slack Stability Overhaul — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-section h3 {
+            margin-top: 0;
+            font-size: 1rem;
+        }
+        .author-section p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .commit-list {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .commit-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+        .commit-item:last-child { border-bottom: none; }
+        .commit-hash {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+        .commit-author {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>OpenClaw Slack Stability Overhaul: Production-Ready Enterprise Messaging</h1>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Slack</span>
+            <span class="tag">Enterprise</span>
+            March 1, 2026 · Multiple Contributors
+        </div>
+
+        <p>Eight Slack-related commits landed today from six different contributors — a coordinated push addressing streaming modes, reply routing, agent identity, and startup reliability. For organizations running OpenClaw as their AI assistant in Slack, this represents a significant maturation of the integration.</p>
+
+        <h2>The Contributors</h2>
+
+        <div class="author-section">
+            <h3>Community-Driven Stability</h3>
+            <p>Today's fixes come from a diverse group of contributors:</p>
+            <ul>
+                <li><strong>Peter Machona</strong> — Legacy streaming mode compatibility</li>
+                <li><strong>dan bachelder</strong> — Per-message reply mode resolution</li>
+                <li><strong>Mark L (liuxiaopai-ai)</strong> — Monitor startup for disabled accounts, HTTP mode detection</li>
+                <li><strong>Colin Johnson (Solvely-Colin)</strong> — Slash command and interactions ingress hardening</li>
+                <li><strong>Glucksberg</strong> — Socket Mode listener guards during startup</li>
+                <li><strong>HouRong</strong> — Agent identity threading through reply paths</li>
+                <li><strong>pushkarsingh32</strong> — Session key emoji shortcode escaping</li>
+            </ul>
+            <p>The breadth of contributors signals that OpenClaw's Slack integration has reached the point where enterprise users are encountering — and fixing — production edge cases.</p>
+        </div>
+
+        <h2>What Changed</h2>
+
+        <h3>1. Legacy Streaming Mode Migration</h3>
+
+        <p>Peter Machona's <a href="https://github.com/openclaw/openclaw/commit/dfbdab5">commit dfbdab5</a> addresses a breaking change from earlier streaming mode updates:</p>
+
+        <pre><code>// Before: boolean streaming flag
+streaming: false
+
+// After: enum-based mode
+streamingMode: "off"</code></pre>
+
+        <p>The fix gracefully maps <code>streaming=false</code> to the new <code>streamingMode: "off"</code> enum, preventing existing configurations from breaking on upgrade.</p>
+
+        <h3>2. Per-Message Reply Mode Resolution</h3>
+
+        <p>Dan Bachelder's <a href="https://github.com/openclaw/openclaw/commit/9ae9439">commit 9ae9439</a> fixes a subtle but important issue: reply modes should be resolved per-message based on chat type (DM vs channel), not globally per-account.</p>
+
+        <div class="callout">
+            <p><strong>Why it matters:</strong> In channels, you often want threaded replies. In DMs, you might prefer direct responses. The old code used a global setting; now it inspects each incoming message's context.</p>
+        </div>
+
+        <h3>3. Startup Guards for Socket Mode</h3>
+
+        <p>Glucksberg's <a href="https://github.com/openclaw/openclaw/commit/3aad6c8">commit 3aad6c8</a> guards Socket Mode listener access during the startup sequence. Without this, race conditions could cause crashes when events arrived before the listeners were fully initialized.</p>
+
+        <h3>4. Agent Identity Threading</h3>
+
+        <p>HouRong's <a href="https://github.com/openclaw/openclaw/commit/b3f60a6">commit b3f60a6</a> ensures agent identity is properly threaded through the channel reply path. This matters for multi-agent deployments where different bots might handle different channels.</p>
+
+        <h3>5. Monitor Startup for Disabled Accounts</h3>
+
+        <p>Mark L's <a href="https://github.com/openclaw/openclaw/commit/265b22c">commit 265b22c</a> (AI-assisted) skips monitor startup for disabled accounts — preventing wasted resources and potential error logs for accounts that are intentionally inactive.</p>
+
+        <h3>6. Slash Command Security Hardening</h3>
+
+        <p>Colin Johnson's <a href="https://github.com/openclaw/openclaw/commit/0f36ee5">commit 0f36ee5</a> hardens the ingress checks for slash commands and interactions. As OpenClaw deployments handle more sensitive operations, validating that requests actually come from Slack becomes critical.</p>
+
+        <h3>7. Session Key Escaping</h3>
+
+        <p>Pushkarsingh32's <a href="https://github.com/openclaw/openclaw/commit/4ba0a4d">commit 4ba0a4d</a> wraps session keys in backticks to prevent emoji shortcode parsing. Without this, a session key containing <code>:wave:</code> would render as 👋 instead of the literal string.</p>
+
+        <h3>8. HTTP Mode Account Detection</h3>
+
+        <p>Mark L's second contribution (<a href="https://github.com/openclaw/openclaw/commit/4da4cc9">commit 4da4cc9</a>) correctly treats HTTP mode accounts as configured, fixing false "account not configured" warnings.</p>
+
+        <h2>Technical Impact</h2>
+
+        <div class="commit-list">
+            <div class="commit-item">
+                <span class="commit-hash">dfbdab5</span> — fix(slack): map legacy streaming=false to off
+                <div class="commit-author">Peter Machona • Mar 1</div>
+            </div>
+            <div class="commit-item">
+                <span class="commit-hash">9ae9439</span> — fix(slack): resolve replyToMode per-message using chat type
+                <div class="commit-author">dan bachelder • Mar 1</div>
+            </div>
+            <div class="commit-item">
+                <span class="commit-hash">265b22c</span> — fix(slack): skip monitor startup for disabled accounts
+                <div class="commit-author">Mark L • Mar 1</div>
+            </div>
+            <div class="commit-item">
+                <span class="commit-hash">0f36ee5</span> — Slack: harden slash and interactions ingress checks
+                <div class="commit-author">Colin Johnson • Mar 1</div>
+            </div>
+            <div class="commit-item">
+                <span class="commit-hash">3aad6c8</span> — fix(slack): guard Socket Mode listeners access during startup
+                <div class="commit-author">Glucksberg • Mar 1</div>
+            </div>
+            <div class="commit-item">
+                <span class="commit-hash">b3f60a6</span> — fix(slack): thread agent identity through channel reply path
+                <div class="commit-author">HouRong • Mar 1</div>
+            </div>
+            <div class="commit-item">
+                <span class="commit-hash">4ba0a4d</span> — fix(slack): wrap session key in backticks
+                <div class="commit-author">pushkarsingh32 • Mar 1</div>
+            </div>
+            <div class="commit-item">
+                <span class="commit-hash">4da4cc9</span> — fix(slack): treat HTTP mode accounts as configured
+                <div class="commit-author">Mark L • Mar 1</div>
+            </div>
+        </div>
+
+        <h2>Why This Matters</h2>
+
+        <p>Slack is often the first enterprise touchpoint for AI assistants. Unlike consumer messaging apps, Slack deployments need to handle:</p>
+
+        <ul>
+            <li><strong>Multiple authentication modes</strong> — Socket Mode, HTTP webhooks, and legacy OAuth</li>
+            <li><strong>Complex reply semantics</strong> — Threads, channels, DMs, and app mentions all behave differently</li>
+            <li><strong>Enterprise security requirements</strong> — Request validation, identity threading, and audit trails</li>
+            <li><strong>Scale considerations</strong> — Multiple workspaces, disabled accounts, graceful degradation</li>
+        </ul>
+
+        <p>Today's fixes address all four categories. The fact that six different contributors identified and fixed these issues suggests the integration has reached production scale — and that the community is actively maintaining it.</p>
+
+        <h2>What's Next</h2>
+
+        <p>Looking at the open PRs, more Slack improvements are in flight:</p>
+
+        <ul>
+            <li><a href="https://github.com/openclaw/openclaw/pull/30796">PR #30796</a> — Full OpenAI speech API config exposure (TTS streaming)</li>
+            <li>Additional multi-workspace isolation improvements</li>
+            <li>Enhanced thread context preservation</li>
+        </ul>
+
+        <p>For teams running OpenClaw in Slack, today's release represents a significant stability improvement. The breadth of fixes — and the fact that they came from community contributors encountering real production issues — signals the integration has matured past early-adopter stage.</p>
+
+        <div class="callout">
+            <p><strong>Upgrade note:</strong> If you're using <code>streaming: false</code> in your Slack configuration, it will continue to work — but consider migrating to <code>streamingMode: "off"</code> for clarity.</p>
+        </div>
+    </div>
+</body>
+</html>

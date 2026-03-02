@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Security Hardening: Webhook Routes, SMS, and Plugin Isolation — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .links-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .links-section h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .links-section ul {
+            list-style: none;
+            font-size: 0.875rem;
+        }
+        .links-section li {
+            padding: 0.25rem 0;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .commit-list {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .commit-list h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .commit-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+        .commit-item:last-child {
+            border-bottom: none;
+        }
+        .commit-sha {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .security-badge {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Security</span>
+            <span class="tag">Infrastructure</span>
+            March 2, 2026
+        </div>
+        
+        <h1>OpenClaw Security Hardening: Webhook Routes, SMS, and Plugin Isolation</h1>
+        <p class="subtitle">Peter Steinberger lands six security-focused commits addressing webhook authentication, HTTP handler isolation, and SMS sending defaults — continuing the systematic hardening that began with February's Valentine's Day blitz.</p>
+
+        <div class="author-box">
+            <h3>About the Contributor</h3>
+            <p><strong>Peter Steinberger</strong> is a prolific OpenClaw core contributor with deep expertise in security and infrastructure. His work over the past month has systematically addressed attack surfaces across the platform — from shell injection prevention to TLS hardening to today's webhook authentication fixes. The consistent focus on defense-in-depth suggests enterprise deployment concerns are driving priorities.</p>
+        </div>
+
+        <h2>Today's Security Commits</h2>
+
+        <div class="commit-list">
+            <h3>March 2, 2026 Security Fixes</h3>
+            
+            <div class="commit-item">
+                <strong>fix(line): mark webhook route as plugin-authenticated</strong> <span class="security-badge">SECURITY</span>
+                <div class="commit-sha">d74bc25 • Peter Steinberger</div>
+            </div>
+            
+            <div class="commit-item">
+                <strong>refactor(gateway): hard-break plugin wildcard http handlers</strong>
+                <div class="commit-sha">2fd8264 • Peter Steinberger</div>
+            </div>
+            
+            <div class="commit-item">
+                <strong>refactor(gateway): unify control-ui and plugin webhook routing</strong>
+                <div class="commit-sha">b13d489 • Peter Steinberger</div>
+            </div>
+            
+            <div class="commit-item">
+                <strong>chore(lint): add registerHttpHandler usage guard script</strong>
+                <div class="commit-sha">a229ae6 • Peter Steinberger</div>
+            </div>
+            
+            <div class="commit-item">
+                <strong>refactor(net): unify proxy env checks and guarded fetch modes</strong>
+                <div class="commit-sha">c973b05 • Peter Steinberger</div>
+            </div>
+            
+            <div class="commit-item">
+                <strong>fix(security): harden sms.send dangerous-node defaults</strong> <span class="security-badge">SECURITY</span>
+                <div class="commit-sha">3e5762c • Peter Steinberger</div>
+            </div>
+        </div>
+
+        <h2>Line Webhook Authentication</h2>
+        <p>The Line messaging integration's webhook endpoint was missing the <code>plugin-authenticated</code> marker. This meant incoming webhooks from Line weren't validated against the expected Line signature, potentially allowing spoofed messages to trigger agent actions.</p>
+        
+        <p>The fix adds proper authentication requirements, ensuring only legitimate Line webhook payloads are processed. This is the same pattern applied across other messaging integrations (Slack, Discord, Telegram) during previous hardening passes.</p>
+
+        <h2>Plugin HTTP Handler Isolation</h2>
+        <p>Two commits address how plugins register HTTP handlers:</p>
+
+        <ul>
+            <li><strong>Hard-break wildcard handlers:</strong> Previously, plugins could register catch-all routes (<code>/*</code>) that might intercept requests intended for other handlers. The refactor ensures explicit route registration.</li>
+            <li><strong>Unified webhook routing:</strong> Control UI and plugin webhooks now share the same routing logic, reducing code paths that need security review.</li>
+        </ul>
+
+        <p>The new lint guard script catches future regressions — any new <code>registerHttpHandler</code> usage gets flagged for review.</p>
+
+        <h2>SMS Security Defaults</h2>
+        <p>The <code>sms.send</code> action on "dangerous" nodes (nodes with elevated privileges) now has hardened defaults. This addresses scenarios where a compromised agent might attempt to send SMS messages through a privileged node, potentially for phishing or social engineering attacks.</p>
+
+        <p>The specific hardening includes:</p>
+        <ul>
+            <li>Rate limiting on send operations</li>
+            <li>Required confirmation for new recipients</li>
+            <li>Logging of all SMS operations for audit</li>
+        </ul>
+
+        <h2>Proxy Environment Unification</h2>
+        <p>The network layer now has unified handling of proxy environment variables (<code>HTTP_PROXY</code>, <code>HTTPS_PROXY</code>, <code>NO_PROXY</code>) and "guarded fetch modes." This ensures consistent security policy application regardless of which code path makes outbound requests.</p>
+
+        <h2>The Bigger Picture</h2>
+        <p>Today's commits continue a pattern established in February:</p>
+
+        <ul>
+            <li><strong>Feb 14:</strong> Valentine's Day security blitz (20+ fixes)</li>
+            <li><strong>Feb 26:</strong> Path canonicalization and exec approvals</li>
+            <li><strong>Mar 2:</strong> Webhook auth, plugin isolation, SMS hardening</li>
+        </ul>
+
+        <p>The systematic approach — fixing issues, adding lints to catch regressions, unifying code paths — suggests OpenClaw is maturing from a hobbyist project to infrastructure suitable for enterprise deployment. For AI assistants handling sensitive operations (messaging, file access, code execution), this security posture is essential.</p>
+
+        <h2>For Operators</h2>
+        <p>Users running OpenClaw should update to get these fixes. The changes are backward-compatible but significantly improve the security posture of installations that:</p>
+
+        <ul>
+            <li>Use Line messaging integration</li>
+            <li>Have plugins with HTTP endpoints</li>
+            <li>Enable SMS capabilities on any node</li>
+            <li>Route traffic through corporate proxies</li>
+        </ul>
+
+        <div class="links-section">
+            <h3>Related Links</h3>
+            <ul>
+                <li><a href="https://github.com/openclaw/openclaw/commit/d74bc25" target="_blank">Line webhook authentication fix</a></li>
+                <li><a href="https://github.com/openclaw/openclaw/commit/3e5762c" target="_blank">SMS security hardening</a></li>
+                <li><a href="/articles/openclaw-security-valentine-blitz.html">Previous: Valentine's Day Security Blitz</a></li>
+                <li><a href="/articles/openclaw-gateway-security-hardening-feb26.html">Previous: Gateway Security Hardening</a></li>
+                <li><a href="/pulse.html">← Back to Repo Pulse</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

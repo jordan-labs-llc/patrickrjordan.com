@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Ancillaries Extension Proposal: Add-Ons for Agentic Commerce — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .links-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .links-section h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .links-section ul {
+            list-style: none;
+            font-size: 0.875rem;
+        }
+        .links-section li {
+            padding: 0.25rem 0;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Vertical Extension</span>
+            <span class="tag">Commerce</span>
+            March 2, 2026
+        </div>
+        
+        <h1>UCP Ancillaries Extension Proposal: Add-Ons for Agentic Commerce</h1>
+        <p class="subtitle">A new proposal brings structured support for optional add-ons, upgrades, and cross-sells to the Universal Commerce Protocol — essential infrastructure for travel, hospitality, and beyond.</p>
+
+        <div class="author-box">
+            <h3>About the Contributor</h3>
+            <p><strong>Tobias Alldén (alldentobias)</strong> returns to UCP after his previous ancillaries proposal in February. His continued focus on add-on commerce suggests deep domain expertise, likely from travel or hospitality technology. The persistence signals genuine industry need for standardized ancillary handling in agentic transactions.</p>
+        </div>
+
+        <h2>Why Ancillaries Matter</h2>
+        <p>When an AI agent books a flight or hotel for a user, the base transaction is just the beginning. Airlines make significant revenue from seat upgrades, baggage, and meal selections. Hotels offer room upgrades, spa packages, and late checkout. E-commerce has warranty extensions, gift wrapping, and expedited shipping.</p>
+        
+        <p>Currently, there's no standardized way for merchants to present these options or for AI agents to select them on behalf of users. Each vertical handles add-ons differently, forcing agents to implement custom logic for every merchant.</p>
+
+        <h2>What the Extension Proposes</h2>
+        <p>The ancillaries extension introduces a structured schema for optional add-ons that can attach to any UCP transaction:</p>
+
+        <ul>
+            <li><strong>Ancillary Types:</strong> Categorization (upgrade, add-on, protection, service) enabling agents to understand what they're selecting</li>
+            <li><strong>Availability Rules:</strong> When ancillaries can be selected (at booking, pre-arrival, during stay) and what they attach to</li>
+            <li><strong>Pricing Models:</strong> Per-item, per-person, per-night, and complex dynamic pricing support</li>
+            <li><strong>Dependencies:</strong> Some ancillaries require others (e.g., premium seat requires lounge access for full experience)</li>
+            <li><strong>Mutual Exclusivity:</strong> Some ancillaries conflict (e.g., standard vs. premium room upgrade)</li>
+        </ul>
+
+        <h2>Technical Implementation</h2>
+        <p>The proposal extends the checkout flow with an optional <code>ancillaries</code> array:</p>
+
+<pre>{
+  "checkout": {
+    "items": [...],
+    "ancillaries": {
+      "available": [
+        {
+          "id": "seat-upgrade-1a",
+          "type": "upgrade",
+          "name": "Premium Seat 1A",
+          "description": "Extra legroom, priority boarding",
+          "pricing": {
+            "amount": "75.00",
+            "currency": "USD",
+            "model": "per_segment"
+          },
+          "attachesTo": "line_item_0",
+          "availableUntil": "2026-03-15T10:00:00Z"
+        }
+      ],
+      "selected": ["seat-upgrade-1a"]
+    }
+  }
+}</pre>
+
+        <h2>Why This Matters for AI Agents</h2>
+        <p>Structured ancillaries enable several agent capabilities that are currently impossible or require extensive custom integration:</p>
+
+        <ul>
+            <li><strong>Preference Learning:</strong> "Patrick always selects premium economy when available under $100" becomes learnable when ancillaries are standardized</li>
+            <li><strong>Budget Optimization:</strong> Agents can evaluate all available upgrades against remaining budget</li>
+            <li><strong>Bundle Detection:</strong> Identifying when selecting multiple ancillaries triggers package pricing</li>
+            <li><strong>Cross-Merchant Comparison:</strong> "Flight A is cheaper but Flight B includes baggage" becomes computable</li>
+        </ul>
+
+        <h2>Relationship to Previous Work</h2>
+        <p>This proposal builds on Alldén's February contribution and the Hotels extension from Sabre. Together, they suggest UCP's vertical extension model is gaining traction:</p>
+
+        <ul>
+            <li><strong>Hotels Extension (Feb 16):</strong> Room types, amenities, policies</li>
+            <li><strong>Ancillaries (Feb 17, expanded Mar 2):</strong> Add-ons applicable across verticals</li>
+            <li><strong>Pattern Emerging:</strong> Domain experts contributing vertical-specific schemas while keeping core protocol stable</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+        <p>The proposal is currently open for review. Key questions for the working group:</p>
+
+        <ul>
+            <li>Should ancillary selection happen during checkout or require separate operations?</li>
+            <li>How should cancellation/refund policies for ancillaries be represented?</li>
+            <li>What's the interaction model with payment instruments that have ancillary restrictions?</li>
+        </ul>
+
+        <p>For AI agents handling real purchasing decisions, ancillaries represent a significant revenue opportunity for merchants and a genuine UX improvement for users. Getting the schema right matters.</p>
+
+        <div class="links-section">
+            <h3>Related Links</h3>
+            <ul>
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/235" target="_blank">PR #235: feat: Ancillaries Extension</a></li>
+                <li><a href="/articles/ucp-hotels-extension.html">Previous: UCP Hotels Extension Analysis</a></li>
+                <li><a href="/articles/ucp-ancillaries-extension.html">Previous: UCP Ancillaries Extension (Feb 17)</a></li>
+                <li><a href="/pulse.html">← Back to Repo Pulse</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

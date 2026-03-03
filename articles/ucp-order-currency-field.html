@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Order Currency Field — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .highlight {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight p:last-child { margin-bottom: 0; }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>UCP Order Currency Field: Multi-Currency Agentic Commerce Gets Cleaner</h1>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Schema</span>
+            <span class="tag">Commerce</span>
+            <br><br>
+            March 3, 2026 · deinck6 + Ilya Grigorik · <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/294ce8d" target="_blank">Commit 294ce8d</a>
+        </div>
+
+        <p>A small schema change landed today that has outsized implications for global agentic commerce: the UCP Order schema now includes a top-level <code>currency</code> field.</p>
+
+        <h2>The Change</h2>
+
+        <p>The commit adds a single field to <code>source/schemas/shopping/order.json</code>:</p>
+
+        <pre><code>{
+  "currency": {
+    "type": "string",
+    "description": "ISO 4217 currency code for this order (e.g., USD, EUR, JPY)"
+  }
+}</code></pre>
+
+        <p>Four lines of schema. Co-authored with Ilya Grigorik, indicating this had core team review.</p>
+
+        <h2>Why This Matters</h2>
+
+        <p>Previously, currency information was embedded within individual price objects throughout the order. Line items had currency. Totals had currency. Shipping had currency. This meant:</p>
+
+        <ul>
+            <li><strong>Redundancy</strong> — every monetary value repeated the same currency code</li>
+            <li><strong>Validation complexity</strong> — ensuring all currencies matched required checking every price object</li>
+            <li><strong>No single source of truth</strong> — which currency was the "order currency" if they differed?</li>
+        </ul>
+
+        <p>The top-level field provides a single, authoritative answer: "This order is in EUR." Period.</p>
+
+        <h2>Implications for AI Agents</h2>
+
+        <p>For AI agents handling international commerce, this simplifies several scenarios:</p>
+
+        <h3>Currency Detection</h3>
+
+        <p>An agent no longer needs to parse nested price objects to determine what currency an order uses. One field lookup gives the answer immediately.</p>
+
+        <h3>Multi-Currency Comparison</h3>
+
+        <p>When an agent is comparing offers from different merchants (potentially in different currencies), having a consistent top-level field makes aggregation cleaner.</p>
+
+        <h3>Display and Formatting</h3>
+
+        <p>Presenting order information to users requires knowing the currency upfront for proper formatting. The top-level field provides this without object traversal.</p>
+
+        <h2>Backward Compatibility</h2>
+
+        <p>The field is additive — existing implementations that rely on currency within price objects continue to work. But new implementations can use the top-level field as the authoritative source.</p>
+
+        <p>This follows UCP's pattern of evolution: additive changes that improve the protocol without breaking existing integrations.</p>
+
+        <h2>The Bigger Picture</h2>
+
+        <p>Google's UCP continues to mature through small, deliberate improvements. The currency field joins recent additions like:</p>
+
+        <ul>
+            <li><a href="/articles/ucp-ancillaries-extension-proposal.html">Ancillaries Extension</a> for add-ons and upgrades</li>
+            <li>Payment instrument qualifiers for BNPL and installments</li>
+            <li>Status discriminators for semantic error handling</li>
+        </ul>
+
+        <p>Each addition makes agentic commerce more robust for real-world scenarios. Multi-currency is one of those scenarios — inevitable when AI agents start shopping across borders on behalf of users.</p>
+
+        <h2>Author Context</h2>
+
+        <p>Daniel Einck (deinck6) has been contributing to UCP's schema work, focusing on practical improvements that address implementation friction. The co-authorship with Ilya Grigorik signals this aligns with the protocol's strategic direction.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Agent Passport Implementation — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .highlight {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight p:last-child { margin-bottom: 0; }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>A2A Agent Passport Implementation: From Proposal to Production</h1>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Identity</span>
+            <span class="tag">Security</span>
+            <span class="tag">Implementation</span>
+            <br><br>
+            March 3, 2026 · aeoess · <a href="https://github.com/a2aproject/A2A/issues/1575" target="_blank">Issue #1575</a>
+        </div>
+
+        <p>For weeks, the A2A community has debated agent identity. <a href="https://github.com/a2aproject/A2A/issues/1497" target="_blank">#1497</a> proposed an identity verification framework. <a href="https://github.com/a2aproject/A2A/issues/1472" target="_blank">#1472</a> asked for cryptographic identity verification. <a href="https://github.com/a2aproject/A2A/issues/1501" target="_blank">#1501</a> tackled trust scoring for delegation.</p>
+
+        <p>Now someone has built it.</p>
+
+        <h2>The Problem Being Solved</h2>
+
+        <p>The contributor runs three AI agents from different creators — Claude, GPT, and an open-source agent — that collaborate on development work. They review each other's code, post to shared channels, and coordinate tasks. The problem they hit daily:</p>
+
+        <div class="highlight">
+            <p>"When PortalX2 tells my GPT agent to push code to my repo, I have no way to verify that the request was within scope, properly authorized, or traceable back to me."</p>
+        </div>
+
+        <p>This is the core identity problem that every production multi-agent system faces. Without verification, delegation, and enforcement, autonomous agents operating on your behalf become a security liability.</p>
+
+        <h2>What the Implementation Provides</h2>
+
+        <p>The <a href="https://github.com/aeoess/agent-passport-system" target="_blank">Agent Passport System</a> is a TypeScript SDK (v1.8.0, 240 tests) that addresses the three proposals simultaneously:</p>
+
+        <h3>Ed25519 Cryptographic Identity</h3>
+
+        <p>Every agent gets a keypair, signs its actions, and can be verified by any other agent or system. Cross-language compatible with canonical serialization spec included, plus a Python reference implementation.</p>
+
+        <h3>Scoped Delegation with Cascade Revocation</h3>
+
+        <p>A human delegates specific permissions to an agent (e.g., <code>data:read</code>, <code>commerce:checkout</code>), with spend limits and expiry. Sub-delegation narrows scope — never widens. Revoking a parent cascades to all children instantly.</p>
+
+        <h3>Automatic Enforcement</h3>
+
+        <p>Every action gets wrapped in a 3-signature chain: (1) agent declares intent, (2) policy engine evaluates against delegation + values floor, (3) execution creates a signed receipt. The agent physically cannot skip this.</p>
+
+        <h2>Concrete Enforcement Example</h2>
+
+        <p>From the enforcement demo that ships with the SDK:</p>
+
+        <pre><code>═══ Actions outside scope — all DENIED ═══
+
+✗ Researcher tries to buy GPU → DENIED 
+  "No valid delegation for scope: commerce:checkout"
+✗ Purchaser tries to deploy code → DENIED 
+  "No valid delegation for scope: code:deploy"
+✗ Deployer tries to read secrets → DENIED 
+  "No valid delegation for scope: data:read"
+⚠ Purchaser tries $1,599 purchase → NARROWED 
+  "Spend 1599 exceeds remaining 200"</code></pre>
+
+        <p>Three agents, different permissions, every attempt logged. When the researcher agent has <code>data:read</code> and <code>api:fetch</code> permissions but tries <code>commerce:checkout</code>, there's no matching delegation — denied before anything happens.</p>
+
+        <h2>Values Floor</h2>
+
+        <p>The implementation includes seven principles defined in YAML that agents attest to:</p>
+
+        <ol>
+            <li><strong>Traceability</strong> — all actions create audit trails</li>
+            <li><strong>Honest identity</strong> — agents don't impersonate</li>
+            <li><strong>Scoped authority</strong> — agents stay within delegated permissions</li>
+            <li><strong>Revocability</strong> — delegation can always be withdrawn</li>
+            <li><strong>Auditability</strong> — decisions are explainable</li>
+            <li><strong>Non-deception</strong> — agents don't manipulate</li>
+            <li><strong>Proportionality</strong> — actions match the minimum needed scope</li>
+        </ol>
+
+        <p>Extensions can narrow the floor but never widen it.</p>
+
+        <h2>Integration Path with A2A</h2>
+
+        <p>The protocol is designed to compose, not replace. The contributor suggests:</p>
+
+        <ul>
+            <li>A2A agent cards could reference Agent Passport IDs for cryptographic verification</li>
+            <li>Delegation chains could gate which A2A operations an agent is authorized to perform</li>
+            <li>The audit trail provides the traceability that several proposals have requested</li>
+        </ul>
+
+        <h2>Why This Matters</h2>
+
+        <p>Implementation often accelerates spec work. The A2A community has been discussing identity for months. Now there's working code — with 240 tests, adversarial scenarios, and a month of production use.</p>
+
+        <p>The 23 adversarial test scenarios cover replay attacks, impersonation, scope escalation, and delegation chain manipulation. This isn't theoretical security — it's tested security.</p>
+
+        <h2>Available Now</h2>
+
+        <ul>
+            <li><a href="https://github.com/aeoess/agent-passport-system" target="_blank">SDK</a> (Apache-2.0, 240 tests, zero heavy deps)</li>
+            <li><a href="https://github.com/aeoess/agent-passport-mcp" target="_blank">MCP Server</a> (33 tools, works with Claude Desktop/Cursor/Windsurf)</li>
+            <li>Demo: <code>npx tsx examples/enforcement-demo.ts</code></li>
+            <li>npm: <code>npm install agent-passport-system</code></li>
+        </ul>
+
+        <p>The contributor has been running this in production with their own agents since February. The enforcement layer, they note, "is the thing that actually changed how they behave."</p>
+
+        <h2>Next Steps</h2>
+
+        <p>This implementation could inform how A2A approaches identity in a future version. The pattern of community implementations proving concepts before spec inclusion is healthy — it shows the ideas work in practice, not just in theory.</p>
+
+        <p>For teams running multi-agent systems today and hitting the same identity problems, there's now a tested solution available.</p>
+    </div>
+</body>
+</html>

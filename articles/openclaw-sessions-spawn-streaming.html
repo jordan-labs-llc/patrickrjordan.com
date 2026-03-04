@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Sessions Spawn Streaming: Fixing Sub-Agent Communication — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--red);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .tag-fix {
+            background: var(--green);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .lede {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .author-box p {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--green);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag tag-fix">Fix</span>
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Sub-Agents</span>
+            March 4, 2026
+        </div>
+        
+        <h1>OpenClaw Sessions Spawn Streaming: Fixing Sub-Agent Communication</h1>
+        
+        <p class="lede">A critical fix ensures parent sessions receive streaming output from spawned sub-agents via ACP relay — enabling real-time visibility into background agent work.</p>
+
+        <div class="author-box">
+            <h3>About the Contributors</h3>
+            <p><strong>Bob</strong> (<a href="https://github.com/openclaw/openclaw" target="_blank">OpenClaw maintainer</a>) merged the fix, with credit to <strong>@vincentkoc</strong> for identifying and resolving the issue. Vincent Koc is an active OpenClaw contributor focusing on gateway and session management.</p>
+        </div>
+
+        <h2>The Problem</h2>
+        
+        <p>OpenClaw's <code>sessions_spawn</code> feature lets a main agent create background sub-agents for specialized tasks. For example:</p>
+        
+        <pre>// Main agent spawns a research sub-agent
+sessions_spawn({
+  task: "Research the latest A2A spec changes",
+  agentId: "research-agent"
+})</pre>
+        
+        <p>When using the ACP (Agent Communication Protocol) relay — particularly for remote or distributed agent setups — streaming output from these spawned sessions wasn't being relayed back to the parent session. The sub-agent would do its work, but the parent would only see the final result, not the incremental progress.</p>
+
+        <h2>Why Streaming Matters</h2>
+        
+        <p>For short tasks, waiting for the final result is fine. But for longer-running sub-agent work:</p>
+        
+        <ul>
+            <li><strong>User experience:</strong> Users want to see that something is happening, not stare at a blank screen</li>
+            <li><strong>Debugging:</strong> When a sub-agent fails mid-task, streaming shows where it got stuck</li>
+            <li><strong>Orchestration:</strong> Parent agents may want to react to intermediate results</li>
+            <li><strong>Resource management:</strong> Early visibility into sub-agent behavior helps catch runaway tasks</li>
+        </ul>
+
+        <div class="callout">
+            <div class="callout-title">ACP Relay Context</div>
+            <p>The ACP relay is how OpenClaw handles communication across session boundaries and network hops. It's particularly important for enterprise deployments where agents run on different machines or in different security contexts.</p>
+        </div>
+
+        <h2>The Fix</h2>
+        
+        <p><a href="https://github.com/openclaw/openclaw/pull/34310" target="_blank">PR #34310</a> ensures that when a sub-agent streams output, those chunks are properly forwarded through the ACP relay to the parent session. The fix is in the session spawning logic, not the relay itself — the relay was already capable of streaming, but the spawn mechanism wasn't hooking into it correctly.</p>
+
+        <h2>Related Fixes (Same Day)</h2>
+        
+        <p>This was part of a burst of session and streaming fixes on March 4:</p>
+        
+        <ul>
+            <li><strong>#34332:</strong> Prevent nodes media base64 context bloat — stops large media payloads from inflating context</li>
+            <li><strong>#34365:</strong> Preserve raw media invoke for HTTP tool clients — ensures media handling works correctly across tool boundaries</li>
+            <li><strong>#34045:</strong> Route Slack system events to bound agent sessions — system events now reach the right session</li>
+        </ul>
+        
+        <p>Together, these fixes suggest the OpenClaw team is working through a systematic review of inter-session communication patterns.</p>
+
+        <h2>Implications</h2>
+        
+        <p>For users of <code>sessions_spawn</code> in ACP relay environments:</p>
+        
+        <ul>
+            <li>Upgrade to the latest OpenClaw to get streaming sub-agent output</li>
+            <li>If you had workarounds for the missing streaming, you can likely remove them</li>
+            <li>Consider using streaming for longer sub-agent tasks to improve user experience</li>
+        </ul>
+        
+        <p>For OpenClaw deployers, this is another signal that the distributed agent patterns are maturing — edge cases that only appear in production relay setups are being systematically addressed.</p>
+
+        <div class="footer-nav">
+            <a href="/pulse.html">← Repo Pulse</a>
+            <a href="/articles/">All Articles →</a>
+        </div>
+    </div>
+</body>
+</html>

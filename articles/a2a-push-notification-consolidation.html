@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Push Notification Consolidation: Simplifying Agent Communication — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .lede {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .author-box p {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--green);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Breaking Change</span>
+            <span class="tag">Spec</span>
+            March 4, 2026
+        </div>
+        
+        <h1>A2A Push Notification Consolidation: Simplifying Agent Communication</h1>
+        
+        <p class="lede">Google's Agent-to-Agent Protocol merges <code>TaskPushNotificationConfig</code> and <code>PushNotificationConfig</code> into a single type — reducing cognitive overhead and surface area for implementers building real-time agent systems.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>Kuba Herczyński</strong> (<a href="https://github.com/herczyn" target="_blank">@herczyn</a>) is a software engineer at Google working on the A2A Protocol team. He's been a primary contributor to the post-1.0 cleanup effort, focusing on spec clarity and consistency.</p>
+        </div>
+
+        <h2>What Changed</h2>
+        
+        <p><a href="https://github.com/a2aproject/A2A/pull/1500" target="_blank">PR #1500</a> consolidates two separate notification configuration types that served similar purposes:</p>
+        
+        <ul>
+            <li><code>TaskPushNotificationConfig</code> — used when subscribing to task updates</li>
+            <li><code>PushNotificationConfig</code> — used for general push notification configuration</li>
+        </ul>
+        
+        <p>These have been merged into a single <code>PushNotificationConfig</code> type. The breaking change marker (<code>!</code>) in the commit message signals that existing implementations will need to update their code.</p>
+
+        <h2>Why It Matters</h2>
+        
+        <p>Push notifications are how A2A enables real-time agent-to-agent communication. When Agent A delegates a task to Agent B, notifications allow B to push status updates back without A constantly polling.</p>
+        
+        <p>Having two separate config types created friction:</p>
+        
+        <ul>
+            <li><strong>Implementer confusion:</strong> Which type do I use when?</li>
+            <li><strong>Inconsistent behavior:</strong> Slight differences between the types led to edge cases</li>
+            <li><strong>SDK bloat:</strong> Two types meant more code to maintain in every language binding</li>
+        </ul>
+
+        <div class="callout">
+            <div class="callout-title">Post-1.0 Cleanup Pattern</div>
+            <p>This is part of a broader effort since the February 1.0 release. The A2A team is systematically identifying redundant or confusing constructs and simplifying them while the ecosystem is still young enough to absorb breaking changes.</p>
+        </div>
+
+        <h2>Technical Details</h2>
+        
+        <p>The consolidated <code>PushNotificationConfig</code> now handles all push notification scenarios. The key fields remain:</p>
+        
+        <pre>{
+  "url": "https://agent-a.example.com/a2a/notifications",
+  "token": "bearer-token-for-auth",
+  "events": ["task.completed", "task.failed", "task.progress"]
+}</pre>
+        
+        <p>The <code>events</code> field lets agents subscribe to specific notification types rather than receiving everything. This was previously only available in one of the two config types.</p>
+
+        <h2>Migration Path</h2>
+        
+        <p>For implementers currently using <code>TaskPushNotificationConfig</code>:</p>
+        
+        <ol>
+            <li>Replace all references to <code>TaskPushNotificationConfig</code> with <code>PushNotificationConfig</code></li>
+            <li>Review any event filtering logic — the consolidated type may have slightly different field names</li>
+            <li>Update SDK dependencies to the latest version once they release with this change</li>
+        </ol>
+
+        <h2>What's Next</h2>
+        
+        <p>The same PR author (Herczyński) has a follow-up commit (<a href="https://github.com/a2aproject/A2A/commit/010b9cc" target="_blank">010b9cc</a>) removing <code>config</code> from binding entirely. The A2A team is clearly working through the spec systematically, and more consolidation PRs are likely incoming.</p>
+        
+        <p>For agent developers, now is a good time to audit your A2A implementation against the latest spec — better to absorb these changes together than one at a time.</p>
+
+        <div class="footer-nav">
+            <a href="/pulse.html">← Repo Pulse</a>
+            <a href="/articles/">All Articles →</a>
+        </div>
+    </div>
+</body>
+</html>

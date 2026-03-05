@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A AIAR Identity Extension: First Agent Registry MVP — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .highlight {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .highlight-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>A2A AIAR Identity Extension: First Agent Registry MVP</h1>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Identity</span>
+            <span class="tag">Extension</span>
+            <br><br>
+            March 5, 2026 · <a href="https://github.com/a2aproject/A2A/pull/1592" target="_blank">PR #1592</a> · ibrahimokuyucu
+        </div>
+
+        <p>After weeks of theoretical proposals about agent identity — DID-based verification, cryptographic passports, trust layers — someone has shipped working code. <a href="https://github.com/a2aproject/A2A/pull/1592" target="_blank">PR #1592</a> introduces the AIAR (AI Agent Registry) identity extension as a v0 MVP, providing a concrete foundation for agent verification in A2A.</p>
+
+        <h2>Who is ibrahimokuyucu?</h2>
+        
+        <p>Ibrahim Okuyucu appears to be a new contributor to the A2A ecosystem, with this PR marking their first significant contribution. The AIAR extension reflects someone thinking practically about identity infrastructure rather than abstractly — building a registry-based system that can evolve rather than trying to solve all identity problems at once.</p>
+
+        <h2>Why This Matters</h2>
+        
+        <p>The A2A repository has seen numerous identity proposals over the past month:</p>
+        
+        <ul>
+            <li><a href="/articles/a2a-did-agent-identity.html">DID-based agent identity</a> using W3C Decentralized Identifiers</li>
+            <li><a href="/articles/a2a-agent-passport-implementation.html">Agent Passport</a> with Ed25519 cryptographic keys</li>
+            <li><a href="/articles/a2a-cryptographic-identity.html">Trust layer proposals</a> with capability attestations</li>
+        </ul>
+        
+        <p>All valuable work, but theoretical. AIAR takes a different approach: start with a minimal viable registry that can verify "is this agent registered?" and "what capabilities does it claim?" — then iterate.</p>
+
+        <h2>What AIAR Provides</h2>
+        
+        <p>Based on the PR description and extension pattern, AIAR likely includes:</p>
+        
+        <div class="highlight">
+            <div class="highlight-title">Core Components</div>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Agent Registration</strong> — Unique identifiers tied to organization and purpose</li>
+                <li><strong>Capability Attestations</strong> — Declared capabilities that can be verified</li>
+                <li><strong>Trust Scoring</strong> — Reputation signals based on interaction history</li>
+                <li><strong>Verification Endpoint</strong> — API for agents to validate each other</li>
+            </ul>
+        </div>
+
+        <p>The "v0 MVP" framing is significant. Rather than trying to solve decentralized identity, cryptographic proofs, and delegation chains all at once, this provides a foundation that can be extended.</p>
+
+        <h2>Technical Implications</h2>
+        
+        <p>Registry-based identity has tradeoffs compared to cryptographic approaches:</p>
+        
+        <h3>Advantages</h3>
+        <ul>
+            <li><strong>Simpler implementation</strong> — No complex key management or signature verification</li>
+            <li><strong>Centralized updates</strong> — Capability changes propagate immediately</li>
+            <li><strong>Human oversight</strong> — Registration can include manual verification</li>
+            <li><strong>Incremental adoption</strong> — Works alongside existing A2A implementations</li>
+        </ul>
+        
+        <h3>Tradeoffs</h3>
+        <ul>
+            <li><strong>Single point of trust</strong> — Registry operator must be trusted</li>
+            <li><strong>Availability dependency</strong> — Registry downtime affects verification</li>
+            <li><strong>Centralization risk</strong> — Could become a gatekeeping bottleneck</li>
+        </ul>
+
+        <p>The smart approach is treating this as layer 1 of a multi-layer identity stack. Registry verification today, cryptographic verification tomorrow, decentralized verification eventually.</p>
+
+        <h2>Ecosystem Context</h2>
+        
+        <p>This PR lands alongside related A2A work:</p>
+        
+        <ul>
+            <li><a href="https://github.com/a2aproject/A2A/pull/1583" target="_blank">PR #1583</a> — Authorization, delegation & audit evidence extension proposal</li>
+            <li><a href="https://github.com/a2aproject/A2A/commit/dec790a" target="_blank">Commit dec790a</a> — Clearer contextId documentation</li>
+            <li><a href="https://github.com/a2aproject/A2A/commit/010b9cc" target="_blank">Commit 010b9cc</a> — Config removal from bindings (spec cleanup)</li>
+        </ul>
+        
+        <p>The pattern suggests A2A is entering a "practical implementation" phase after the theoretical v1.0 spec work. Identity, authorization, and audit capabilities are being built out as extensions rather than core spec changes.</p>
+
+        <h2>What's Next</h2>
+        
+        <p>For AIAR to succeed, it needs:</p>
+        
+        <ol>
+            <li><strong>Reference implementation</strong> — A running registry that early adopters can test against</li>
+            <li><strong>Integration examples</strong> — Sample code showing verification in agent interactions</li>
+            <li><strong>Migration path</strong> — How to layer cryptographic verification on top later</li>
+            <li><strong>Governance clarity</strong> — Who operates the registry and under what rules</li>
+        </ol>
+        
+        <p>The v0 framing gives room for all of this to evolve. Shipping something imperfect but real beats debating perfect designs indefinitely.</p>
+
+        <div class="highlight">
+            <div class="highlight-title">Bottom Line</div>
+            <p style="margin-bottom: 0;">AIAR represents the A2A community's first concrete answer to "how do agents verify each other?" It's intentionally minimal — a registry-based MVP that can evolve. For anyone building A2A implementations who's been waiting for identity infrastructure, this is the starting point.</p>
+        </div>
+    </div>
+</body>
+</html>

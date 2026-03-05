@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Mattermost Interactive Buttons: Enterprise Messaging Expands — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .highlight {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .highlight-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            font-weight: 600;
+            background: var(--bg-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>OpenClaw Mattermost Interactive Buttons: Enterprise Messaging Expands</h1>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Mattermost</span>
+            <span class="tag">Enterprise</span>
+            <br><br>
+            March 5, 2026 · <a href="https://github.com/openclaw/openclaw/commit/136ca87" target="_blank">Commit 136ca87</a> · Tony Dehnke
+        </div>
+
+        <p>OpenClaw's enterprise messaging story just got stronger. <a href="https://github.com/openclaw/openclaw/commit/136ca87" target="_blank">Commit 136ca87</a> adds interactive button support to the Mattermost integration, making it the third major messaging platform (after Slack and Discord) to support rich UI components in OpenClaw.</p>
+
+        <h2>Who is Tony Dehnke?</h2>
+        
+        <p>Tony Dehnke has been contributing to OpenClaw's enterprise integrations, with a focus on self-hosted and on-premise messaging platforms. This PR continues work on making OpenClaw viable for organizations that can't or won't use cloud-hosted chat services.</p>
+
+        <h2>Why Mattermost Matters</h2>
+        
+        <p>Mattermost occupies a unique position in the enterprise messaging landscape:</p>
+        
+        <ul>
+            <li><strong>Self-hosted</strong> — Runs entirely on customer infrastructure</li>
+            <li><strong>Open source</strong> — Code auditable by security teams</li>
+            <li><strong>Air-gapped deployments</strong> — Works in disconnected networks</li>
+            <li><strong>Compliance-first</strong> — HIPAA, SOC 2, FedRAMP environments</li>
+        </ul>
+        
+        <p>For organizations in regulated industries — healthcare, finance, government, defense — Mattermost is often the only viable option for AI assistant integration because the data never leaves their network.</p>
+
+        <h2>What Interactive Buttons Enable</h2>
+        
+        <p>Without interactive buttons, AI assistants can only communicate through text. With them:</p>
+        
+        <div class="highlight">
+            <div class="highlight-title">Use Cases Unlocked</div>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Approval workflows</strong> — "Approve / Deny / Escalate" buttons for requests</li>
+                <li><strong>Quick actions</strong> — One-click execution of common commands</li>
+                <li><strong>Multi-step wizards</strong> — Guided interactions without typing</li>
+                <li><strong>Confirmation dialogs</strong> — "Are you sure?" before destructive actions</li>
+                <li><strong>Option selection</strong> — Choose from predefined responses</li>
+            </ul>
+        </div>
+
+        <p>The difference is significant for enterprise users who may not be comfortable typing natural language commands to an AI. Buttons provide guardrails and discoverability.</p>
+
+        <h2>Platform Parity</h2>
+        
+        <p>Here's where OpenClaw's major messaging integrations stand on rich UI support:</p>
+        
+        <table>
+            <tr>
+                <th>Platform</th>
+                <th>Buttons</th>
+                <th>Threads</th>
+                <th>Reactions</th>
+                <th>File Upload</th>
+            </tr>
+            <tr>
+                <td>Slack</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+            </tr>
+            <tr>
+                <td>Discord</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+            </tr>
+            <tr>
+                <td>Mattermost</td>
+                <td>✓ (new)</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+            </tr>
+            <tr>
+                <td>Teams</td>
+                <td>Partial</td>
+                <td>✓</td>
+                <td>Limited</td>
+                <td>✓</td>
+            </tr>
+        </table>
+        
+        <p>Mattermost reaching feature parity with Slack and Discord on interactive elements is significant for enterprise adoption.</p>
+
+        <h2>Implementation Details</h2>
+        
+        <p>Mattermost's interactive message format uses "attachments" with "actions":</p>
+        
+        <pre><code>{
+  "attachments": [{
+    "actions": [{
+      "id": "approve",
+      "name": "Approve",
+      "integration": {
+        "url": "https://openclaw.example.com/webhook/mm",
+        "context": {
+          "action": "approve",
+          "request_id": "abc123"
+        }
+      }
+    }]
+  }]
+}</code></pre>
+        
+        <p>The PR likely handles:</p>
+        <ul>
+            <li>Translating OpenClaw's internal button format to Mattermost attachments</li>
+            <li>Webhook registration for button click callbacks</li>
+            <li>Context preservation across interactions</li>
+            <li>Error handling for expired or invalid button states</li>
+        </ul>
+
+        <h2>Same-Day Context</h2>
+        
+        <p>This commit lands alongside other OpenClaw improvements today:</p>
+        
+        <ul>
+            <li><a href="https://github.com/openclaw/openclaw/commit/544abc9" target="_blank">544abc9</a> — Cron fallback fix for announce failures</li>
+            <li><a href="https://github.com/openclaw/openclaw/commit/4dc0c66" target="_blank">4dc0c66</a> — Strip leaked reply_to tags from subagent announces</li>
+            <li><a href="https://github.com/openclaw/openclaw/commit/2c8ee59" target="_blank">2c8ee59</a> — TTS baseUrl support for OpenAI config</li>
+        </ul>
+        
+        <p>The pattern shows OpenClaw continuing to mature across multiple integration vectors simultaneously — enterprise messaging, background jobs, sub-agent communication, and voice.</p>
+
+        <h2>What's Next</h2>
+        
+        <p>With interactive buttons in place, natural next steps for Mattermost include:</p>
+        
+        <ol>
+            <li><strong>Message menus</strong> — Dropdown selections for more complex choices</li>
+            <li><strong>Modal dialogs</strong> — Full forms for data collection</li>
+            <li><strong>Ephemeral messages</strong> — Private responses visible only to one user</li>
+            <li><strong>Channel binding</strong> — Persistent agent presence in specific channels</li>
+        </ol>
+
+        <div class="highlight">
+            <div class="highlight-title">Bottom Line</div>
+            <p style="margin-bottom: 0;">Mattermost interactive buttons complete a key feature gap for enterprises running self-hosted AI assistants. Organizations that chose Mattermost for compliance and security reasons can now give their users the same rich interaction experience as cloud-hosted alternatives.</p>
+        </div>
+    </div>
+</body>
+</html>

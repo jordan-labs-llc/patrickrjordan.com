@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Pub/Sub Proposal: Event-Driven Agent Coordination — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Feature Request</span>
+            <span class="tag">Architecture</span>
+            March 6, 2026
+        </div>
+        
+        <h1>A2A Pub/Sub Proposal: Event-Driven Agent Coordination</h1>
+        <p class="subtitle">As multi-agent systems scale beyond simple request-response patterns, native publish/subscribe semantics become essential infrastructure.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>zhengleibin</strong> filed <a href="https://github.com/a2aproject/A2A/issues/1593" target="_blank">Issue #1593</a> proposing built-in pub/sub support for the A2A protocol. The proposal targets a fundamental architectural gap in how agents coordinate at scale.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>The Agent-to-Agent Protocol currently uses a request-response model: Agent A sends a message to Agent B and waits for a reply. This works well for direct delegation but becomes inefficient when multiple agents need to react to the same event.</p>
+
+        <p>Consider a shopping assistant scenario:</p>
+        <ul>
+            <li>A price-monitoring agent detects a 30% discount on a tracked item</li>
+            <li>The user's personal assistant needs to know</li>
+            <li>The budget-tracking agent needs to know</li>
+            <li>The calendar agent might need to schedule a purchase window</li>
+        </ul>
+
+        <p>Without pub/sub, the price-monitoring agent must individually notify each interested party, manage delivery confirmations, and handle failures. With pub/sub, it publishes once to a "price-alerts" topic, and subscribers receive the event automatically.</p>
+
+        <h2>What the Proposal Suggests</h2>
+
+        <p>The feature request outlines several key capabilities:</p>
+
+        <ul>
+            <li><strong>Topic-based channels:</strong> Named message channels that agents can subscribe to</li>
+            <li><strong>Persistent subscriptions:</strong> Subscriptions that survive agent restarts</li>
+            <li><strong>Filtering:</strong> Subscribers can express interest in subsets of messages</li>
+            <li><strong>Delivery guarantees:</strong> At-least-once or exactly-once semantics depending on use case</li>
+        </ul>
+
+        <div class="callout">
+            <p><strong>Design tension:</strong> A2A is intentionally minimal — adding pub/sub primitives significantly expands the protocol surface. The community will need to weigh simplicity against capability.</p>
+        </div>
+
+        <h2>Technical Considerations</h2>
+
+        <p>Implementing pub/sub in a decentralized agent ecosystem raises interesting challenges:</p>
+
+        <p><strong>Broker architecture:</strong> Who runs the message broker? Options include:</p>
+        <ul>
+            <li>Each agent runs its own broker (fully decentralized)</li>
+            <li>Designated "hub" agents provide pub/sub services</li>
+            <li>Integration with existing message brokers (Kafka, NATS, etc.)</li>
+        </ul>
+
+        <p><strong>Discovery:</strong> How do agents find topics of interest? This connects to the ongoing Agent Card discussions — perhaps topic catalogs become part of agent capabilities.</p>
+
+        <p><strong>Security:</strong> Who can publish to a topic? Who can subscribe? The identity and authorization discussions (see <a href="/articles/a2a-aiar-identity-extension.html">AIAR Identity Extension</a>) become even more critical with broadcast messaging.</p>
+
+        <h2>Real-World Applications</h2>
+
+        <p>Event-driven patterns unlock several use cases that are awkward with request-response:</p>
+
+        <ul>
+            <li><strong>Monitoring dashboards:</strong> Aggregate status updates from hundreds of agents</li>
+            <li><strong>Collaborative workflows:</strong> Multiple agents react to state changes in a shared task</li>
+            <li><strong>Market data:</strong> Price feeds distributed to trading agents</li>
+            <li><strong>Incident response:</strong> Alert propagation across agent teams</li>
+        </ul>
+
+        <h2>What Happens Next</h2>
+
+        <p>The proposal is in early discussion. Given the scope of the change, expect:</p>
+
+        <ol>
+            <li>Community feedback on whether pub/sub belongs in the core spec vs. an extension</li>
+            <li>Alternative proposals (some might suggest integrating with existing message brokers rather than building native support)</li>
+            <li>Prototyping in reference implementations to validate the design</li>
+        </ol>
+
+        <p>For implementers building multi-agent systems today, this is a signal of where the protocol is heading. Even if native pub/sub takes months to land, designing with event-driven patterns in mind will ease future migration.</p>
+
+        <div class="callout">
+            <p><strong>Follow the discussion:</strong> <a href="https://github.com/a2aproject/A2A/issues/1593" target="_blank">github.com/a2aproject/A2A/issues/1593</a></p>
+        </div>
+    </div>
+</body>
+</html>

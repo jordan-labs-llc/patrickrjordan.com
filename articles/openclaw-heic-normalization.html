@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw HEIC Normalization: Cross-Platform Image Handling — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Gateway</span>
+            <span class="tag">Cross-Platform</span>
+            March 6, 2026
+        </div>
+        
+        <h1>OpenClaw HEIC Normalization: Cross-Platform Image Handling</h1>
+        <p class="subtitle">A small gateway fix solves a frustrating problem: iOS photos can now be processed by any backend, not just Apple-native ones.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>Vincent Koc</strong> merged <a href="https://github.com/openclaw/openclaw/commit/9aceb51" target="_blank">commit 9aceb51</a> adding HEIC normalization to the OpenClaw gateway. Vincent is a core maintainer focused on gateway infrastructure and cross-platform compatibility.</p>
+        </div>
+
+        <h2>The Problem</h2>
+        
+        <p>Since iOS 11 (2017), iPhones save photos in HEIC format by default. HEIC offers better compression than JPEG while maintaining quality — Apple made a smart technical choice.</p>
+
+        <p>The challenge: most non-Apple software can't read HEIC natively. This creates friction when iPhone users send photos to AI assistants running on Linux servers or Windows backends. The image arrives, the server doesn't know what to do with it, and the user gets an error.</p>
+
+        <div class="callout">
+            <p><strong>User experience impact:</strong> "I just sent a photo, why can't you see it?" is a frustrating interaction for both humans and AI assistants trying to be helpful.</p>
+        </div>
+
+        <h2>What Changed</h2>
+
+        <p>The fix adds HEIC detection and conversion at the gateway layer — the earliest possible point in the image processing pipeline:</p>
+
+        <ol>
+            <li>Incoming images are checked for HEIC/HEIF format</li>
+            <li>HEIC images are converted to JPEG before being passed to providers</li>
+            <li>The conversion happens transparently — no user or skill changes required</li>
+        </ol>
+
+        <p>By handling this in the gateway, every downstream consumer benefits automatically. Vision models, image generation tools, and storage systems all receive universally-compatible JPEG.</p>
+
+        <h2>Technical Details</h2>
+
+        <p>The implementation leverages existing image processing libraries to:</p>
+
+        <ul>
+            <li>Detect HEIC via magic bytes (not just file extension)</li>
+            <li>Preserve EXIF metadata during conversion</li>
+            <li>Maintain reasonable quality/size tradeoffs</li>
+            <li>Handle edge cases like HEIC sequences (Live Photos)</li>
+        </ul>
+
+        <p>The PR also updates the <code>input_image</code> normalization path, ensuring consistency with how other image formats are handled.</p>
+
+        <h2>Why Gateway-Level Matters</h2>
+
+        <p>OpenClaw could have addressed HEIC support in several places:</p>
+
+        <ul>
+            <li><strong>Client apps:</strong> Convert before sending (requires updating every client)</li>
+            <li><strong>Individual skills:</strong> Each skill handles its own conversion (code duplication)</li>
+            <li><strong>Provider adapters:</strong> Convert before model inference (still reaches storage as HEIC)</li>
+            <li><strong>Gateway:</strong> Convert once, early, benefiting everything downstream ✓</li>
+        </ul>
+
+        <p>The gateway approach embodies "do one thing well" — image normalization becomes infrastructure that other components can rely on.</p>
+
+        <h2>Implications</h2>
+
+        <p>For OpenClaw users:</p>
+        <ul>
+            <li>iPhone photos "just work" without any configuration</li>
+            <li>No need to change camera settings or use third-party apps</li>
+            <li>Existing workflows continue unchanged</li>
+        </ul>
+
+        <p>For OpenClaw developers:</p>
+        <ul>
+            <li>Skills can assume images arrive in web-friendly formats</li>
+            <li>Less defensive coding around format detection</li>
+            <li>Consistent behavior across all image sources</li>
+        </ul>
+
+        <p>This commit is part of a broader pattern in OpenClaw: pushing complexity to infrastructure layers so that higher-level code can focus on user value.</p>
+
+        <div class="callout">
+            <p><strong>View the change:</strong> <a href="https://github.com/openclaw/openclaw/commit/9aceb51" target="_blank">github.com/openclaw/openclaw/commit/9aceb51</a></p>
+        </div>
+    </div>
+</body>
+</html>

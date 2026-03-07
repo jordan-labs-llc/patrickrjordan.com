@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Version Negotiation Overhaul: Business-Canonical Versioning — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .author-section h3 {
+            margin-top: 0;
+            font-size: 1rem;
+        }
+        .author-section p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+        .links-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .links-section h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Versioning</span>
+            <span class="tag">Breaking Change</span>
+            March 7, 2026
+        </div>
+        
+        <h1>UCP Version Negotiation Overhaul: Business-Canonical Versioning</h1>
+        <p class="subtitle">Ilya Grigorik's comprehensive PR #200 fundamentally reshapes how protocol versioning works — businesses declare what they support, platforms must match, and extensions can declare dependency constraints.</p>
+
+        <div class="author-section">
+            <h3>About the Author</h3>
+            <p><strong>Ilya Grigorik</strong> is a web performance engineer at Google and author of "High Performance Browser Networking" (O'Reilly). He has been the driving force behind UCP's most significant specifications, including cryptographic message signing, risk/abuse signals, and status discriminators. This PR represents months of feedback distillation into a coherent versioning model.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Protocol versioning sounds mundane until you realize it determines whether an AI agent can actually transact with a business. The prior UCP model imposed an <em>unbounded</em> backwards-compatibility obligation: businesses had to process any request from a platform using an older protocol version. Forever.</p>
+
+        <p>That's unsustainable. <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/200" target="_blank">PR #200</a> flips the model: the business's protocol version is canonical. Platforms must support what businesses declare. This seemingly simple inversion has profound implications for how the ecosystem evolves.</p>
+
+        <div class="callout">
+            <p><strong>The core insight:</strong> In a two-sided marketplace where hundreds of thousands of businesses interact with dozens of platforms, businesses should not carry infinite compatibility burden. The smaller side (platforms) can afford to support multiple versions; the larger side (businesses) cannot.</p>
+        </div>
+
+        <h2>What Changed Technically</h2>
+
+        <p>The PR introduces four major changes:</p>
+
+        <h3>1. Business-Declared Version Support</h3>
+
+        <p>Businesses now declare accepted versions via a <code>supported_versions</code> array in their profile:</p>
+
+<pre><code>{
+  "protocol_version": "2026-03-01",
+  "supported_versions": {
+    "2026-01-23": "/.well-known/ucp/2026-01-23",
+    "2025-09-15": "/.well-known/ucp/2025-09-15"
+  }
+}</code></pre>
+
+        <p>Each entry points to a complete, self-contained profile for that version. The current version is served at the root; only older versions appear in the map. Version-specific profiles are leaf documents with no further <code>supported_versions</code> nesting.</p>
+
+        <h3>2. Version Mismatch Becomes Protocol Error</h3>
+
+        <p>Previously, <code>version_unsupported</code> was a negotiation result (HTTP 200 with checkout message schema). Now it's a protocol error (HTTP 422). The reasoning: version mismatch is a pre-negotiation gate check — the buyer cannot resolve a protocol incompatibility. It's not a business outcome; it's infrastructure failure.</p>
+
+        <h3>3. Capability Version Intersection</h3>
+
+        <p>The capability intersection algorithm now explicitly handles version selection:</p>
+
+<pre><code>// Intersection algorithm additions:
+// 1. Compute mutual version set for each capability
+// 2. Select highest mutual version
+// 3. Exclude capability if no mutual version exists</code></pre>
+
+        <p>This prevents the ambiguity of "I support checkout, you support checkout, but we're using different checkout versions with incompatible semantics."</p>
+
+        <h3>4. Extension Schema Version Constraints</h3>
+
+        <p>Extensions can now declare dependencies via a <code>requires</code> object:</p>
+
+<pre><code>{
+  "requires": {
+    "protocol": { "min": "2026-01-23" },
+    "capabilities": {
+      "dev.ucp.shopping.checkout": { 
+        "min": "2026-06-01",
+        "max": "2026-12-01"
+      }
+    }
+  }
+}</code></pre>
+
+        <p>Why capability constraints? Third-party extensions move on their own release schedule. When <code>com.acme.loyalty</code> extends <code>dev.ucp.shopping.checkout</code>, it depends on checkout's semantic contract as of a specific version. Schema validation catches structural mismatches, but can't catch semantic changes — fields changing units, enum values shifting meaning, behavioral contracts tightening.</p>
+
+        <p>The extension author declaring "I understand checkout's contract as of version X through Y" is the only defense against silent semantic bugs.</p>
+
+        <h2>Design Philosophy</h2>
+
+        <p>Several key decisions shaped this PR:</p>
+
+        <ul>
+            <li><strong>URI-reference format:</strong> The <code>supported_versions</code> map uses relative URIs, allowing <code>/.well-known/ucp/2026-01-11</code> style paths without requiring absolute URLs.</li>
+            <li><strong>Version lifecycle is business policy:</strong> The protocol does not prescribe deprecation schedules. Some businesses may support five versions; others may only support current. That's a business decision, not a protocol mandate.</li>
+            <li><strong>min/max for extensions:</strong> An extension tested against checkout 2026-01-23 through 2026-09-01 should not silently claim compatibility with 2026-12-01 if breaking changes landed. Both floor and ceiling matter.</li>
+            <li><strong>MUST over SHOULD:</strong> After review feedback, <code>min_protocol_version</code> validation was upgraded from SHOULD to MUST — implementations must verify negotiated version against extension requirements.</li>
+        </ul>
+
+        <h2>Implications for the Ecosystem</h2>
+
+        <h3>For Platforms</h3>
+        <p>Platforms now carry the version support burden. This is appropriate — there are far fewer platforms than businesses, and platforms are sophisticated technical operations that can maintain compatibility shims.</p>
+
+        <h3>For Businesses</h3>
+        <p>Freedom to evolve. Businesses can drop support for older versions without breaking the ecosystem, as long as they give platforms time to adapt. The <code>supported_versions</code> map makes deprecation explicit and discoverable.</p>
+
+        <h3>For Extension Authors</h3>
+        <p>New responsibility: explicitly declare what you depend on. The <code>requires</code> object forces extension authors to think about versioning upfront, preventing "works on my version" deployment failures.</p>
+
+        <h2>Connection to Prior Work</h2>
+
+        <p>This PR builds on Grigorik's systematic UCP contributions:</p>
+
+        <ul>
+            <li><strong>Status discriminator</strong> (Feb 28): Semantic error handling that enables this version mismatch reclassification</li>
+            <li><strong>Message signing</strong> (Feb 18): Cryptographic verification that benefits from clear version contracts</li>
+            <li><strong>Risk signals</strong> (Feb 4): Protocol-level trust signals that work across versions</li>
+        </ul>
+
+        <p>Together, these form UCP's maturity infrastructure — the boring but essential work that makes enterprise adoption possible.</p>
+
+        <h2>Next Steps</h2>
+
+        <p>The PR merged on March 7, 2026. Key follow-up work:</p>
+
+        <ul>
+            <li>Platform implementations need to adopt the new discovery flow</li>
+            <li>Business profiles need to migrate to the <code>supported_versions</code> format</li>
+            <li>Extension authors should add <code>requires</code> declarations to existing schemas</li>
+            <li>Documentation updates to reflect the new version negotiation model</li>
+        </ul>
+
+        <p>This is the kind of change that determines whether a protocol scales from demo to production. Unsexy, essential infrastructure.</p>
+
+        <div class="links-section">
+            <h3>Related Links</h3>
+            <ul>
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/200" target="_blank">PR #200: fix/clarify version negotiation</a></li>
+                <li><a href="https://ucp.dev/specification/overview" target="_blank">UCP Specification Overview</a></li>
+                <li><a href="/articles/ucp-status-discriminator.html">UCP Status Discriminator: Semantic Error Handling</a></li>
+                <li><a href="/pulse.html">Repo Pulse — Daily Activity Tracking</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

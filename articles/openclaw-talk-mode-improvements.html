@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Talk Mode Improvements: Configurable Silence Detection — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        .author-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .related {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related h3 {
+            margin-top: 0;
+        }
+        .related-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .related-links a {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Voice Mode</span>
+            <span class="tag">User Experience</span>
+            March 8, 2026
+        </div>
+        
+        <h1>OpenClaw Talk Mode Improvements: Configurable Silence Detection</h1>
+        
+        <p class="subtitle">A flurry of commits hardens voice conversation handling across iOS and macOS — configurable silence timeouts, shared config parsing, and better edge case handling.</p>
+
+        <div class="author-box">
+            <div class="author-avatar">PS</div>
+            <div class="author-info">
+                <h4>Peter Steinberger</h4>
+                <p>OpenClaw core maintainer. Former founder of PSPDFKit, known for deep iOS and macOS expertise. Driving OpenClaw's Apple platform experience.</p>
+            </div>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Voice interfaces are delicate. The difference between "I'm thinking" and "I'm done talking" is subjective, varies by speaker, and depends on context. When an AI assistant cuts you off mid-thought, it's jarring. When it waits too long after you've finished, it feels unresponsive.</p>
+        
+        <p>This batch of improvements gives users control over that threshold and makes the behavior consistent across Apple platforms.</p>
+
+        <h2>What Changed</h2>
+        
+        <h3>Configurable Silence Timeout</h3>
+        
+        <p>The core change from contributor <code>@danodoesdesign</code> adds a configurable silence timeout to Talk mode. Previously, the timeout was hardcoded — now users can adjust it in settings:</p>
+        
+        <pre><code>{
+  "talk": {
+    "silence_timeout_ms": 1500,
+    "sensitivity": "normal"
+  }
+}</code></pre>
+        
+        <p>Values range from 500ms (aggressive, for quick-paced conversations) to 3000ms (patient, for thoughtful speakers or those with speech differences). The default remains 1200ms, unchanged from previous behavior.</p>
+
+        <h3>Hardened Parsing</h3>
+        
+        <p>Peter Steinberger's follow-up commits add defensive parsing for the silence timeout config:</p>
+        
+        <ul>
+            <li>Invalid values fall back to defaults rather than crashing</li>
+            <li>Negative values are rejected</li>
+            <li>Extremely large values are capped at 10 seconds</li>
+            <li>Type mismatches (string instead of number) are handled gracefully</li>
+        </ul>
+        
+        <div class="callout">
+            <p><strong>Config Philosophy:</strong> OpenClaw treats malformed config as a signal to use safe defaults, not an error condition. Users shouldn't be locked out because of a typo in their config file.</p>
+        </div>
+
+        <h3>Shared Apple Talk Config</h3>
+        
+        <p>The refactor commits centralize Talk config parsing into a shared module used by both iOS and macOS. This means:</p>
+        
+        <ul>
+            <li>Feature parity — both platforms behave identically</li>
+            <li>Single source of truth for validation logic</li>
+            <li>Easier maintenance for future Talk mode features</li>
+        </ul>
+        
+        <p>Previously, each platform had its own parsing code with subtle differences. Users reported that the same config produced different behavior on their iPhone vs. Mac — that's now fixed.</p>
+
+        <h3>Canonical Config Payload</h3>
+        
+        <p>A new canonical payload structure ensures that Talk config is serialized consistently when syncing between devices or exporting settings:</p>
+        
+        <pre><code>{
+  "talk": {
+    "version": 1,
+    "silence_timeout_ms": 1500,
+    "sensitivity": "normal",
+    "vad_model": "whisper-vad",
+    "auto_punctuate": true
+  }
+}</code></pre>
+        
+        <p>The <code>version</code> field enables forward compatibility — future Talk config changes can migrate older configs gracefully.</p>
+
+        <h2>Test Coverage</h2>
+        
+        <p>The PR includes new test coverage for edge cases:</p>
+        
+        <ul>
+            <li>Empty config objects</li>
+            <li>Missing required fields</li>
+            <li>Boundary values (0ms, negative, maximum)</li>
+            <li>Invalid types (arrays, nested objects where scalars expected)</li>
+            <li>Unicode and special characters in string fields</li>
+        </ul>
+        
+        <p>This is part of OpenClaw's broader push toward defensive coding, following the security hardening initiatives from earlier this month.</p>
+
+        <h2>User-Facing Impact</h2>
+        
+        <p>For most users, nothing changes — the defaults are unchanged. Power users gain:</p>
+        
+        <ol>
+            <li><strong>Adjustable pacing</strong> — Match the AI's listening behavior to your speaking style</li>
+            <li><strong>Accessibility improvements</strong> — Longer timeouts for users who need more time between phrases</li>
+            <li><strong>Cross-device consistency</strong> — Your Talk config now works identically on all Apple devices</li>
+        </ol>
+
+        <h2>What's Next</h2>
+        
+        <p>These improvements lay groundwork for more sophisticated Talk mode features:</p>
+        
+        <ul>
+            <li><strong>Adaptive silence detection</strong> — ML-based detection that learns your speaking patterns</li>
+            <li><strong>Context-aware timeouts</strong> — Longer pauses when reading aloud, shorter for quick commands</li>
+            <li><strong>Per-conversation settings</strong> — Different profiles for different use cases</li>
+        </ul>
+        
+        <p>The commits are available starting with <a href="https://github.com/openclaw/openclaw/commit/6ff7e8f" target="_blank">6ff7e8f</a> through the day's refactor series.</p>
+
+        <div class="related">
+            <h3>Related Articles</h3>
+            <div class="related-links">
+                <a href="/articles/openclaw-android-voice-reliability.html">OpenClaw Android Voice Reliability: VAD Improvements</a>
+                <a href="/articles/openclaw-android-voice-redesign.html">OpenClaw Android Voice Redesign: Native Audio Pipeline</a>
+                <a href="/articles/openclaw-ios-tls-hardening.html">OpenClaw iOS TLS Hardening: Certificate Pinning</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

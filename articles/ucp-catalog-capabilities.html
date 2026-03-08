@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Catalog Capabilities: Product Discovery for AI Agents — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        .author-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .related {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related h3 {
+            margin-top: 0;
+        }
+        .related-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .related-links a {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Product Discovery</span>
+            <span class="tag">Core Capability</span>
+            March 8, 2026
+        </div>
+        
+        <h1>UCP Catalog Capabilities: Product Discovery for AI Agents</h1>
+        
+        <p class="subtitle">PR #55 adds Catalog Search and Catalog Lookup operations — agents can now discover products directly through the protocol, completing the end-to-end commerce loop.</p>
+
+        <div class="author-box">
+            <div class="author-avatar">IG</div>
+            <div class="author-info">
+                <h4>Ilya Grigorik</h4>
+                <p>Performance Engineer at Shopify, former Web Performance Lead at Google. A core UCP specification author focused on protocol efficiency and developer experience.</p>
+            </div>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Until now, UCP has focused on the transaction side of commerce: carts, checkout, payments, and order management. But there was a gap — how does an agent <em>find</em> products in the first place? The answer was typically "use a search API separately" or "scrape the website," neither of which integrates cleanly with the structured UCP flow.</p>
+        
+        <p>PR #55 closes this gap by adding two new capabilities to the protocol:</p>
+        
+        <ul>
+            <li><strong>Catalog Search</strong> — Query a business's product catalog with natural language or structured filters</li>
+            <li><strong>Catalog Lookup</strong> — Retrieve detailed product information by identifier</li>
+        </ul>
+        
+        <p>This is significant because it means an AI agent can now handle the complete purchase journey — from "I need running shoes under $150" through to order confirmation — entirely within UCP.</p>
+
+        <h2>What Changed Technically</h2>
+        
+        <p>The PR introduces a new <code>catalog</code> capability with two operations:</p>
+        
+        <h3>Catalog Search</h3>
+        
+        <pre><code>{
+  "operation": "catalog/search",
+  "query": {
+    "text": "wireless noise-canceling headphones",
+    "filters": {
+      "price_max": 300,
+      "in_stock": true,
+      "category": "electronics/audio"
+    },
+    "sort": "relevance",
+    "limit": 20
+  }
+}</code></pre>
+        
+        <p>The search operation supports both free-text queries and structured filters. Businesses can advertise which filter fields they support in their capability declaration, allowing agents to adapt their queries accordingly.</p>
+        
+        <h3>Catalog Lookup</h3>
+        
+        <pre><code>{
+  "operation": "catalog/lookup",
+  "identifiers": [
+    { "type": "sku", "value": "HDPH-NC-500" },
+    { "type": "gtin", "value": "0123456789012" }
+  ],
+  "include": ["pricing", "availability", "variants", "media"]
+}</code></pre>
+        
+        <p>Lookup retrieves detailed product information, with optional <code>include</code> fields to control response size. This is useful when an agent needs to refresh pricing before checkout or present detailed options to a user.</p>
+
+        <div class="callout">
+            <p><strong>Key Design Decision:</strong> Both operations return product references that can be directly used with the <code>cart</code> capability. The <code>product_id</code> returned from catalog operations is guaranteed to be valid for cart operations within the same session.</p>
+        </div>
+
+        <h3>Pagination and Cursors</h3>
+        
+        <p>For large result sets, the search operation supports cursor-based pagination:</p>
+        
+        <pre><code>{
+  "results": [...],
+  "cursor": "eyJvZmZzZXQiOjIwfQ==",
+  "has_more": true,
+  "total_estimate": 150
+}</code></pre>
+        
+        <p>Agents can pass the cursor in subsequent requests to retrieve additional pages. The <code>total_estimate</code> field is intentionally approximate — businesses aren't required to provide exact counts, which allows for more efficient implementation.</p>
+
+        <h2>Integration with Version Negotiation</h2>
+        
+        <p>This capability builds on the version negotiation overhaul from PR #200 (merged yesterday). Businesses can declare catalog support in their service definition:</p>
+        
+        <pre><code>{
+  "capabilities": {
+    "catalog": {
+      "version": "1.0",
+      "operations": ["search", "lookup"],
+      "search_filters": ["category", "price_min", "price_max", "in_stock", "brand"]
+    }
+  }
+}</code></pre>
+        
+        <p>The combination of declarative capabilities and the <code>requires</code> constraint system means agents can discover what a business supports before making requests, reducing error handling complexity.</p>
+
+        <h2>Why Not Just Use Existing Search APIs?</h2>
+        
+        <p>Fair question. Many businesses already have search APIs, and there are aggregators like Google Shopping that provide product discovery. Three reasons why native UCP catalog capabilities matter:</p>
+        
+        <ol>
+            <li><strong>Session continuity</strong> — Product identifiers returned from catalog operations are guaranteed to work with cart/checkout operations in the same session. External APIs require additional mapping.</li>
+            <li><strong>Unified authentication</strong> — The same auth context that allows checkout also authorizes catalog access. No separate API key management.</li>
+            <li><strong>Structured agent interaction</strong> — Agents can declaratively understand what filtering is supported rather than guessing or falling back to unstructured search.</li>
+        </ol>
+
+        <h2>Implementation Considerations</h2>
+        
+        <p>For businesses implementing catalog capabilities:</p>
+        
+        <ul>
+            <li><strong>Search backends vary</strong> — The spec is intentionally flexible about ranking algorithms. A business can use Elasticsearch, Algolia, their own ML-based ranking, or simple database queries.</li>
+            <li><strong>Start with lookup</strong> — If full search is complex, implement lookup first. Agents can use external discovery and then lookup via UCP for the transaction.</li>
+            <li><strong>Filter advertising matters</strong> — Declare which filters you support so agents can construct valid queries without trial and error.</li>
+        </ul>
+
+        <h2>What's Next</h2>
+        
+        <p>With catalog capabilities in place, several follow-on features become possible:</p>
+        
+        <ul>
+            <li><strong>Recommendations</strong> — "Related products" and "customers also bought" as catalog operations</li>
+            <li><strong>Inventory holds</strong> — Reserve items during cart session to prevent overselling</li>
+            <li><strong>Price alerts</strong> — Subscribe to price changes via the emerging A2A pub/sub patterns</li>
+        </ul>
+        
+        <p>The full PR is available at <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/55" target="_blank">Universal-Commerce-Protocol/ucp#55</a>.</p>
+
+        <div class="related">
+            <h3>Related Articles</h3>
+            <div class="related-links">
+                <a href="/articles/ucp-version-negotiation-overhaul.html">UCP Version Negotiation Overhaul: Business-Canonical Versioning</a>
+                <a href="/articles/ucp-status-discriminator.html">UCP Error Handling: Status Discriminator and Severity Levels</a>
+                <a href="/articles/ucp-order-currency-field.html">UCP Order Currency Field: Multi-Currency Commerce</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

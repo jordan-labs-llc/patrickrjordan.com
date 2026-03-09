@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A RELEASES.md: Formalizing the Release Process — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>A2A RELEASES.md: Formalizing the Release Process</h1>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Governance</span>
+            <span class="tag">Process</span>
+            March 9, 2026 · Amye Scavarda Perrin
+            <br><br>
+            Source: <a href="https://github.com/a2aproject/A2A/pull/1605" target="_blank">PR #1605</a>
+        </div>
+
+        <h2>The Change</h2>
+        
+        <p>Amye Scavarda Perrin opens PR #1605 to create <code>RELEASES.md</code> — a formal document describing A2A's release process, versioning scheme, and upgrade guidance. This follows last week's governance update that added an AWS representative to the Technical Steering Committee.</p>
+
+        <h2>Author Context</h2>
+        
+        <p>Amye Scavarda Perrin is a Linux Foundation veteran who has been instrumental in A2A's governance evolution. Her contributions focus on the non-technical but essential infrastructure that enables open source projects to scale: governance documents, contribution guidelines, and release processes.</p>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Release documentation might seem like bureaucracy, but for enterprise adopters it's a prerequisite. When companies build production systems on a protocol, they need predictable answers to questions like:</p>
+
+        <ul>
+            <li>How often do major versions release?</li>
+            <li>How long are older versions supported?</li>
+            <li>What's the deprecation timeline for breaking changes?</li>
+            <li>How will we be notified of security issues?</li>
+        </ul>
+
+        <p>Without documented answers, enterprises either avoid adoption or build internal hedging mechanisms — both of which slow ecosystem growth.</p>
+
+        <h2>The Signal</h2>
+        
+        <p>This PR, combined with last week's TSC expansion, signals A2A's transition from "promising Google project" to "industry standard in formation." The pattern is familiar from other successful open source projects:</p>
+
+        <ol>
+            <li><strong>Launch phase:</strong> Rapid iteration, spec changes, single-vendor control</li>
+            <li><strong>Stabilization:</strong> 1.0 release, breaking change moratorium, reference implementations</li>
+            <li><strong>Institutionalization:</strong> Multi-vendor governance, formal processes, enterprise adoption</li>
+        </ol>
+
+        <p>A2A is now firmly in phase 3.</p>
+
+        <div class="callout">
+            <div class="callout-title">Enterprise Readiness Checklist</div>
+            <p>Open source protocols become enterprise-ready when they have: formal governance (✓), multi-vendor TSC (✓), versioning policy (in progress), security disclosure process (needed), and conformance testing (emerging).</p>
+        </div>
+
+        <h2>What RELEASES.md Likely Contains</h2>
+        
+        <p>Based on similar documents from MCP and other Linux Foundation projects, expect:</p>
+
+        <ul>
+            <li><strong>Versioning scheme:</strong> Likely semantic versioning with major.minor.patch</li>
+            <li><strong>Release cadence:</strong> Probably quarterly minor releases, with patches as needed</li>
+            <li><strong>Deprecation policy:</strong> Minimum notice period before breaking changes</li>
+            <li><strong>Support windows:</strong> How long each major version receives security patches</li>
+            <li><strong>Announcement channels:</strong> Where release notes and security advisories are published</li>
+        </ul>
+
+        <h2>Broader Context</h2>
+        
+        <p>This week's A2A activity shows a project in steady-state maintenance mode rather than rapid feature development:</p>
+
+        <ul>
+            <li><strong>Governance updates:</strong> AWS joins TSC, release process documentation</li>
+            <li><strong>Documentation fixes:</strong> Clearer wording around context IDs, HTTP error mapping updates</li>
+            <li><strong>Partner expansion:</strong> AgentTrust.ai and Pinchwork join partners list</li>
+        </ul>
+
+        <p>This is healthy. After the January 1.0 release and the February identity/authorization proposals, the protocol needs time for implementations to catch up and the community to provide feedback.</p>
+
+        <h2>Implications for Implementers</h2>
+        
+        <p>If you're building on A2A:</p>
+
+        <ul>
+            <li><strong>Track PR #1605:</strong> The release policy will affect your upgrade planning</li>
+            <li><strong>Expect stability:</strong> Post-1.0 breaking changes will require deprecation periods</li>
+            <li><strong>Watch the TSC:</strong> Multi-vendor governance means changes go through committee review</li>
+        </ul>
+
+        <h2>Links</h2>
+        
+        <ul>
+            <li><a href="https://github.com/a2aproject/A2A/pull/1605" target="_blank">PR #1605: Create RELEASES.md</a></li>
+            <li><a href="https://github.com/a2aproject/A2A/pull/1598" target="_blank">PR #1598: GOVERNANCE.md Update (AWS TSC member)</a></li>
+            <li><a href="https://a2a-protocol.org/" target="_blank">A2A Protocol</a></li>
+            <li><a href="/pulse.html">Repo Pulse</a> — Daily tracking of A2A and related projects</li>
+        </ul>
+    </div>
+</body>
+</html>

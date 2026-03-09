@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw 2026.3.9 Release Prep: LaunchD Hardening and Build Stability — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>OpenClaw 2026.3.9 Release Prep: LaunchD Hardening and Build Stability</h1>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Security</span>
+            <span class="tag">macOS</span>
+            March 9, 2026 · Peter Steinberger
+            <br><br>
+            Sources: <a href="https://github.com/openclaw/openclaw/commit/ce9e91f" target="_blank">ce9e91f</a>, 
+            <a href="https://github.com/openclaw/openclaw/commit/6c579d7" target="_blank">6c579d7</a>,
+            <a href="https://github.com/openclaw/openclaw/commit/f6d0712" target="_blank">f6d0712</a>,
+            <a href="https://github.com/openclaw/openclaw/commit/7217b97" target="_blank">7217b97</a>
+        </div>
+
+        <h2>The Change</h2>
+        
+        <p>Peter Steinberger lands a flurry of commits preparing OpenClaw's 2026.3.9 release — hardening the macOS launchd integration, stabilizing launchd paths, and fixing edge cases in the onboarding flow. This release continues the systematic security and reliability improvements that have characterized OpenClaw's evolution over the past month.</p>
+
+        <h2>Author Context</h2>
+        
+        <p>Peter Steinberger is one of OpenClaw's most prolific contributors, responsible for the bulk of the project's security hardening and platform integration work. His commits consistently demonstrate deep knowledge of macOS system internals, security boundaries, and production deployment patterns.</p>
+
+        <h2>Why This Matters</h2>
+        
+        <p>AI assistants running as background daemons face unique security challenges. On macOS, launchd agents manage these processes — and misconfigured permissions or unstable paths can create security vulnerabilities or reliability issues.</p>
+
+        <h3>LaunchAgent Permission Hardening</h3>
+        
+        <p>The <code>fix(launchd): harden macOS launchagent install permissions</code> commit addresses a subtle but important security consideration: ensuring that LaunchAgent plist files and associated directories have appropriately restrictive permissions.</p>
+
+        <div class="callout">
+            <div class="callout-title">Security Principle</div>
+            <p>LaunchAgents run with user privileges. If the plist files or their parent directories are world-writable, an attacker could modify them to execute arbitrary code with the user's permissions on next login.</p>
+        </div>
+
+        <p>This is defense-in-depth. The attack vector requires local access, but on shared systems or in enterprise environments with multiple users, it's a real concern.</p>
+
+        <h3>Path Stabilization</h3>
+        
+        <p>The <code>fix: stabilize launchd paths and appcast secret scan</code> commit addresses a more practical issue: ensuring that launchd paths don't change unexpectedly between versions or installations. Unstable paths can cause:</p>
+
+        <ul>
+            <li>Failed daemon restarts after updates</li>
+            <li>Orphaned processes from old installations</li>
+            <li>Log file fragmentation across directories</li>
+            <li>Confusion when debugging issues</li>
+        </ul>
+
+        <p>The appcast secret scan component addresses update security — ensuring that the update feed doesn't accidentally expose secrets during distribution.</p>
+
+        <h3>Onboarding Edge Case</h3>
+        
+        <p>The <code>fix(onboard): avoid persisting talk fallback on fresh setup</code> commit fixes a subtle UX bug where the Talk mode fallback configuration was being saved during initial setup, even when the user hadn't explicitly chosen it. This could lead to unexpected behavior on subsequent sessions.</p>
+
+        <h2>Technical Analysis</h2>
+        
+        <p>These commits represent the kind of "boring but essential" work that separates hobby projects from production-ready software:</p>
+
+        <ul>
+            <li><strong>Permission hardening:</strong> Requires understanding of macOS security model, user vs. root permissions, and LaunchServices behavior</li>
+            <li><strong>Path stabilization:</strong> Needs careful analysis of installation scenarios, upgrade paths, and directory hierarchies</li>
+            <li><strong>Config persistence:</strong> Demands understanding of user intent vs. system defaults during onboarding</li>
+        </ul>
+
+        <h2>Broader Trends</h2>
+        
+        <p>This release continues patterns we've seen throughout February and March 2026:</p>
+
+        <ol>
+            <li><strong>Security-first development:</strong> Every release includes hardening commits</li>
+            <li><strong>Platform-native integration:</strong> Deep investment in macOS system integration, not just cross-platform abstractions</li>
+            <li><strong>Production focus:</strong> Fixing edge cases that only appear in real-world deployments</li>
+        </ol>
+
+        <h2>What's Next</h2>
+        
+        <p>The version bump to 2026.3.9 and plugin version sync suggest a coordinated release is imminent. Based on the recent commit patterns, expect:</p>
+
+        <ul>
+            <li>Continued hardening of platform-specific integrations</li>
+            <li>More edge case fixes discovered through user feedback</li>
+            <li>Potential new features building on the stabilized foundation</li>
+        </ul>
+
+        <div class="callout">
+            <div class="callout-title">For Users</div>
+            <p>If you're running OpenClaw on macOS, update to 2026.3.9 when available. The permission hardening changes are invisible but meaningful for security-conscious deployments.</p>
+        </div>
+
+        <h2>Links</h2>
+        
+        <ul>
+            <li><a href="https://github.com/openclaw/openclaw" target="_blank">OpenClaw Repository</a></li>
+            <li><a href="/pulse.html">Repo Pulse</a> — Daily tracking of OpenClaw and related projects</li>
+        </ul>
+    </div>
+</body>
+</html>

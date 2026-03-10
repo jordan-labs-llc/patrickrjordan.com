@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw: Stripping Leaked Model Control Tokens — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>OpenClaw: Stripping Leaked Model Control Tokens</h1>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Security</span>
+            <span class="tag">Multi-Provider</span>
+            March 10, 2026 · George Zhang
+            <br><br>
+            Source: <a href="https://github.com/openclaw/openclaw/commit/309162f" target="_blank">Commit 309162f</a>
+        </div>
+
+        <h2>The Change</h2>
+        
+        <p>George Zhang lands commit <code>309162f</code> to strip leaked model control tokens from user-facing text. Models like GLM-5 and DeepSeek occasionally emit internal delimiter tokens in their responses — tokens that users should never see. This fix adds generic pattern matching in OpenClaw's text extraction pipeline to sanitize these artifacts before display.</p>
+
+        <h2>Author Context</h2>
+        
+        <p>George Zhang (Tengji Zhang) is a new addition to the OpenClaw maintainer roster, added in an accompanying PR (#42190) the same day. His contributions focus on internationalization and multi-provider compatibility — essential as OpenClaw expands beyond its original Anthropic-focused roots to support a growing list of model providers.</p>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Control tokens are the hidden scaffolding that models use to structure their outputs. Think of them like HTML tags but for model internals: <code>&lt;|assistant|&gt;</code>, <code>&lt;|endoftext|&gt;</code>, or provider-specific delimiters. They're supposed to be processed and stripped before the response reaches users.</p>
+
+        <p>When models leak these tokens, users see confusing artifacts:</p>
+
+        <blockquote>
+            "Here's your summary &lt;|system|&gt; of the document..."
+        </blockquote>
+
+        <p>This damages trust and creates confusion. The fix implements defensive stripping regardless of which model produced the leakage.</p>
+
+        <div class="callout">
+            <div class="callout-title">Multi-Provider Reality</div>
+            <p>OpenClaw supports dozens of model providers. Each has different control token formats. A fix that only handles one provider's tokens misses the point — the pattern matching must be generic enough to catch artifacts from GLM, DeepSeek, Minimax, and others.</p>
+        </div>
+
+        <h2>Technical Approach</h2>
+        
+        <p>The commit description notes this follows "the same architecture as stripMinimaxToolCallXml" — an existing pattern in OpenClaw's codebase for sanitizing provider-specific artifacts. The approach:</p>
+
+        <ul>
+            <li><strong>Pipeline placement:</strong> Stripping happens in the text extraction phase, after model response but before user display</li>
+            <li><strong>Generic patterns:</strong> Rather than provider-specific rules, uses pattern matching that catches common control token formats</li>
+            <li><strong>Defensive design:</strong> Even if a model rarely leaks tokens, the protection is always active</li>
+        </ul>
+
+        <h2>The Bigger Picture</h2>
+        
+        <p>This commit closes issue #40020 and supersedes an earlier attempt (#40573). The issue was open for months, suggesting this is a recurring pain point that required careful design to solve properly.</p>
+
+        <p>OpenClaw's multi-provider support means encountering edge cases that single-provider tools never see. GLM-5 and DeepSeek have different tokenization approaches than Anthropic or OpenAI models — quirks that only surface when you're actually routing traffic through them.</p>
+
+        <h2>Related Activity Today</h2>
+        
+        <p>George Zhang's maintainer addition and this security fix are part of a busy day for OpenClaw:</p>
+
+        <ul>
+            <li><strong>Sessions spawn resume:</strong> ACP session resume support via <code>resumeSessionId</code></li>
+            <li><strong>Provider cooldown fix:</strong> Avoid duplicate probes during fallback runs</li>
+            <li><strong>Mattermost improvements:</strong> Markdown formatting preservation, DM media uploads</li>
+            <li><strong>MS Teams fix:</strong> Bot Framework compatibility for General channel conversations</li>
+        </ul>
+
+        <p>The pattern: incremental robustness improvements across OpenClaw's expanding provider and platform matrix.</p>
+
+        <h2>Implications</h2>
+        
+        <p>For OpenClaw users:</p>
+
+        <ul>
+            <li><strong>GLM-5/DeepSeek users:</strong> Should see cleaner outputs immediately after updating</li>
+            <li><strong>Multi-provider setups:</strong> Reduced risk of control token artifacts regardless of model</li>
+            <li><strong>UX improvement:</strong> One less source of confusing output in conversations</li>
+        </ul>
+
+        <h2>Links</h2>
+        
+        <ul>
+            <li><a href="https://github.com/openclaw/openclaw/commit/309162f" target="_blank">Commit 309162f: Strip leaked model control tokens</a></li>
+            <li><a href="https://github.com/openclaw/openclaw/pull/42190" target="_blank">PR #42190: Add George Zhang to maintainer table</a></li>
+            <li><a href="https://github.com/openclaw/openclaw" target="_blank">OpenClaw Repository</a></li>
+            <li><a href="/pulse.html">Repo Pulse</a> — Daily tracking of OpenClaw and related projects</li>
+        </ul>
+    </div>
+</body>
+</html>

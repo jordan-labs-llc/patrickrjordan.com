@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP: Extending Discount Capability to Cart — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>UCP: Extending Discount Capability to Cart</h1>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Commerce</span>
+            <span class="tag">Capability</span>
+            March 10, 2026 · Ilya Grigorik
+            <br><br>
+            Source: <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/246" target="_blank">PR #246</a>
+        </div>
+
+        <h2>The Change</h2>
+        
+        <p>Ilya Grigorik opens PR #246 to extend UCP's discount capability from checkout-only to also support cart operations. The change adds <code>dev.ucp.shopping.cart</code> extension to the discount schema, updates discovery examples, and introduces a cart-to-checkout continuity requirement for discount codes.</p>
+
+        <h2>Author Context</h2>
+        
+        <p>Ilya Grigorik is a principal engineer at Google and the primary architect behind UCP. His background includes extensive work on web performance (co-authored QUIC papers, led Chrome's performance team) and, more recently, defining how AI agents interact with commerce systems. He's been driving the UCP specification since its public unveiling in late 2025.</p>
+
+        <h2>Why This Matters</h2>
+        
+        <p>The original discount capability landed with checkout support only — a reasonable MVP scope. But real-world shopping experiences show discounts earlier: "Apply code SAVE20" appears on cart pages, not just at checkout. This gap created a UX mismatch for AI agents trying to replicate natural shopping flows.</p>
+
+        <p>The fix addresses this in three ways:</p>
+
+        <ul>
+            <li><strong>Schema extension:</strong> Discount create/update operations now support the cart capability via <code>extends</code></li>
+            <li><strong>Discovery clarity:</strong> Agents can discover whether a business supports cart discounts during capability negotiation</li>
+            <li><strong>Continuity requirement:</strong> Discount codes applied to cart MUST carry forward to checkout</li>
+        </ul>
+
+        <h2>Technical Details</h2>
+        
+        <p>The change is backwards compatible. Businesses that don't support cart discounts simply don't advertise the extension. The <code>extends</code> mechanism (already used elsewhere in UCP) lets capabilities opt-in to supporting additional operations.</p>
+
+        <p>The continuity requirement is the subtle-but-important piece: if an agent applies "SAVE20" to a cart, and the user proceeds to checkout, the discount code must persist. This prevents frustrating scenarios where users lose their discount mid-flow.</p>
+
+        <div class="callout">
+            <div class="callout-title">Capability Composition</div>
+            <p>UCP's <code>extends</code> pattern lets capabilities layer functionality without breaking existing implementations. A discount capability that only supports checkout continues working; adding cart support is additive.</p>
+        </div>
+
+        <h2>The Pattern</h2>
+        
+        <p>This PR exemplifies healthy protocol evolution: the discount capability shipped, implementations provided feedback ("we need cart support"), and the spec adapts. The backwards-compatible approach means existing integrations don't break.</p>
+
+        <p>Compare this to the <a href="/articles/ucp-catalog-capabilities.html">catalog capabilities</a> PR from two days ago — UCP is filling in the practical gaps that emerge when AI agents actually try to shop.</p>
+
+        <h2>Related Changes This Week</h2>
+        
+        <p>UCP has been busy with capability refinements:</p>
+
+        <ul>
+            <li><strong>PR #247:</strong> Link delegation extension for embedded protocol transport</li>
+            <li><strong>PR #245:</strong> Fee extension for checkout and cart (complementary to discounts)</li>
+            <li><strong>PR #244:</strong> Embedded protocol cart binding with reauth mechanism</li>
+        </ul>
+
+        <p>The theme: making the cart→checkout flow robust for AI agents.</p>
+
+        <h2>Implications for Implementers</h2>
+        
+        <p>If you're building UCP-compatible commerce:</p>
+
+        <ul>
+            <li><strong>Consider cart discounts:</strong> If your platform shows discounts on cart pages, expose this capability</li>
+            <li><strong>Ensure continuity:</strong> Applied cart discounts must persist through checkout</li>
+            <li><strong>Update discovery:</strong> Advertise cart extension in capability discovery if supported</li>
+        </ul>
+
+        <h2>Links</h2>
+        
+        <ul>
+            <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/246" target="_blank">PR #246: Extend discount capability to cart</a></li>
+            <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/55" target="_blank">PR #55: Catalog Search+Lookup capabilities</a></li>
+            <li><a href="https://ucp.dev" target="_blank">UCP Protocol</a></li>
+            <li><a href="/pulse.html">Repo Pulse</a> — Daily tracking of UCP and related projects</li>
+        </ul>
+    </div>
+</body>
+</html>

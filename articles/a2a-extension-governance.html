@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Extension Governance Framework — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .highlight {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .links {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .links a {
+            display: inline-block;
+            margin-right: 1rem;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            March 11, 2026
+        </div>
+        
+        <h1>A2A Extension Governance: Formalizing the Extension Lifecycle</h1>
+        
+        <p>The Agent-to-Agent Protocol (A2A) has merged <a href="https://github.com/a2aproject/A2A/pull/1488" target="_blank">PR #1488</a>, establishing formal governance for protocol extensions. This marks a critical maturation point: A2A is moving from rapid prototyping to managed evolution.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>Vinay Ramesh</strong> is a Google engineer working on A2A infrastructure. He's been instrumental in shaping A2A's governance model and extension architecture since the protocol's inception.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Extensions are how A2A expands without breaking. The core protocol handles agent discovery, task delegation, and message passing. Everything else—identity verification, payment handling, domain-specific capabilities—lives in extensions.</p>
+        
+        <p>Without governance, extensions proliferate chaotically. You get namespace collisions, incompatible versions, abandoned specs. The extension governance framework addresses this by establishing:</p>
+        
+        <ul>
+            <li><strong>Extension namespacing:</strong> Clear ownership and naming conventions</li>
+            <li><strong>Lifecycle stages:</strong> Draft → Experimental → Stable → Deprecated</li>
+            <li><strong>Compatibility requirements:</strong> What breaking changes are allowed at each stage</li>
+            <li><strong>TSC oversight:</strong> Technical Steering Committee review for stable promotion</li>
+        </ul>
+
+        <h2>What Changed</h2>
+        
+        <p>The new <code>EXTENSION_GOVERNANCE.md</code> document establishes the following structure:</p>
+        
+        <div class="highlight">
+            <strong>Extension Stages:</strong>
+            <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                <li><strong>Draft:</strong> Proposals under active discussion. No stability guarantees.</li>
+                <li><strong>Experimental:</strong> Implemented and testable. May change based on feedback.</li>
+                <li><strong>Stable:</strong> Production-ready. Breaking changes require deprecation cycle.</li>
+                <li><strong>Deprecated:</strong> Scheduled for removal. Migration path documented.</li>
+            </ul>
+        </div>
+        
+        <p>Extensions must also declare their scope:</p>
+        
+        <ul>
+            <li><strong>Core:</strong> Maintained by the A2A TSC, ships with reference implementations</li>
+            <li><strong>Community:</strong> Third-party extensions with TSC registration</li>
+            <li><strong>Vendor:</strong> Proprietary extensions in private namespaces</li>
+        </ul>
+
+        <h2>Implications</h2>
+        
+        <p>For A2A implementers, this governance framework means:</p>
+        
+        <ol>
+            <li><strong>Extension stability is predictable.</strong> You can safely depend on Stable extensions without fear of sudden breaking changes.</li>
+            <li><strong>Community extensions have a path to Core.</strong> Well-designed community extensions can graduate to official status through the TSC review process.</li>
+            <li><strong>Breaking changes are manageable.</strong> The deprecation cycle gives implementers time to migrate.</li>
+        </ol>
+        
+        <p>Combined with last week's AWS TSC membership addition, this signals A2A's transition from Google project to industry standard. Enterprise adopters need this kind of governance to justify integration investments.</p>
+
+        <h2>Next Steps</h2>
+        
+        <p>The governance doc is merged but the machinery is still being built. Watch for:</p>
+        
+        <ul>
+            <li>Extension registry infrastructure</li>
+            <li>Automated compatibility testing for extensions</li>
+            <li>First batch of community extensions seeking Stable status</li>
+        </ul>
+        
+        <p>The identity extensions (DID-based agent identity, AIAR) are likely candidates for early Stable promotion, given their maturity and the security implications of leaving them in Experimental.</p>
+
+        <div class="links">
+            <a href="https://github.com/a2aproject/A2A/pull/1488" target="_blank">View PR #1488 →</a>
+            <a href="/pulse.html">Back to Repo Pulse →</a>
+        </div>
+    </div>
+</body>
+</html>

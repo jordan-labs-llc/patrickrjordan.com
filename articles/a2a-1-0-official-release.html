@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A 1.0 Official Release: Agent Interoperability Goes Production — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>A2A 1.0 Official Release: Agent Interoperability Goes Production</h1>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Protocol</span>
+            <span class="tag">Milestone</span>
+            March 13, 2026 · A2A Bot & Team ·
+            <a href="https://github.com/a2aproject/A2A/commit/1736957" target="_blank">Release commit</a> ·
+            <a href="https://github.com/a2aproject/A2A/pull/1621" target="_blank">Blog Post</a>
+        </div>
+
+        <h2>The Author</h2>
+        <p>The A2A 1.0 release represents months of collaborative work from Google's A2A team and the broader community. Key contributors include <strong>Holt Skinner</strong> (Developer Relations), <strong>Darrel</strong> (documentation and blog), and <strong>Amye Scavarda Perrin</strong> (CNCF governance). The automated release was triggered by the A2A Bot, signaling mature CI/CD infrastructure for the project.</p>
+
+        <h2>Why This Matters</h2>
+        <p>After six months of rapid iteration — from the initial announcement through v0.3.0 release candidate and extensive community feedback — Google's Agent-to-Agent Protocol has reached production-ready status. This is the first major multi-agent communication protocol to hit 1.0.</p>
+        
+        <div class="callout">
+            <p><strong>A2A 1.0 signals:</strong> Enterprise adopters can now build production systems with confidence in API stability. Breaking changes require major version bumps. The protocol is ready for real-world deployment.</p>
+        </div>
+
+        <p>For those tracking agentic commerce, A2A 1.0 is the interoperability layer that enables multi-vendor agent systems. When a shopping agent needs to coordinate with a payment agent, shipping agent, and customer service agent — potentially from different vendors — A2A provides the standard communication protocol.</p>
+
+        <h2>What Changed Technically</h2>
+        <p>The 1.0 release finalizes several key decisions that were in flux during the RC period:</p>
+        
+        <ul>
+            <li><strong>Specification freeze:</strong> <a href="https://github.com/a2aproject/A2A/commit/6845a87" target="_blank">PR #1620</a> updates the specification from release candidate to final 1.0.0</li>
+            <li><strong>HTTP method consistency:</strong> <a href="https://github.com/a2aproject/A2A/commit/0876046" target="_blank">PR #1613</a> fixes list tasks examples to use GET instead of POST</li>
+            <li><strong>HTTP caching guidance:</strong> <a href="https://github.com/a2aproject/A2A/commit/727168f" target="_blank">PR #1479</a> adds caching recommendations for Agent Card endpoints</li>
+            <li><strong>Official blog announcement:</strong> <a href="https://github.com/a2aproject/A2A/pull/1621" target="_blank">PR #1621</a> adds the v1.0 announcement blog post</li>
+        </ul>
+
+        <p>The release also includes important semantic changes that were finalized in the RC period:</p>
+        
+        <ul>
+            <li><code>blocking</code> renamed to <code>return_immediately</code> for clarity</li>
+            <li>Task and Push notification configs consolidated</li>
+            <li>In-Task Authorization documentation expanded</li>
+            <li>Extension governance framework formalized</li>
+        </ul>
+
+        <h2>The Versioning Commitment</h2>
+        <p>With 1.0, the A2A team commits to semantic versioning guarantees:</p>
+
+        <ul>
+            <li><strong>Patch versions (1.0.x):</strong> Bug fixes, typo corrections, clarifications</li>
+            <li><strong>Minor versions (1.x.0):</strong> New features, backwards-compatible additions</li>
+            <li><strong>Major versions (x.0.0):</strong> Breaking changes with migration guides</li>
+        </ul>
+
+        <p>The <a href="https://github.com/a2aproject/A2A/pull/1605" target="_blank">RELEASES.md documentation</a> (still in review) will formalize deprecation timelines and upgrade guidance for enterprise adopters.</p>
+
+        <h2>What's Next</h2>
+        <p>The team is already working on post-1.0 enhancements:</p>
+
+        <ul>
+            <li><strong>Custom protocol bindings:</strong> <a href="https://github.com/a2aproject/A2A/pull/1619" target="_blank">PR #1619</a> adds documentation for extending A2A to non-HTTP transports</li>
+            <li><strong>gRPC bidirectional streaming:</strong> <a href="https://github.com/a2aproject/A2A/pull/1549" target="_blank">PR #1549</a> proposes native streaming for sub-millisecond agent coordination</li>
+            <li><strong>DID-based agent identity:</strong> <a href="https://github.com/a2aproject/A2A/pull/1511" target="_blank">PR #1511</a> enables decentralized identity verification</li>
+        </ul>
+
+        <p>Expect the 1.x series to focus on performance (streaming), security (identity verification), and ecosystem growth (extension registry). The hard work of stabilizing the core is done — now the protocol can evolve with confidence.</p>
+
+        <h2>Implications for Implementers</h2>
+        <p>If you've been waiting for stability before adopting A2A, the wait is over. The 1.0 release is your signal to:</p>
+
+        <ol>
+            <li>Upgrade from any pre-1.0 implementations using the <a href="https://a2a-protocol.org/latest/topics/v1/#whats-new-in-v1" target="_blank">migration guide</a></li>
+            <li>Build production agent systems with confidence in API stability</li>
+            <li>Contribute to the extension ecosystem (governance framework now in place)</li>
+        </ol>
+
+        <p>For the agentic commerce space, A2A 1.0 alongside UCP creates a complete stack: agents can discover and transact with businesses (UCP) while coordinating with each other (A2A). The protocol wars are settling into interoperability.</p>
+    </div>
+</body>
+</html>

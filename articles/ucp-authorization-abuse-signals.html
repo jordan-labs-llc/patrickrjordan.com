@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Authorization & Abuse Signals: Platform Attestations for Commerce Security — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li { margin-bottom: 0.5rem; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-warning {
+            border-left-color: var(--yellow);
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .tag-breaking {
+            border-color: var(--red);
+            color: var(--red);
+        }
+        a { color: var(--accent); }
+        blockquote {
+            border-left: 3px solid var(--border);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>UCP Authorization & Abuse Signals: Platform Attestations for Commerce Security</h1>
+        
+        <div class="meta">
+            <span class="tag tag-breaking">Breaking Change</span>
+            <span class="tag">UCP</span>
+            <span class="tag">Security</span>
+            <span class="tag">Commerce</span>
+            <br><br>
+            March 14, 2026 · <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/203" target="_blank">PR #203</a> · Ilya Grigorik
+        </div>
+
+        <h2>The Problem: Platforms See What Businesses Can't</h2>
+
+        <p>When an AI agent submits a checkout request on behalf of a user, the business receiving that request faces an information asymmetry problem. The <em>platform</em> — whether it's Microsoft Copilot, Google's Shopping Agent, or another commerce AI — observes rich transaction context: IP address, user agent, device fingerprints, behavioral patterns, authentication signals. The <em>business</em> sees none of this directly.</p>
+
+        <p>This matters for fraud prevention, rate limiting, and abuse detection. Without access to environmental signals, businesses can't make informed authorization decisions. They're forced to either:</p>
+
+        <ul>
+            <li>Accept elevated fraud risk by approving transactions blindly</li>
+            <li>Impose friction by requiring explicit verification on every transaction</li>
+            <li>Rely on post-hoc detection, catching abuse only after damage is done</li>
+        </ul>
+
+        <p>None of these options work at scale for agentic commerce.</p>
+
+        <h2>The Solution: Platform-Attested Signals</h2>
+
+        <p>PR #203 introduces a <code>signals</code> contract that enables businesses to request environmental data from platforms, and for platforms to provide cryptographically attested observations. The key design principles:</p>
+
+        <div class="callout">
+            <p><strong>Signals are platform attestations.</strong> Values MUST reflect direct observations by the platform, not relayed buyer claims. This is what makes them trustworthy for authorization decisions.</p>
+        </div>
+
+        <h3>How It Works</h3>
+
+        <p>The flow operates in two directions:</p>
+
+        <ol>
+            <li><strong>Businesses request signals</strong> via info messages on responses, using <code>risk</code> and <code>abuse</code> codes to indicate what data they need</li>
+            <li><strong>Platforms provide signals</strong> on subsequent requests, with values that reflect their direct observations of the transaction environment</li>
+        </ol>
+
+        <p>This creates a dynamic, capability-based system. Businesses declare what they need; platforms provide what they can observe. Extensions can define proprietary signals for specialized use cases.</p>
+
+        <h3>Example Signal Categories</h3>
+
+        <p>The specification defines signal categories that platforms may support:</p>
+
+        <ul>
+            <li><strong>Network signals:</strong> IP address, geolocation, proxy detection</li>
+            <li><strong>Device signals:</strong> User agent, device fingerprint, screen characteristics</li>
+            <li><strong>Behavioral signals:</strong> Session duration, interaction patterns, velocity checks</li>
+            <li><strong>Authentication signals:</strong> Auth method strength, account age, verification status</li>
+        </ul>
+
+        <h2>Why This Is a Breaking Change</h2>
+
+        <p>The <code>feat!</code> prefix indicates breaking changes. Specifically:</p>
+
+        <ul>
+            <li>The info message schema for cart and checkout responses changes to accommodate signal requests</li>
+            <li>New reserved code ranges for <code>risk</code> and <code>abuse</code> messages</li>
+            <li>Implementations that process info messages must handle the new structure</li>
+        </ul>
+
+        <p>For platform developers, this requires implementing signal observation and attestation capabilities. For businesses, it requires parsing signal requests and incorporating provided signals into authorization logic.</p>
+
+        <h2>Technical Details</h2>
+
+        <p>The PR adds 181 lines and removes 63, indicating substantial new functionality with some consolidation of existing code. Key additions:</p>
+
+        <pre><code>// Business requests signals via info message
+{
+  "code": "risk",
+  "signals": ["ip_address", "device_fingerprint", "auth_method"]
+}
+
+// Platform provides signals on next request
+{
+  "signals": {
+    "ip_address": {"value": "...", "confidence": 0.95},
+    "device_fingerprint": {"value": "...", "confidence": 0.87}
+  }
+}</code></pre>
+
+        <h2>What This Enables</h2>
+
+        <p>With signals in place, businesses can implement sophisticated authorization strategies:</p>
+
+        <ul>
+            <li><strong>Velocity limiting:</strong> Rate limit by IP or device fingerprint, not just account</li>
+            <li><strong>Risk scoring:</strong> Combine multiple signals for dynamic risk assessment</li>
+            <li><strong>Fraud detection:</strong> Identify suspicious patterns across sessions</li>
+            <li><strong>Compliance:</strong> Enforce geographic restrictions with platform-attested location</li>
+        </ul>
+
+        <p>Critically, this works without requiring user-facing authentication. The platform observes; the business decides.</p>
+
+        <h2>Context: Building the Trust Layer</h2>
+
+        <p>This PR complements other recent UCP security work:</p>
+
+        <ul>
+            <li><a href="/articles/ucp-eligibility-verification.html">Eligibility claims</a> (PR #250) — cryptographic proof of customer eligibility</li>
+            <li><a href="/articles/ucp-request-signing.html">Request signing</a> — RFC 9421 signatures for message integrity</li>
+            <li><a href="/articles/ucp-attribution-signals.html">Attribution signals</a> — conversion tracking for agentic commerce</li>
+        </ul>
+
+        <p>Together, these form the trust infrastructure that enables businesses to accept AI-driven transactions with confidence. Without them, agentic commerce remains a demo. With them, it becomes enterprise-ready.</p>
+
+        <h2>The Bottom Line</h2>
+
+        <p>Ilya Grigorik continues to drive the critical security infrastructure that UCP needs for production adoption. Authorization and abuse signals solve a real problem — the information asymmetry between platforms and businesses — in a way that respects privacy while enabling trust.</p>
+
+        <p>The breaking change is worth it. You can't have secure agentic commerce without platform attestations.</p>
+
+        <p>Follow the implementation: <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/203" target="_blank">PR #203 on GitHub</a></p>
+    </div>
+</body>
+</html>

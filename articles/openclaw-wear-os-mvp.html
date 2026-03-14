@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Wear OS MVP: Your AI Assistant on Your Wrist — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li { margin-bottom: 0.5rem; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .tag-new {
+            border-color: var(--green);
+            color: var(--green);
+        }
+        a { color: var(--accent); }
+        blockquote {
+            border-left: 3px solid var(--border);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .feature-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .feature-item h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .feature-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        @media (max-width: 600px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>OpenClaw Wear OS MVP: Your AI Assistant on Your Wrist</h1>
+        
+        <div class="meta">
+            <span class="tag tag-new">New Platform</span>
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Android</span>
+            <span class="tag">Wearables</span>
+            <br><br>
+            March 14, 2026 · <a href="https://github.com/openclaw/openclaw/pull/46279" target="_blank">PR #46279</a> · sibbl
+        </div>
+
+        <h2>The Vision: AI Everywhere You Are</h2>
+
+        <p>OpenClaw just expanded to the wrist. PR #46279 introduces a complete Wear OS companion app — bringing conversational AI to smartwatches with a UI designed for tiny round screens and quick interactions.</p>
+
+        <p>This isn't a notification relay or remote control. It's a full-featured chat surface with direct gateway connectivity, background reply handling, and native watch complications. Your AI assistant is now literally always at hand.</p>
+
+        <h2>What's Included</h2>
+
+        <div class="feature-grid">
+            <div class="feature-item">
+                <h4>⌚ Transcript-First Chat UI</h4>
+                <p>Optimized for round displays with scrolling conversation view and fast reply actions</p>
+            </div>
+            <div class="feature-item">
+                <h4>📱 Phone-Side Proxy</h4>
+                <p>Wear proxy service enables Tailscale routing through the phone for remote gateway access</p>
+            </div>
+            <div class="feature-item">
+                <h4>🔗 Direct Gateway Client</h4>
+                <p>Watch can connect directly to local gateways when on the same network</p>
+            </div>
+            <div class="feature-item">
+                <h4>🔔 Background Notifications</h4>
+                <p>Reply notifications with quick reply actions even when app is backgrounded</p>
+            </div>
+            <div class="feature-item">
+                <h4>📍 Tile + Complications</h4>
+                <p>Native watch face complications and app tiles for instant access</p>
+            </div>
+            <div class="feature-item">
+                <h4>⚙️ Split Settings</h4>
+                <p>Separate settings screens designed for watch interaction patterns</p>
+            </div>
+        </div>
+
+        <h2>About the Author</h2>
+
+        <p><strong>sibbl</strong> is a prolific open-source contributor with experience in cross-platform mobile development. The PR demonstrates sophisticated understanding of Wear OS constraints — honest connection state management, behavior that works when backgrounded, and UI patterns optimized for quick glanceable interactions.</p>
+
+        <h2>Technical Architecture</h2>
+
+        <p>The implementation takes a pragmatic approach to connectivity:</p>
+
+        <ul>
+            <li><strong>Direct mode:</strong> When watch and gateway are on the same network, connect directly</li>
+            <li><strong>Proxy mode:</strong> Route through the paired phone when gateway is remote (via Tailscale)</li>
+            <li><strong>Offline mode:</strong> Queue messages and sync when connectivity returns</li>
+        </ul>
+
+        <p>This flexibility means the watch app works whether you're at home on WiFi, out with just your phone, or even with LTE-enabled watches on cellular.</p>
+
+        <div class="callout">
+            <p><strong>Session picker included.</strong> If you run multiple OpenClaw agents or sessions, you can switch between them directly from the watch. No need to pull out your phone.</p>
+        </div>
+
+        <h2>What This Doesn't Change</h2>
+
+        <p>The PR explicitly scopes what's out of bounds:</p>
+
+        <ul>
+            <li>Gateway orchestration semantics remain unchanged</li>
+            <li>Tools and skills behavior is unaffected</li>
+            <li>Desktop, iOS, and macOS clients unchanged</li>
+            <li>Android phone app UI theme unchanged (beyond proxy service additions)</li>
+        </ul>
+
+        <p>This is a clean new platform addition, not a refactor that touches existing code.</p>
+
+        <h2>Why Wearables Matter for AI Assistants</h2>
+
+        <p>The wrist is the most intimate computing surface. Unlike phones (in pockets) or computers (on desks), watches are always visible and accessible. For AI assistants, this creates new interaction patterns:</p>
+
+        <ul>
+            <li><strong>Quick queries:</strong> "What's my next meeting?" without reaching for your phone</li>
+            <li><strong>Ambient awareness:</strong> Glanceable complications showing assistant status</li>
+            <li><strong>Contextual triggers:</strong> Location or activity-based assistant suggestions</li>
+            <li><strong>Voice-first:</strong> Natural voice input when hands are busy</li>
+        </ul>
+
+        <p>The challenge is designing for constraints: small screens, limited input methods, aggressive power management. This MVP demonstrates that conversational AI can work within those limits.</p>
+
+        <h2>Platform Coverage</h2>
+
+        <p>With this PR, OpenClaw now supports:</p>
+
+        <ul>
+            <li>✅ macOS (native app)</li>
+            <li>✅ Windows (native app)</li>
+            <li>✅ Linux (native app)</li>
+            <li>✅ iOS (native app)</li>
+            <li>✅ Android (native app)</li>
+            <li>✅ Wear OS (new!)</li>
+            <li>⏳ Apple Watch (not yet)</li>
+        </ul>
+
+        <p>Apple Watch support is the obvious next frontier. The architectural patterns established here — proxy services, direct/indirect connectivity, background handling — would translate well to watchOS.</p>
+
+        <h2>The Bottom Line</h2>
+
+        <p>Wearable AI is no longer theoretical. sibbl delivers a thoughtful Wear OS implementation that respects the platform's constraints while providing genuine utility. The transcript-first UI, flexible connectivity options, and native platform integration (tiles, complications) show this isn't a quick port — it's a considered wearable-first design.</p>
+
+        <p>For OpenClaw users with Wear OS watches, your assistant just became significantly more accessible. For the project, this demonstrates the platform's extensibility and community health.</p>
+
+        <p>Follow the PR: <a href="https://github.com/openclaw/openclaw/pull/46279" target="_blank">PR #46279 on GitHub</a></p>
+    </div>
+</body>
+</html>

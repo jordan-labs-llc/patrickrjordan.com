@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Trust Infrastructure Matures: Eligibility, Attestation, and Totals — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .highlight-box {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-section h3 {
+            margin-top: 0;
+        }
+        .timeline {
+            border-left: 2px solid var(--border);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .timeline-item {
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: absolute;
+            left: -1.8rem;
+            top: 0.4rem;
+        }
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>UCP Trust Infrastructure Matures: Eligibility, Attestation, and Totals</h1>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Trust</span>
+            <span class="tag">Commerce</span>
+            March 15, 2026 · Ilya Grigorik & Contributors
+        </div>
+
+        <p>This week's UCP activity reveals a coherent strategy: building the trust infrastructure that enables enterprise adoption of agentic commerce. Three significant developments — eligibility verification, attestation extensions, and formalized totals contracts — address different facets of the same problem: how do businesses trust AI agents enough to transact with them?</p>
+
+        <div class="author-section">
+            <h3>Key Contributors</h3>
+            <p><strong>Ilya Grigorik</strong> (Google) continues as the primary spec author, driving eligibility claims and totals formalization. <strong>douglasborthwick-crypto</strong> contributes the attestation extension proposal, bringing cryptographic verification expertise to the ecosystem.</p>
+        </div>
+
+        <h2>The Trust Problem in Agentic Commerce</h2>
+
+        <p>When a human shops online, businesses have multiple trust signals: browser cookies, login history, shipping address consistency, payment method verification. When an AI agent shops on behalf of a human, most of these signals vanish. UCP must recreate — and improve upon — these trust mechanisms at the protocol level.</p>
+
+        <div class="highlight-box">
+            <strong>The Core Challenge:</strong> AI agents need to prove they represent legitimate users without exposing user identity. Businesses need fraud prevention without user friction. The protocol must enable both simultaneously.
+        </div>
+
+        <h2>This Week's Progress</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">March 13</div>
+                <strong>Eligibility Claims & Verification Contract Merged</strong>
+                <p><a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/49aee52" target="_blank">PR #250</a> establishes the contract for eligibility verification — how agents prove customer qualifications (student, employee, member) without revealing identity.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">March 13</div>
+                <strong>Attestation Extension Proposed</strong>
+                <p><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/264" target="_blank">PR #264</a> adds cryptographic attestation for eligibility claims — enabling third parties to vouch for customer status with verifiable signatures.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">March 12</div>
+                <strong>Totals Contract Formalization</strong>
+                <p><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/261" target="_blank">PR #261</a> formalizes how order totals are calculated and communicated — ensuring agents and businesses agree on pricing before checkout.</p>
+            </div>
+        </div>
+
+        <h2>Eligibility Verification Deep Dive</h2>
+
+        <p>The eligibility system enables restricted discounts (student pricing, employee discounts, membership perks) to work in agentic commerce without exposing personal data:</p>
+
+        <pre><code>{
+  "eligibility": {
+    "claims": [{
+      "type": "student",
+      "issuer": "university.edu",
+      "verified_at": "2026-03-01T00:00:00Z"
+    }],
+    "attestations": [{
+      "claim_hash": "sha256:...",
+      "attestor": "sheerid.com",
+      "signature": "..."
+    }]
+  }
+}</code></pre>
+
+        <p>The key insight: attestation is separate from claims. A university issues the claim ("this person is a student"), and a verification service attests to its validity without needing the underlying identity data.</p>
+
+        <h2>Why Totals Formalization Matters</h2>
+
+        <p>Cart totals seem straightforward until you consider edge cases:</p>
+
+        <ul>
+            <li>Multi-currency carts with items priced in different currencies</li>
+            <li>Tax calculations that depend on shipping address (unknown until later)</li>
+            <li>Promotional discounts with complex stacking rules</li>
+            <li>Installment payments where the "total" has multiple interpretations</li>
+        </ul>
+
+        <p>PR #261 establishes a polymorphic totals contract — a flexible structure that can represent all these scenarios while giving AI agents deterministic expectations about what they'll pay.</p>
+
+        <h2>The Emerging Trust Stack</h2>
+
+        <p>Taken together, recent UCP developments form a coherent trust stack:</p>
+
+        <ol>
+            <li><strong>Authorization signals</strong> (PR #203) — Platform attestations about request authenticity</li>
+            <li><strong>Eligibility claims</strong> (PR #250) — Customer qualification proofs</li>
+            <li><strong>Attestation extensions</strong> (PR #264) — Third-party verification</li>
+            <li><strong>Totals contracts</strong> (PR #261) — Pricing transparency and agreement</li>
+            <li><strong>Message signing</strong> (previously merged) — Request authenticity and integrity</li>
+        </ol>
+
+        <p>Each layer addresses a specific trust gap. Together, they provide the security infrastructure that enterprises require before allowing AI agents to transact at scale.</p>
+
+        <h2>Implications for Implementers</h2>
+
+        <p>Businesses implementing UCP should prepare for:</p>
+
+        <ul>
+            <li><strong>Eligibility verification integrations</strong> — Connect to verification providers (SheerID, Student Beans, etc.)</li>
+            <li><strong>Attestation validation</strong> — Implement signature verification for third-party attestations</li>
+            <li><strong>Totals API updates</strong> — Return structured totals objects that handle edge cases</li>
+        </ul>
+
+        <p>The specification is converging toward a stable trust model. Early implementers should track these PRs closely — the patterns established now will define agentic commerce for years.</p>
+
+        <p><a href="https://github.com/Universal-Commerce-Protocol/ucp/pulls" target="_blank">View open UCP proposals →</a></p>
+    </div>
+</body>
+</html>

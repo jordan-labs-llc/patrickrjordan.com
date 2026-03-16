@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Identity Linking Gets a Complete Redesign — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        ul, ol {
+            margin: 0 0 1rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-warning {
+            border-left-color: #f59e0b;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        a {
+            color: var(--accent);
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .author-box h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>UCP Identity Linking Gets a Complete Redesign</h1>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Breaking Change</span>
+            March 16, 2026 · <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/265" target="_blank">PR #265</a>
+        </div>
+
+        <div class="author-box">
+            <h4>About the Contributor</h4>
+            <p><strong>Amith Anda</strong> is a core contributor to UCP focusing on identity and security architecture. This PR represents a fundamental rethinking of how identity linking works in agentic commerce scenarios.</p>
+        </div>
+
+        <h2>Why This Change Matters</h2>
+        
+        <p>Identity linking is the mechanism that allows AI agents to connect user identities across different systems — linking a user's merchant account to their payment provider, or their loyalty program to a specific retailer. Get this wrong, and you either have a security nightmare or a usability dead end.</p>
+        
+        <p>The original UCP identity linking design worked, but it was showing cracks as enterprise adoption accelerated. The new design addresses three critical limitations:</p>
+        
+        <ul>
+            <li><strong>Extensibility:</strong> The old design baked specific identity providers into the protocol. Adding new providers required spec changes.</li>
+            <li><strong>Scope Control:</strong> There was no clean way to limit what data an identity link could access — it was all or nothing.</li>
+            <li><strong>Discovery:</strong> Agents couldn't programmatically discover what identity linking mechanisms a merchant supported.</li>
+        </ul>
+
+        <div class="callout callout-warning">
+            <strong>⚠️ Breaking Change:</strong> This PR carries the <code>feat!</code> prefix, indicating backward-incompatible changes. Existing identity linking implementations will need to migrate to the new mechanism registry pattern.
+        </div>
+
+        <h2>What Changed Technically</h2>
+        
+        <h3>Mechanism Registry</h3>
+        
+        <p>The headline change is introducing a <strong>mechanism registry</strong> — a discoverable list of supported identity linking methods. Instead of hardcoding OAuth2, SAML, or proprietary methods, merchants now advertise their capabilities:</p>
+        
+        <pre><code>{
+  "identityLinking": {
+    "mechanisms": [
+      {
+        "type": "oauth2",
+        "authorizationEndpoint": "https://merchant.example/oauth/authorize",
+        "scopes": ["profile", "loyalty.read", "orders.read"]
+      },
+      {
+        "type": "saml",
+        "metadataUrl": "https://merchant.example/saml/metadata"
+      }
+    ]
+  }
+}</code></pre>
+
+        <h3>Capability-Driven Scopes</h3>
+        
+        <p>The second major change is capability-driven scoping. Rather than identity links granting blanket access, they now specify exactly what capabilities are unlocked:</p>
+        
+        <ul>
+            <li><code>profile</code> — basic identity confirmation</li>
+            <li><code>loyalty.read</code> — read loyalty points and tier status</li>
+            <li><code>loyalty.redeem</code> — ability to redeem points</li>
+            <li><code>orders.read</code> — view order history</li>
+            <li><code>orders.modify</code> — change or cancel orders</li>
+        </ul>
+        
+        <p>This granularity is essential for enterprise adoption. A corporate travel agent can link to a hotel's loyalty program to <em>read</em> status without being authorized to <em>redeem</em> points — a common compliance requirement.</p>
+
+        <h3>Migration Path</h3>
+        
+        <p>For existing implementations, the migration involves:</p>
+        
+        <ol>
+            <li>Exposing identity mechanisms in your capability document</li>
+            <li>Updating identity link requests to include scope arrays</li>
+            <li>Implementing scope validation on the merchant side</li>
+        </ol>
+        
+        <p>The PR includes a compatibility shim that maps old-style identity links to the new format with full scopes (essentially the "all or nothing" behavior), giving merchants time to implement proper scope handling.</p>
+
+        <h2>Implications and Next Steps</h2>
+        
+        <p>This redesign opens several doors:</p>
+        
+        <ul>
+            <li><strong>Decentralized Identity:</strong> The mechanism registry pattern makes it straightforward to add DID/Verifiable Credential support without protocol changes.</li>
+            <li><strong>Zero-Knowledge Proofs:</strong> Capability-driven scopes lay groundwork for proving membership (e.g., "user is a Gold member") without revealing the underlying identity.</li>
+            <li><strong>Audit Trails:</strong> Explicit scope grants make compliance reporting trivial — every identity link documents exactly what access was authorized.</li>
+        </ul>
+        
+        <p>The PR is still open for review. Given the breaking nature of the changes, expect a longer review cycle and potentially a dedicated migration window before this lands in a spec version.</p>
+        
+        <p>For merchants and agent developers watching UCP, this is a good time to audit your current identity linking implementations and start planning for the mechanism registry pattern.</p>
+    </div>
+</body>
+</html>

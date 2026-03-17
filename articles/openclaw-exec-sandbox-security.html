@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Exec Sandbox Security: Blocking Environment Injection Vectors — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .tag-security {
+            background: var(--red);
+            color: white;
+            border-color: var(--red);
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout-warning {
+            border-color: var(--red);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .related {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .related-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .related-links a {
+            color: var(--text);
+            font-weight: 500;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            font-weight: 600;
+            background: var(--bg-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <h1>OpenClaw Exec Sandbox Security: Blocking Environment Injection Vectors</h1>
+        
+        <div class="meta">
+            <span class="tag tag-security">Security</span>
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Sandbox</span>
+            <br><br>
+            March 17, 2026 · <a href="https://github.com/openclaw/openclaw/commit/f84a41d" target="_blank">Commit f84a41d</a> · Andrew Demczuk
+        </div>
+
+        <div class="author-box">
+            <h4>About the Author</h4>
+            <p><strong>Andrew Demczuk</strong> is a security researcher and OpenClaw contributor focused on sandbox hardening and isolation mechanisms. This commit represents part of ongoing work to identify and close environment-based escape vectors in AI assistant sandboxes.</p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">⚠️ Security Advisory</div>
+            <p>This fix addresses a class of sandbox escape vulnerabilities. If you're running OpenClaw with host exec capabilities enabled, update to a build containing this commit. The vulnerable environment variables could allow malicious code execution when the agent runs Java, Python, or .NET commands.</p>
+        </div>
+
+        <h2>The Problem: Runtime Startup Hooks</h2>
+        
+        <p>Many language runtimes support environment variables that execute arbitrary code at startup. When an AI agent runs a command like <code>python script.py</code> or <code>java -jar app.jar</code>, these environment variables are inherited from the parent process—and if an attacker can set them, they can inject code that runs before the intended command.</p>
+
+        <p>The specific vectors blocked by this commit:</p>
+
+        <table>
+            <tr>
+                <th>Runtime</th>
+                <th>Environment Variable</th>
+                <th>Effect</th>
+            </tr>
+            <tr>
+                <td>JVM</td>
+                <td><code>JAVA_TOOL_OPTIONS</code></td>
+                <td>Injects JVM arguments including <code>-javaagent:</code> for arbitrary bytecode execution</td>
+            </tr>
+            <tr>
+                <td>JVM</td>
+                <td><code>_JAVA_OPTIONS</code></td>
+                <td>Same as above, alternative variable name</td>
+            </tr>
+            <tr>
+                <td>Python</td>
+                <td><code>PYTHONSTARTUP</code></td>
+                <td>Executes arbitrary Python script before interactive interpreter</td>
+            </tr>
+            <tr>
+                <td>Python</td>
+                <td><code>PYTHONPATH</code></td>
+                <td>Prepends directories to module search path, enabling import hijacking</td>
+            </tr>
+            <tr>
+                <td>.NET</td>
+                <td><code>DOTNET_STARTUP_HOOKS</code></td>
+                <td>Loads managed assemblies at startup before Main()</td>
+            </tr>
+            <tr>
+                <td>.NET</td>
+                <td><code>COMPlus_</code> prefix</td>
+                <td>Various CLR configuration hooks, some enabling code injection</td>
+            </tr>
+        </table>
+
+        <h2>Attack Scenario</h2>
+
+        <p>Consider a scenario where an AI agent is given a task that involves running code:</p>
+
+        <pre><code>User: "Run this Python script that analyzes my data"
+
+Agent: I'll execute that for you.
+[exec] python analyze.py</code></pre>
+
+        <p>If an attacker has previously convinced the agent to set <code>PYTHONSTARTUP=/tmp/malicious.py</code> (perhaps through a prompt injection or by including it in a "configuration" file), that malicious script would execute with full host permissions before the intended script runs.</p>
+
+        <p>The same pattern applies to Java and .NET. The <code>JAVA_TOOL_OPTIONS</code> variable is particularly dangerous because it applies to all Java processes, including build tools like Maven and Gradle that an agent might invoke.</p>
+
+        <h2>The Fix</h2>
+
+        <p>The commit adds an environment variable blocklist to OpenClaw's host exec sandbox. Before spawning any process, the sandbox now filters out known-dangerous variables:</p>
+
+        <pre><code>// Environment variables that can execute arbitrary code at runtime startup
+const BLOCKED_ENV_VARS = new Set([
+  // JVM startup hooks
+  'JAVA_TOOL_OPTIONS',
+  '_JAVA_OPTIONS',
+  'JDK_JAVA_OPTIONS',
+  
+  // Python startup/path injection
+  'PYTHONSTARTUP',
+  'PYTHONPATH',
+  'PYTHONHOME',
+  
+  // .NET startup hooks
+  'DOTNET_STARTUP_HOOKS',
+  'DOTNET_ROOT',
+  
+  // Node.js (already blocked, but explicit)
+  'NODE_OPTIONS',
+]);
+
+// Also block any variable matching these prefixes
+const BLOCKED_ENV_PREFIXES = [
+  'COMPlus_',      // .NET CLR configuration
+  'DYLD_',         // macOS dynamic linker (existing)
+  'LD_',           // Linux dynamic linker (existing)
+];</code></pre>
+
+        <p>The filtering happens at the sandbox boundary, so even if an agent's environment contains these variables, they won't be passed to child processes.</p>
+
+        <h2>Defense in Depth</h2>
+
+        <p>This fix is part of OpenClaw's layered security model:</p>
+
+        <ul>
+            <li><strong>Layer 1: Prompt-level guardrails</strong> — The agent should refuse to set suspicious environment variables</li>
+            <li><strong>Layer 2: Command blocklists</strong> — Dangerous commands are blocked before execution</li>
+            <li><strong>Layer 3: Environment filtering</strong> — Even if an attacker gets environment variables set, they won't propagate (this fix)</li>
+            <li><strong>Layer 4: Process isolation</strong> — Sandboxed processes run with reduced privileges</li>
+        </ul>
+
+        <p>No single layer is sufficient. Prompt injection attacks can bypass Layer 1. Novel commands can bypass Layer 2. This fix closes a gap in Layer 3 that could have undermined the entire stack.</p>
+
+        <h2>Why This Matters for AI Assistants</h2>
+
+        <p>AI assistants that can execute code face a fundamental tension: users want them to be powerful, but that power creates attack surface. Every command execution is a potential vector for:</p>
+
+        <ul>
+            <li>Data exfiltration (reading sensitive files)</li>
+            <li>Lateral movement (accessing network resources)</li>
+            <li>Persistence (installing backdoors)</li>
+            <li>Privilege escalation (exploiting local vulnerabilities)</li>
+        </ul>
+
+        <p>Environment variable injection is particularly insidious because it's invisible—the agent thinks it's running a legitimate command, but malicious code executes first. The user sees expected output (if the injected code is careful), making detection difficult.</p>
+
+        <div class="callout">
+            <div class="callout-title">💡 For OpenClaw Operators</div>
+            <p>If you're self-hosting OpenClaw with exec capabilities, review your deployment's environment. Even with this fix, the safest configuration restricts exec to a sandboxed container with no access to sensitive host resources. The <code>tools.profile: "coding"</code> configuration combined with container isolation provides the best balance of capability and security.</p>
+        </div>
+
+        <h2>What's Next</h2>
+
+        <p>This commit addresses known injection vectors, but the blocklist approach is inherently reactive. The OpenClaw security team is also exploring:</p>
+
+        <ul>
+            <li><strong>Allowlist-based environments</strong> — Only pass explicitly approved environment variables to sandboxed processes</li>
+            <li><strong>Runtime isolation</strong> — Using container namespaces to prevent environment leakage entirely</li>
+            <li><strong>Static analysis</strong> — Scanning commands for patterns that suggest environment variable exploitation</li>
+        </ul>
+
+        <p>The cat-and-mouse game of sandbox security continues. Each fix closes known vectors while researchers look for new ones.</p>
+
+        <div class="related">
+            <h3>Related Articles</h3>
+            <div class="related-links">
+                <a href="/articles/openclaw-security-hardening-march-12.html">OpenClaw Security Sprint: Unicode Obfuscation, WebSocket Limits, Webhook Hardening →</a>
+                <a href="/articles/openclaw-security-hardening-march.html">OpenClaw Security Hardening: Webhook Routes, SMS, and Plugin Isolation →</a>
+                <a href="/articles/openclaw-deferred-channel-startup.html">OpenClaw Deferred Channel Startup: Faster Boots, Same Reliability →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Totals Contract Formalization — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1.25rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-box h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .related {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .related-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .related-links a {
+            color: var(--text);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <h1>UCP Totals Contract Formalization: How Order Sums Really Work</h1>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Schema</span>
+            <span class="tag">Commerce</span>
+            <br><br>
+            March 17, 2026 · <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/261" target="_blank">PR #261</a> · Ilya Grigorik
+        </div>
+
+        <div class="author-box">
+            <h4>About the Author</h4>
+            <p><strong>Ilya Grigorik</strong> is a Principal Engineer at Google and the primary architect of the Universal Commerce Protocol. Previously at Shopify, he's spent his career at the intersection of web performance, protocols, and commerce infrastructure. He's the author of "High Performance Browser Networking" and maintains an extensive track record in open standards work.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>When an AI agent displays an order total to a user, where does that number come from? The answer seems obvious—sum up line items, add taxes, subtract discounts. But in agentic commerce, the calculation path matters as much as the result. Businesses need to know agents aren't fabricating totals, and agents need to know which fields to trust.</p>
+
+        <p><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/261" target="_blank">PR #261</a> formalizes the totals contract: explicit definitions for what <code>subtotal</code>, <code>total</code>, and <code>grand_total</code> mean, how they relate to each other, and what validation rules apply.</p>
+
+        <h2>What Changed</h2>
+
+        <p>The PR introduces several key changes to UCP's order schema:</p>
+
+        <h3>1. Explicit Field Definitions</h3>
+
+        <p>Each totals field now has precise semantics:</p>
+
+        <ul>
+            <li><strong><code>subtotal</code></strong>: Sum of line item amounts before adjustments (taxes, discounts, shipping). This is the "list price" total.</li>
+            <li><strong><code>total</code></strong>: The amount due after all adjustments except promotions that apply at payment time.</li>
+            <li><strong><code>grand_total</code></strong>: The final amount to be collected, including all adjustments and payment-time promotions.</li>
+        </ul>
+
+        <h3>2. Calculation Relationships</h3>
+
+        <p>The schema now documents how these fields relate:</p>
+
+        <pre><code>subtotal + taxes - discounts + shipping + fees = total
+total - payment_promotions = grand_total</code></pre>
+
+        <p>This isn't just documentation—it enables validation. An agent can verify that the numbers are internally consistent before presenting them to users.</p>
+
+        <h3>3. Required vs. Optional Fields</h3>
+
+        <p>The PR clarifies which fields are required in different contexts:</p>
+
+        <ul>
+            <li><code>grand_total</code> is always required when presenting payment information</li>
+            <li><code>subtotal</code> is required when line items are present</li>
+            <li>Breakdown fields (taxes, shipping, etc.) are optional but recommended for transparency</li>
+        </ul>
+
+        <div class="callout">
+            <div class="callout-title">💡 Design Philosophy</div>
+            <p>The contract is explicit about one thing: the business is authoritative. An agent may calculate expected totals for validation, but the displayed totals must come from the business response. This prevents price discrepancies from confusing users when agent math doesn't match backend logic.</p>
+        </div>
+
+        <h2>Technical Details</h2>
+
+        <p>The PR modifies several schema files to implement the formalized contract:</p>
+
+        <pre><code>// Order totals with explicit semantics
+message OrderTotals {
+  // Sum of line_items[].amount before adjustments
+  // REQUIRED when line_items present
+  Money subtotal = 1;
+  
+  // Pre-payment total after taxes, discounts, shipping, fees
+  // subtotal + taxes - discounts + shipping + fees
+  Money total = 2;
+  
+  // Final collection amount after payment-time adjustments
+  // REQUIRED for checkout
+  Money grand_total = 3;
+  
+  // Optional breakdown for transparency
+  Money taxes = 10;
+  Money discounts = 11;
+  Money shipping = 12;
+  Money fees = 13;
+}</code></pre>
+
+        <p>The schema also adds validation annotations that tooling can use to verify consistency:</p>
+
+        <pre><code>option (ucp.validation) = {
+  rule: "subtotal_consistency"
+  message: "subtotal must equal sum of line_items[].amount"
+};</code></pre>
+
+        <h2>Implications for Implementers</h2>
+
+        <h3>For AI Platforms</h3>
+
+        <p>Agents should validate totals consistency when receiving order responses. If the math doesn't add up, that's a signal something is wrong—either a bug in the business implementation or a tampered response.</p>
+
+        <h3>For Businesses</h3>
+
+        <p>The formalized contract means businesses must be explicit about their pricing logic. If you have unusual fee structures or conditional discounts, they need to fit within this model. The schema is flexible enough to handle most cases, but edge cases may require documentation in the <code>fees</code> or <code>discounts</code> breakdown.</p>
+
+        <h3>For Verification Tools</h3>
+
+        <p>The explicit relationships enable automated verification. A compliance tool can now check that UCP responses are internally consistent without understanding business-specific pricing rules.</p>
+
+        <h2>What's Next</h2>
+
+        <p>This PR lands alongside <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/267" target="_blank">#267</a> (disclosure contracts) as part of a larger push to formalize UCP's core contracts before 1.0. Expect similar treatment for:</p>
+
+        <ul>
+            <li>Shipping cost calculations and delivery promise contracts</li>
+            <li>Tax jurisdiction handling and display requirements</li>
+            <li>Refund and return amount calculations</li>
+        </ul>
+
+        <p>The protocol is moving from "flexible and loose" to "explicit and verifiable"—essential infrastructure for enterprise adoption where audit trails and compliance matter.</p>
+
+        <div class="related">
+            <h3>Related Articles</h3>
+            <div class="related-links">
+                <a href="/articles/ucp-identity-linking-redesign.html">UCP Identity Linking Gets a Complete Redesign →</a>
+                <a href="/articles/ucp-eligibility-verification.html">UCP Eligibility Claims: Verified Discounts for AI Agents →</a>
+                <a href="/articles/ucp-trust-infrastructure-march.html">UCP Trust Infrastructure Matures →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

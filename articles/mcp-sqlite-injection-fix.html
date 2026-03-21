@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP SQLite Injection Fix — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --red: #ef4444;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .tag-security {
+            border-color: var(--red);
+            color: var(--red);
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-warning {
+            border-left-color: var(--red);
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .author-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        .author-detail {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>MCP SQLite Server Gets Critical SQL Injection Fix</h1>
+        
+        <div class="meta">
+            <span class="tag tag-security">Security</span>
+            <span class="tag">MCP</span>
+            <span class="tag">SQLite</span>
+            <br><br>
+            March 21, 2026 · <a href="https://github.com/modelcontextprotocol/servers/pull/3663" target="_blank">PR #3663</a>
+        </div>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <div class="author-name">xr843</div>
+            <div class="author-detail">
+                Security researcher contributing to MCP server hardening. This fix addresses SQL injection vulnerabilities discovered in the SQLite reference server.
+            </div>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">⚠️ Security Advisory</div>
+            <p>If you're running the MCP SQLite server in production, update immediately once this PR is merged. The vulnerability allows arbitrary SQL execution through crafted tool inputs.</p>
+        </div>
+
+        <h2>The Vulnerability</h2>
+        
+        <p>Two tools in the MCP SQLite server were vulnerable to SQL injection attacks:</p>
+
+        <ul>
+            <li><code>describe_table</code> — accepts a table name parameter that was concatenated directly into SQL</li>
+            <li><code>query</code> — while designed for read-only queries, lacked sufficient input sanitization</li>
+        </ul>
+
+        <p>An attacker with access to the MCP server (or able to manipulate tool inputs through prompt injection) could execute arbitrary SQL against the connected database.</p>
+
+        <h2>Attack Vector Example</h2>
+        
+        <pre><code>// Malicious describe_table input
+{
+  "table_name": "users; DROP TABLE users; --"
+}
+
+// This would generate:
+// SELECT * FROM sqlite_master WHERE name = 'users; DROP TABLE users; --'
+// Depending on implementation, the injection could escape the quoted context</code></pre>
+
+        <h2>The Fix</h2>
+        
+        <p>The PR implements proper parameterized queries and input validation:</p>
+
+        <pre><code>// Before (vulnerable)
+const sql = `SELECT * FROM sqlite_master WHERE name = '${tableName}'`;
+
+// After (safe)
+const sql = `SELECT * FROM sqlite_master WHERE name = ?`;
+db.prepare(sql).get(tableName);</code></pre>
+
+        <p>Key changes:</p>
+        <ol>
+            <li><strong>Parameterized queries:</strong> All user input now goes through SQLite's parameter binding, not string concatenation</li>
+            <li><strong>Input validation:</strong> Table names are validated against a whitelist of allowed characters</li>
+            <li><strong>Query restrictions:</strong> The query tool now enforces read-only mode at the SQLite connection level</li>
+        </ol>
+
+        <h2>Why This Matters</h2>
+        
+        <p>MCP servers are increasingly being used in production environments where they handle sensitive data. The SQLite server is particularly common because it provides:</p>
+
+        <ul>
+            <li>Easy integration with existing databases</li>
+            <li>Local data analysis without cloud dependencies</li>
+            <li>A reference implementation for building custom database MCP servers</li>
+        </ul>
+
+        <p>As MCP adoption grows, security researchers are correctly scrutinizing the reference implementations. This is the healthy maturation of the ecosystem — vulnerabilities are being found and fixed before widespread exploitation.</p>
+
+        <div class="callout">
+            <div class="callout-title">📊 MCP Security Audit Timeline</div>
+            <p>This fix continues the security hardening trend in MCP servers:</p>
+            <ul>
+                <li>Feb 11 — <a href="/articles/mcp-security-audit-february-2026.html">Initial security audits reveal SQLite/filesystem issues</a></li>
+                <li>Mar 13 — <a href="/articles/mcp-security-fixes-march-13.html">Git argument injection and robots.txt fixes</a></li>
+                <li>Mar 15 — Git injection guards for additional commands</li>
+                <li>Mar 21 — SQLite injection fix (this PR)</li>
+            </ul>
+        </div>
+
+        <h2>Recommendations</h2>
+        
+        <p>If you're building MCP servers that interact with databases:</p>
+
+        <ol>
+            <li><strong>Always use parameterized queries</strong> — never concatenate user input into SQL strings</li>
+            <li><strong>Validate input patterns</strong> — reject inputs that don't match expected formats</li>
+            <li><strong>Use read-only connections</strong> — for query tools, connect with read-only permissions at the database level</li>
+            <li><strong>Consider prepared statements</strong> — they provide both security and performance benefits</li>
+        </ol>
+
+        <h2>Next Steps</h2>
+        
+        <p>The PR is currently open and under review. Given the security nature, expect fast-track merging. Users should monitor the <a href="https://github.com/modelcontextprotocol/servers/releases" target="_blank">MCP servers releases</a> for the fix.</p>
+
+        <p>This fix is a good reminder that MCP servers, like any software handling untrusted input, need security-first implementation practices. The reference servers are improving, but custom implementations should be audited with the same rigor.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Order Currency Required — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .author-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        .author-detail {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>UCP Order Currency Required: Multi-Currency Commerce Gets Explicit</h1>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Breaking Change</span>
+            <span class="tag">Commerce</span>
+            <br><br>
+            March 21, 2026 · <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/283" target="_blank">PR #283</a>
+        </div>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <div class="author-name">deinck6</div>
+            <div class="author-detail">
+                UCP contributor working on schema improvements. This PR follows their earlier work on the Order currency field addition (March 3).
+            </div>
+        </div>
+
+        <h2>The Change</h2>
+        
+        <p>A simple but significant schema change: the <code>currency</code> field in UCP Order objects moves from optional to required. This is a breaking change that affects all UCP implementations.</p>
+
+        <pre><code>// Before (optional)
+{
+  "order": {
+    "total": "99.99"
+    // currency could be inferred, missing, or ambiguous
+  }
+}
+
+// After (required)
+{
+  "order": {
+    "total": "99.99",
+    "currency": "USD"  // Always present
+  }
+}</code></pre>
+
+        <h2>Why It Matters</h2>
+        
+        <p>When an AI agent completes a purchase on behalf of a user, currency ambiguity is not acceptable. Consider these scenarios:</p>
+
+        <ul>
+            <li><strong>Cross-border shopping:</strong> A US user buying from a UK merchant needs to know whether "99.99" means USD or GBP — a 20%+ difference</li>
+            <li><strong>Currency comparison:</strong> Agents comparing prices across merchants must normalize to a common currency, which requires knowing the source currency</li>
+            <li><strong>Budget constraints:</strong> Users set spending limits in their local currency; agents need explicit currency to enforce these correctly</li>
+            <li><strong>Audit trails:</strong> Enterprise compliance requires unambiguous transaction records</li>
+        </ul>
+
+        <div class="callout">
+            <div class="callout-title">💱 The Ambiguity Problem</div>
+            <p>Before this change, an Order could rely on implicit currency inference from merchant location, user locale, or previous transactions. This worked for human-driven commerce where visual context provided currency cues, but fails in automated agent transactions where context is structured data, not web pages.</p>
+        </div>
+
+        <h2>Technical Details</h2>
+        
+        <p>The change is minimal in schema terms:</p>
+
+        <pre><code>// In order.schema.json
+{
+  "properties": {
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code",
+      "pattern": "^[A-Z]{3}$"
+    }
+  },
+  "required": ["currency", ...]  // Added to required array
+}</code></pre>
+
+        <p>Implementations must now:</p>
+        <ol>
+            <li>Always include <code>currency</code> when creating Order objects</li>
+            <li>Validate that incoming Orders have the field present</li>
+            <li>Update API documentation to reflect the required status</li>
+        </ol>
+
+        <h2>Migration Path</h2>
+        
+        <p>For existing UCP implementations:</p>
+
+        <ul>
+            <li><strong>Merchants:</strong> Ensure order responses always include the currency field — most already do, this formalizes the requirement</li>
+            <li><strong>Platforms:</strong> Validate incoming orders have currency present; return 400 errors for missing fields</li>
+            <li><strong>Agents:</strong> No action needed if already handling currency correctly; update any currency inference logic to fail explicitly on missing data</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+        
+        <p>The PR is currently open and under review. Given this is a breaking change, expect discussion around:</p>
+
+        <ul>
+            <li>Version bump requirements (likely a minor version since it's additive validation)</li>
+            <li>Deprecation timeline for non-compliant implementations</li>
+            <li>Migration guidance in release notes</li>
+        </ul>
+
+        <p>This change aligns with UCP's broader direction of making agent transactions explicit and unambiguous. Combined with the recent <a href="/articles/ucp-identity-linking-mechanism-registry.html">identity linking redesign</a> and <a href="/articles/ucp-totals-contract-formalization.html">totals contract formalization</a>, UCP is systematically closing gaps that could cause agent commerce failures.</p>
+
+        <div class="callout">
+            <div class="callout-title">📊 Related Changes</div>
+            <p>This PR builds on <a href="/articles/ucp-order-currency-field.html">the earlier Order currency field addition</a> from March 3, which made the field available. This PR completes the transition by making it mandatory.</p>
+        </div>
+    </div>
+</body>
+</html>

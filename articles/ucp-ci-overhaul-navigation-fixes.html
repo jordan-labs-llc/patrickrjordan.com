@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP CI Pipeline Overhaul and Navigation Fixes — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>UCP CI Pipeline Overhaul and Navigation Fixes</h1>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">DevOps</span>
+            <span class="tag">Documentation</span>
+            March 23, 2026 · Ryan C
+        </div>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>Ryan C</strong> is a consistent contributor to the Universal Commerce Protocol, focusing on documentation infrastructure, CI/CD workflows, and developer experience. His work on UCP's docs site has made the specification more accessible to implementers.</p>
+        </div>
+
+        <h2>What Changed</h2>
+        
+        <p>A comprehensive pull request (<a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/270" target="_blank">#270</a>) landed on March 22nd addressing three interconnected concerns:</p>
+        
+        <ul>
+            <li><strong>CI Pipeline Overhaul</strong> — Restructured build workflows for the documentation site, improving reliability and reducing build times</li>
+            <li><strong>Anchor Link Fixes</strong> — Repaired broken internal navigation links throughout the specification documentation</li>
+            <li><strong>UI Navigation Refinements</strong> — Improved the documentation site's navigation patterns for better discoverability</li>
+        </ul>
+
+        <h2>Why This Matters</h2>
+        
+        <p>Protocol specifications live or die by their documentation quality. When AI agents need to implement UCP, their developers reference the specification docs. Broken links, confusing navigation, and unreliable builds all create friction that slows adoption.</p>
+        
+        <div class="callout">
+            <strong>Infrastructure Enables Adoption</strong><br>
+            This isn't the glamorous work of designing new protocol features — it's the essential infrastructure that makes those features usable. As UCP moves toward broader enterprise adoption, documentation reliability becomes a competitive advantage.
+        </div>
+
+        <p>The timing is notable: this commit follows several weeks of feature-heavy development including identity linking redesign, wallet attestation, and payment instrument enhancements. Consolidating the docs infrastructure now ensures these features are properly documented and discoverable.</p>
+
+        <h2>Technical Details</h2>
+        
+        <p>The PR bundles several improvements:</p>
+        
+        <ul>
+            <li><strong>Build workflow restructuring</strong> — More predictable CI runs with better caching and parallelization</li>
+            <li><strong>Anchor link validation</strong> — Automated checks catch broken internal references before merge</li>
+            <li><strong>Navigation hierarchy</strong> — Logical grouping of specification sections for easier traversal</li>
+        </ul>
+
+        <h2>What's Next</h2>
+        
+        <p>With the documentation infrastructure stabilized, the UCP team can focus on several upcoming priorities:</p>
+        
+        <ul>
+            <li>Documenting the new identity linking mechanism registry</li>
+            <li>Creating implementation guides for wallet attestation</li>
+            <li>Adding examples for required_fields in payment instruments</li>
+        </ul>
+        
+        <p>Clean documentation infrastructure makes all of these easier to ship.</p>
+
+        <p style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.9rem; color: var(--text-secondary);">
+            <a href="/pulse.html">← Back to Repo Pulse</a>
+        </p>
+    </div>
+</body>
+</html>

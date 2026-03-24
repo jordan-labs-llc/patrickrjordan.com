@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Git Server Closes Argument Injection Gaps — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .summary {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .info-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .info-box h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .info-box p {
+            font-size: 0.875rem;
+            margin-bottom: 0;
+        }
+        .warning-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        @media (prefers-color-scheme: dark) {
+            .warning-box {
+                background: #78350f;
+                border-color: #d97706;
+            }
+        }
+        .warning-box h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #92400e;
+        }
+        @media (prefers-color-scheme: dark) {
+            .warning-box h4 {
+                color: #fcd34d;
+            }
+        }
+        .warning-box p {
+            font-size: 0.875rem;
+            margin-bottom: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            font-weight: 600;
+            background: var(--bg-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Back to Articles</a>
+        
+        <div class="meta">
+            <span class="tag">MCP</span>
+            <span class="tag" style="background: var(--red);">Security</span>
+            March 15, 2026 · 4 min read
+        </div>
+        
+        <h1>MCP Git Server Closes Argument Injection Gaps</h1>
+        
+        <p class="summary">
+            A targeted security fix adds consistent defense-in-depth guards to four git server functions that lacked input validation for leading dashes, closing potential command injection vectors.
+        </p>
+
+        <div class="info-box">
+            <h4>About the Author</h4>
+            <p><strong>Elliot</strong> (<a href="https://github.com/ElliotJLT" target="_blank">@ElliotJLT</a>) identified and fixed this security gap in the MCP git server. The PR was generated with Claude Code, demonstrating how AI assistants can contribute to security hardening.</p>
+        </div>
+
+        <h2>The Vulnerability</h2>
+        
+        <p>The MCP git server wraps git commands via GitPython, exposing them as tools to AI agents. Two functions — <code>git_diff</code> and <code>git_checkout</code> — already rejected user inputs starting with <code>-</code> to prevent flag injection attacks. But four other functions lacked the same protection:</p>
+        
+        <ul>
+            <li><code>git_show</code></li>
+            <li><code>git_create_branch</code></li>
+            <li><code>git_log</code> (timestamp parameters)</li>
+            <li><code>git_branch</code> (<code>contains</code>/<code>not_contains</code> parameters)</li>
+        </ul>
+
+        <div class="warning-box">
+            <h4>⚠️ Attack Vector</h4>
+            <p>An attacker with filesystem write access (e.g., via <code>mcp-filesystem</code> server) could create malicious git refs like <code>--format=evil</code> under <code>.git/refs/heads/</code>. Without the leading-dash check, these values would be passed as flags to git commands, potentially enabling arbitrary code execution or data exfiltration.</p>
+        </div>
+
+        <h2>What Changed</h2>
+        
+        <p>The fix adds consistent validation guards matching the existing pattern:</p>
+        
+        <pre><code>def git_show(repo_path: str, revision: str) -> str:
+    # Guard against flag injection
+    if revision.startswith("-"):
+        raise ValueError("Revision cannot start with '-'")
+    
+    repo = git.Repo(repo_path)
+    return repo.git.show(revision)</code></pre>
+        
+        <p>Each guarded parameter now rejects inputs starting with <code>-</code>, preventing user-controlled values from being interpreted as command flags.</p>
+
+        <h3>Functions Hardened</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Function</th>
+                    <th>Parameter</th>
+                    <th>Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>git_show</code></td>
+                    <td><code>revision</code></td>
+                    <td>Format string injection via <code>--format</code></td>
+                </tr>
+                <tr>
+                    <td><code>git_create_branch</code></td>
+                    <td><code>branch_name</code></td>
+                    <td>Flag injection via branch names</td>
+                </tr>
+                <tr>
+                    <td><code>git_log</code></td>
+                    <td><code>since</code>, <code>until</code></td>
+                    <td>Flag injection via timestamp parameters</td>
+                </tr>
+                <tr>
+                    <td><code>git_branch</code></td>
+                    <td><code>contains</code>, <code>not_contains</code></td>
+                    <td>Flag injection via filter parameters</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Why This Matters</h2>
+        
+        <p>MCP servers often run with significant system access. When an AI agent uses the git server alongside a filesystem server, the combination creates a trust boundary issue: the agent might read a malicious ref name from the filesystem and pass it to a git function without sanitization.</p>
+        
+        <p>The existing guards on <code>git_diff</code> and <code>git_checkout</code> (plus tests for malicious refs) showed this threat model was already recognized — this PR simply closed the remaining gaps with consistent defense-in-depth.</p>
+
+        <h2>Defense-in-Depth Principles</h2>
+        
+        <p>This fix exemplifies good security hygiene:</p>
+        
+        <ul>
+            <li><strong>Consistency:</strong> All functions handling user input now apply the same validation</li>
+            <li><strong>Fail-safe defaults:</strong> Rejection via <code>ValueError</code> ensures malicious inputs can't slip through</li>
+            <li><strong>Test coverage:</strong> 6 new tests verify rejection of flag-like inputs, including a test that verifies <code>git_show</code> rejects malicious refs even when they exist on disk</li>
+        </ul>
+
+        <h2>Implications for MCP Server Authors</h2>
+        
+        <p>If you're building MCP servers that shell out to command-line tools:</p>
+        
+        <ol>
+            <li><strong>Audit all user-controlled inputs:</strong> Any parameter that reaches a CLI should be validated</li>
+            <li><strong>Block leading dashes:</strong> Prevent flag injection by rejecting inputs starting with <code>-</code> or <code>--</code></li>
+            <li><strong>Use positional argument separators:</strong> Many tools support <code>--</code> to separate flags from positional args</li>
+            <li><strong>Consider allowlists:</strong> For constrained inputs, validate against known-good patterns</li>
+        </ol>
+
+        <p style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-secondary);">
+            <strong>Source:</strong> <a href="https://github.com/modelcontextprotocol/servers/pull/3545" target="_blank">PR #3545</a> · 79 additions across 2 files · Generated with Claude Code
+        </p>
+    </div>
+</body>
+</html>

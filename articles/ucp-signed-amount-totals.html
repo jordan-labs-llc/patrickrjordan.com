@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Totals Now Accept Signed Amounts — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --yellow: #f59e0b;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text);
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .highlight {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .highlight-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .author-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .impact-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .impact-card .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+        .impact-card .value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--yellow);
+            color: black;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .next-steps {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .next-steps h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        a {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <h1>UCP Totals Now Accept Signed Amounts</h1>
+        <div class="meta">
+            <span class="tag">Bug Fix</span>
+            March 24, 2026 · 
+            <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/299" target="_blank">PR #299</a>
+        </div>
+
+        <div class="author-box">
+            <div class="author-avatar">RC</div>
+            <div class="author-info">
+                <h3>Ryan C (wry-ry)</h3>
+                <p>UCP contributor focused on schema correctness and checkout flow semantics. Previously contributed to CI pipeline overhauls and documentation improvements.</p>
+            </div>
+        </div>
+
+        <h2>Why This Matters</h2>
+        <p>
+            UCP's checkout specification has always supported <strong>negative amounts</strong> — discounts, account credits, and promotional adjustments that reduce the total. The official examples show this clearly. But until now, there was a subtle schema bug: the <code>total</code> field referenced <code>amount.json</code> (unsigned) instead of <code>signed_amount.json</code>.
+        </p>
+        <p>
+            This mismatch meant that while the spec <em>described</em> negative totals, the schema would <em>reject</em> them. Implementers following the JSON Schema strictly would find their discount scenarios failing validation.
+        </p>
+
+        <div class="highlight">
+            <div class="highlight-title">The Problem</div>
+            <p style="margin:0;">
+                When a checkout total goes negative (e.g., a $50 order with a $60 account credit), the total is <code>-$10.00</code>. The old schema couldn't represent this — the amount type only accepted non-negative values.
+            </p>
+        </div>
+
+        <h2>What Changed Technically</h2>
+        <p>
+            The fix is elegant in its simplicity: a single-line change swapping the schema reference from <code>amount.json</code> to <code>signed_amount.json</code>.
+        </p>
+
+        <pre><code>// Before
+"total": { "$ref": "amount.json" }
+
+// After
+"total": { "$ref": "signed_amount.json" }</code></pre>
+
+        <div class="impact-grid">
+            <div class="impact-card">
+                <div class="label">Files Changed</div>
+                <div class="value">1</div>
+            </div>
+            <div class="impact-card">
+                <div class="label">Lines Added</div>
+                <div class="value">1</div>
+            </div>
+            <div class="impact-card">
+                <div class="label">Lines Removed</div>
+                <div class="value">1</div>
+            </div>
+        </div>
+
+        <h2>Commerce Scenarios Unlocked</h2>
+        <p>
+            This seemingly small change unlocks important commerce patterns that were technically unsupported:
+        </p>
+        <ul>
+            <li><strong>Account Credits:</strong> Customer has store credit exceeding the order value — total goes negative, merchant owes the customer.</li>
+            <li><strong>Promotional Overages:</strong> Aggressive first-order discounts that exceed item cost, subsidizing customer acquisition.</li>
+            <li><strong>Refund Previews:</strong> Showing negative totals when previewing refund amounts before confirmation.</li>
+            <li><strong>Gift Card Balances:</strong> When a gift card value exceeds checkout total, the difference is negative.</li>
+        </ul>
+
+        <h2>Implications for Implementers</h2>
+        <p>
+            If you're implementing a UCP merchant or agent:
+        </p>
+        <ol>
+            <li><strong>Update your schema:</strong> Pull the latest UCP schemas to enable signed total validation.</li>
+            <li><strong>Review total handling:</strong> Ensure your payment processing can handle negative totals gracefully — these typically indicate credits rather than charges.</li>
+            <li><strong>Test edge cases:</strong> Validate that your checkout flows handle the zero-crossing correctly (positive → negative → positive).</li>
+        </ol>
+
+        <div class="next-steps">
+            <h3>🔮 What's Next</h3>
+            <p>
+                This PR is currently open and under review. The fix aligns the schema with the specification's documented examples, so approval is expected. Watch for the merge and subsequent spec version bump.
+            </p>
+            <p>
+                Related work: <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/295" target="_blank">PR #295</a> adds attribution extensions to checkout, and <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/296" target="_blank">PR #296</a> introduces card network token credentials — both building out UCP's payment infrastructure.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Sandbox Policy Fix — alsoAllow and Re-Allow Now Work — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text);
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .highlight {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .highlight-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .author-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .impact-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .impact-card .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+        .impact-card .value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--green);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+        .tag-security {
+            background: var(--red);
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .next-steps {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .next-steps h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        a {
+            color: var(--accent);
+        }
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--red);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .warning-box .title {
+            font-weight: 600;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <h1>OpenClaw Sandbox Policy Fix</h1>
+        <div class="meta">
+            <span class="tag">Bug Fix</span>
+            <span class="tag tag-security">Security</span>
+            March 25, 2026 · 
+            <a href="https://github.com/openclaw/openclaw/pull/54492" target="_blank">PR #54492</a>
+        </div>
+
+        <div class="author-box">
+            <div class="author-avatar">NG</div>
+            <div class="author-info">
+                <h3>Nimrod Gutman (ngutman)</h3>
+                <p>OpenClaw core contributor specializing in sandbox security, tool policy, and agent isolation. Known for thorough PR documentation and regression coverage.</p>
+            </div>
+        </div>
+
+        <h2>Why This Matters</h2>
+        <p>
+            OpenClaw's sandbox mode is critical infrastructure for safely running AI agents in constrained environments. It controls which tools an agent can access — preventing sandboxed agents from executing arbitrary commands, sending messages, or accessing the browser without explicit permission.
+        </p>
+        <p>
+            This PR fixes a bug where <strong>two important sandbox config options were silently ignored</strong>:
+        </p>
+        <ul>
+            <li><code>alsoAllow</code> — for adding tools to the sandbox allowlist</li>
+            <li>Explicit re-allows of default-denied tools</li>
+        </ul>
+
+        <div class="warning-box">
+            <div class="title">⚠️ The Bug</div>
+            <p style="margin:0;">
+                Operators configuring <code>tools.sandbox.tools.alsoAllow: ["message", "tts"]</code> expected their sandboxed agents to use those tools. But the sandbox resolver only read <code>allow</code> and <code>deny</code> — completely ignoring <code>alsoAllow</code>. Agents were more restricted than configured.
+            </p>
+        </div>
+
+        <h2>What Changed Technically</h2>
+        <p>
+            The fix introduces a <strong>unified effective sandbox policy resolver</strong> that all sandbox-related code paths now share:
+        </p>
+
+        <ul>
+            <li>Canonical sandbox tool resolution</li>
+            <li><code>openclaw sandbox explain</code> output</li>
+            <li>Security audits</li>
+            <li>Blocked-tool error messages</li>
+        </ul>
+
+        <p>
+            This ensures the sandbox behaves consistently everywhere — what you configure is what you get.
+        </p>
+
+        <div class="impact-grid">
+            <div class="impact-card">
+                <div class="label">Files Changed</div>
+                <div class="value">12</div>
+            </div>
+            <div class="impact-card">
+                <div class="label">Lines Added</div>
+                <div class="value">815</div>
+            </div>
+            <div class="impact-card">
+                <div class="label">Lines Removed</div>
+                <div class="value">113</div>
+            </div>
+        </div>
+
+        <h2>Key Behaviors Fixed</h2>
+        <ol>
+            <li><strong><code>alsoAllow</code> works:</strong> Tools listed in <code>alsoAllow</code> are now additive to the sandbox allowlist.</li>
+            <li><strong>Re-allows work:</strong> Explicitly allowing a default-denied tool (like <code>browser</code>) now removes it from the deny list.</li>
+            <li><strong>Explain matches runtime:</strong> <code>openclaw sandbox explain</code> now reports the same effective policy used at runtime.</li>
+            <li><strong><code>allow: []</code> semantics preserved:</strong> Empty allow array plus <code>alsoAllow</code> still means allow-all (not an empty allowlist).</li>
+        </ol>
+
+        <h2>Example Configuration</h2>
+        <pre><code># Before: alsoAllow was silently ignored
+agents:
+  defaults:
+    sandbox:
+      mode: all
+  list:
+    - id: my-agent
+      tools:
+        sandbox:
+          tools:
+            alsoAllow: ["message", "tts"]  # Didn't work!
+
+# After: alsoAllow works as documented
+# Same config now correctly grants message + tts access</code></pre>
+
+        <h2>Regression Coverage</h2>
+        <p>
+            The PR includes comprehensive test coverage to prevent future regressions:
+        </p>
+        <ul>
+            <li><code>src/agents/tool-policy-sandbox.test.ts</code> — unit tests for policy resolution</li>
+            <li><code>src/agents/pi-tools.sandbox-policy.test.ts</code> — integration tests</li>
+            <li><code>src/commands/sandbox-explain.test.ts</code> — CLI output tests</li>
+        </ul>
+
+        <div class="next-steps">
+            <h3>🔮 Implications</h3>
+            <p>
+                This fix is already merged (March 25, 2026). If you've been configuring <code>alsoAllow</code> and wondering why it wasn't working — update to the latest OpenClaw release.
+            </p>
+            <p>
+                The broader lesson: sandbox policy drift is subtle and dangerous. Having a single effective resolver shared by runtime, CLI, and auditing ensures configuration matches behavior.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

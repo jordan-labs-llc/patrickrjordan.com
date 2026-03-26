@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A SDK Reaches v1.0: Python Tutorial Overhaul — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--green);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            margin-top: 0;
+        }
+        .pr-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .pr-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .additions { color: var(--green); }
+        .deletions { color: var(--red); }
+        .timeline {
+            border-left: 2px solid var(--border);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.75rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span>March 26, 2026</span>
+            <span>4 min read</span>
+        </div>
+        
+        <h1>A2A SDK Reaches v1.0: Python Tutorial Overhaul</h1>
+        <p class="subtitle">The Agent-to-Agent protocol's Python SDK hits its first stable milestone, with updated tutorials reflecting the modern event-driven approach and native protobuf construction.</p>
+
+        <div class="pr-stats">
+            <div class="pr-stat"><span class="additions">+124</span></div>
+            <div class="pr-stat"><span class="deletions">−41</span></div>
+            <div class="pr-stat">5 files changed</div>
+            <div class="pr-stat"><a href="https://github.com/a2aproject/A2A/pull/1678" target="_blank">PR #1678</a></div>
+        </div>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>Iva Sokolaj</strong> is an A2A project contributor working on SDK documentation and developer experience. This PR updates the Python tutorial to align with the v1.0.0-alpha.0 SDK release, marking a significant milestone in the protocol's maturity.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        <p>The Agent-to-Agent (A2A) protocol enables AI agents to communicate and collaborate with each other — think of it as a lingua franca for the emerging agent ecosystem. While UCP handles agent-to-business transactions, A2A handles agent-to-agent coordination.</p>
+        
+        <p>The SDK reaching v1.0 (even as an alpha) signals the protocol is stabilizing. For developers building multi-agent systems, this means:</p>
+        <ul>
+            <li><strong>API stability</strong> — v1.0 semantics mean breaking changes require major version bumps</li>
+            <li><strong>Production readiness</strong> — the SDK is ready for real workloads, not just experimentation</li>
+            <li><strong>Ecosystem foundation</strong> — other languages (Go, Rust, TypeScript) can align to the Python reference</li>
+        </ul>
+
+        <h2>What Changed</h2>
+
+        <h3>Agent Card Schema Updates</h3>
+        <p>The AgentCard — an agent's public capability declaration — received several updates:</p>
+        <ul>
+            <li>Legacy <code>url</code> property replaced with <code>icon_url</code></li>
+            <li>New <code>supported_interfaces</code> field for declaring protocol bindings</li>
+            <li>Documentation for the <code>extended_agent_card</code> capability</li>
+        </ul>
+
+        <h3>Event-Driven Execution Model</h3>
+        <p>The HelloWorldAgentExecutor walkthrough was rewritten to reflect the modern approach:</p>
+        
+        <div class="callout">
+            <div class="callout-title">Old vs New Model</div>
+            <p><strong>Before:</strong> Single string message responses<br>
+            <strong>After:</strong> Explicit event queuing — <code>Task</code>, <code>TaskStatusUpdateEvent</code> (WORKING), <code>TaskArtifactUpdateEvent</code>, <code>TaskStatusUpdateEvent</code> (COMPLETED)</p>
+        </div>
+
+        <p>This makes the difference between streaming and non-streaming execution explicit and prepares developers for more complex async workflows.</p>
+
+        <h3>Client Factory Pattern</h3>
+        <p>Direct <code>A2ACardResolver</code> instantiation replaced with the new <code>ClientFactory</code> approach:</p>
+        
+        <pre><code># Old pattern
+resolver = A2ACardResolver(agent_url)
+client = A2AClient(resolver)
+
+# New pattern
+client = ClientFactory.create(config)
+client.send_message(message)  # Handles streaming based on config + agent capabilities</code></pre>
+
+        <h3>Native Protobuf Construction</h3>
+        <p>The tutorial now uses native protobuf <code>Message</code>, <code>Part</code>, and <code>Role</code> objects instead of <code>MessageSendParams</code> dictionaries — aligning with the generated types and enabling better IDE support.</p>
+
+        <h3>Safer Defaults</h3>
+        <p>Server binding changed from <code>0.0.0.0</code> to <code>127.0.0.1</code> in examples — a small but meaningful security improvement for developers following the tutorial.</p>
+
+        <h2>A2A v1.0 Timeline</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">March 12, 2026</div>
+                <strong>V1.0 Specification Published</strong>
+                <p>Official 1.0 specification released with blog post announcement</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">March 24, 2026</div>
+                <strong>a2a-sdk v1.0.0-alpha.0</strong>
+                <p>Python SDK published with v1.0-aligned implementation</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">March 26, 2026</div>
+                <strong>Tutorial Updates Merged</strong>
+                <p>Documentation aligned with new SDK patterns</p>
+            </div>
+        </div>
+
+        <h2>What's Next</h2>
+        <p><strong>For A2A adopters:</strong></p>
+        <ul>
+            <li>The <a href="https://github.com/a2aproject/a2a-samples/tree/main/samples/python">a2a-samples repo</a> is being updated to v1.0</li>
+            <li>Watch for <code>v1.0.0-alpha.1</code> addressing early feedback</li>
+            <li>QuerySkill operation (<a href="https://github.com/a2aproject/A2A/pull/1655">PR #1655</a>) may land in 1.1 — runtime skill capability introspection</li>
+        </ul>
+
+        <p><strong>For the ecosystem:</strong></p>
+        <ul>
+            <li>A2A's event-driven model aligns well with UCP's mechanism registry pattern</li>
+            <li>Expect MCP servers to add A2A client capabilities for agent-to-agent delegation</li>
+            <li>The <code>supported_interfaces</code> field enables multi-protocol agents (HTTP+JSON, gRPC, etc.)</li>
+        </ul>
+
+        <p><strong>Related:</strong></p>
+        <ul>
+            <li><a href="https://github.com/a2aproject/A2A/blob/main/docs/blog/v1-0-release.md">A2A V1.0 Release Blog Post</a></li>
+            <li><a href="/articles/a2a-1-0-official-release.html">Previous analysis: A2A 1.0 Official Release</a></li>
+        </ul>
+
+        <p style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.875rem;">
+            Published March 26, 2026 · <a href="/pulse.html">View Repo Pulse</a> · <a href="/">Home</a>
+        </p>
+    </div>
+</body>
+</html>

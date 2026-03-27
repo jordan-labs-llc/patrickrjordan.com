@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Razorpay UPI Payment Handlers: India's Payment Rails Meet Agentic Commerce — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .tldr {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .tldr-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .tldr p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .author-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .links-section {
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+        }
+        .links-section h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .links-list {
+            list-style: none;
+            padding: 0;
+        }
+        .links-list li {
+            margin-bottom: 0.5rem;
+        }
+        .stat-box {
+            display: flex;
+            gap: 2rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <div class="meta">
+            <span class="tag">UCP</span>
+            <span class="tag">Payments</span>
+            <span class="tag">India</span>
+            March 27, 2026 · Razorpay Team
+        </div>
+        
+        <h1>UCP Razorpay UPI Payment Handlers: India's Payment Rails Meet Agentic Commerce</h1>
+        
+        <div class="tldr">
+            <div class="tldr-title">TL;DR</div>
+            <p>Four new PRs from Razorpay introduce UPI payment handlers to UCP — including UPI Intent, UPI Circle (delegated payments), and hosted checkout integration. This is the first major payment handler contribution from India's dominant payment processor, signaling UCP's expansion beyond US/EU payment methods.</p>
+        </div>
+
+        <div class="stat-box">
+            <div class="stat">
+                <div class="stat-value">10B+</div>
+                <div class="stat-label">Monthly UPI Txns (India)</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">~50%</div>
+                <div class="stat-label">Digital Payments Share</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">4</div>
+                <div class="stat-label">New UCP PRs</div>
+            </div>
+        </div>
+
+        <h2>What's Being Proposed</h2>
+        
+        <p>On March 27, 2026, Razorpay engineers opened four related PRs that collectively add India's UPI payment ecosystem to UCP:</p>
+        
+        <ul>
+            <li><strong><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/316" target="_blank">PR #316</a>:</strong> Hosted checkout payment handler for Razorpay Magic Checkout</li>
+            <li><strong><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/315" target="_blank">PR #315</a>:</strong> UPI Intent payment handler (<code>com.razorpay.upi</code>)</li>
+            <li><strong><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/314" target="_blank">PR #314</a>:</strong> UPI Circle (delegated UPI) payment handler for agentic commerce</li>
+            <li><strong><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/313" target="_blank">PR #313</a>:</strong> UPI Intent payment instrument and credential schemas</li>
+        </ul>
+        
+        <p>The most interesting of these is <strong>UPI Circle</strong> — Razorpay's delegated payment feature where users pre-authorize trusted contacts (or agents) to make UPI payments on their behalf up to a specified limit. This maps naturally to agentic commerce scenarios.</p>
+
+        <h2>Why UPI Matters for Agentic Commerce</h2>
+        
+        <p>India's Unified Payments Interface (UPI) is the world's largest real-time payment system by transaction volume. Unlike card-based systems:</p>
+        
+        <ul>
+            <li><strong>Real-time settlement:</strong> Transactions complete in seconds, not days</li>
+            <li><strong>Zero/low merchant fees:</strong> Dramatically lower than card networks</li>
+            <li><strong>Intent-based flows:</strong> Users confirm payments via their banking app</li>
+            <li><strong>QR and deep-link native:</strong> No card numbers to transmit</li>
+        </ul>
+        
+        <p>For AI agents, UPI's intent model presents both opportunities and challenges. An agent can't tap a phone to approve a payment — but UPI Circle's delegation model solves this elegantly.</p>
+
+        <h2>UPI Circle: Delegation for Agents</h2>
+        
+        <p>The <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/314" target="_blank">UPI Circle PR</a> is particularly significant. The flow:</p>
+        
+        <ol>
+            <li><strong>User setup:</strong> Customer creates a UPI Circle delegation in their banking app, authorizing a merchant/agent with a spending limit</li>
+            <li><strong>Agent discovery:</strong> UCP's capability discovery reveals <code>com.razorpay.upi.circle</code> as available</li>
+            <li><strong>Agent-initiated payment:</strong> The AI agent can initiate payments within the delegated limit without per-transaction user approval</li>
+            <li><strong>Real-time completion:</strong> UPI settles immediately; agent receives confirmation</li>
+        </ol>
+        
+        <p>This is agentic commerce done right: explicit user consent and limits, machine-readable capabilities, and real-time settlement.</p>
+
+        <h2>Technical Architecture</h2>
+        
+        <p>The PRs add several schema components:</p>
+        
+        <pre><code>// UPI Intent Instrument (PR #313)
+{
+  "type": "com.razorpay.upi.intent",
+  "vpa": "user@upi",  // Virtual Payment Address
+  "app_preference": ["gpay", "phonepe", "paytm"]
+}
+
+// UPI Circle Credential
+{
+  "type": "com.razorpay.upi.circle",
+  "delegation_id": "del_xxxxx",
+  "limit_remaining": 5000,
+  "currency": "INR"
+}</code></pre>
+        
+        <p>The hosted checkout handler (<a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/316" target="_blank">PR #316</a>) provides a fallback for cases where delegated payment isn't available — redirecting to Razorpay's Magic Checkout for full payment method selection.</p>
+
+        <h2>Market Context</h2>
+        
+        <p>This contribution is significant for several reasons:</p>
+        
+        <ul>
+            <li><strong>First major Indian payment processor:</strong> Razorpay processes a substantial portion of India's digital payments. Their UCP participation validates the protocol's global ambitions.</li>
+            <li><strong>Real-time payment focus:</strong> UCP has been card-centric so far; UPI represents a fundamentally different payment paradigm.</li>
+            <li><strong>Delegation as a pattern:</strong> UPI Circle's delegation model could inspire similar patterns for other payment methods (pre-authorized ACH, delegated wallets).</li>
+        </ul>
+
+        <h2>Implications for AI Commerce</h2>
+        
+        <p>For AI agent developers building commerce experiences:</p>
+        
+        <ul>
+            <li><strong>India becomes accessible:</strong> A market of 1.4B people with 500M+ smartphone users can now transact via UCP-compliant agents</li>
+            <li><strong>Delegation patterns:</strong> UPI Circle provides a template for agent-authorized payments elsewhere</li>
+            <li><strong>Real-time feedback:</strong> UPI's instant settlement means agents know immediately if payments succeeded</li>
+        </ul>
+        
+        <p>For businesses implementing UCP, supporting these handlers means access to India's digital-native consumers who increasingly expect AI-assisted shopping experiences.</p>
+
+        <h2>Next Steps</h2>
+        
+        <p>These PRs are currently open and under review. Key questions the community is evaluating:</p>
+        
+        <ul>
+            <li>How should delegation limits be communicated to agents at capability discovery time?</li>
+            <li>Should UPI-specific error codes map to UCP's semantic status system?</li>
+            <li>How do multi-party UPI flows (like split payments) fit the protocol?</li>
+        </ul>
+        
+        <p>Expect iteration on the schemas before merge, but the direction is clear: UCP is becoming genuinely global.</p>
+
+        <div class="author-box">
+            <h3>About the Contributors</h3>
+            <p><strong>Himanshu Shekhar</strong> and <strong>Paras Kathuria</strong> from Razorpay authored these PRs. Razorpay is India's leading payment gateway, processing billions in monthly transaction volume across millions of businesses.</p>
+        </div>
+
+        <div class="links-section">
+            <h3>Related Links</h3>
+            <ul class="links-list">
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/316" target="_blank">PR #316: Hosted checkout payment handler</a></li>
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/315" target="_blank">PR #315: UPI Intent payment handler</a></li>
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/314" target="_blank">PR #314: UPI Circle delegated payment handler</a></li>
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/313" target="_blank">PR #313: UPI Intent instrument schemas</a></li>
+                <li><a href="https://ucp.dev" target="_blank">Universal Commerce Protocol</a></li>
+                <li><a href="/pulse.html">Repo Pulse — Latest Activity</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

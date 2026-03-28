@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local MCP: Privacy-First Productivity on macOS — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--green);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .callout-warning {
+            border-left-color: var(--yellow);
+        }
+        .author-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .author-box h3 {
+            margin-top: 0;
+        }
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .capability-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .capability-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .capability-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .stat-highlight {
+            display: inline-block;
+            background: var(--green);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag">MCP</span>
+            <span>March 28, 2026</span>
+            <span>4 min read</span>
+        </div>
+        
+        <h1>Local MCP: Privacy-First Productivity on macOS</h1>
+        <p class="subtitle">A new MCP server brings Mail, Calendar, Contacts, Teams, and OneDrive to AI assistants — all running locally with zero cloud processing. The privacy-conscious enterprise use case gets a compelling answer.</p>
+
+        <div class="author-box">
+            <h3>About the Author</h3>
+            <p><strong>Dario Lanchuske</strong> (<a href="https://github.com/lanchuske">@lanchuske</a>) ships Local MCP with <span class="stat-highlight">38 MCP tools</span> and <span class="stat-highlight">1,000+ npm downloads</span> already achieved. The package auto-detects and configures Claude Desktop, Cursor, Windsurf, VS Code, and Zed — zero manual config needed.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        <p>Most productivity MCP servers require OAuth tokens, API keys, or cloud services. For enterprises and privacy-conscious users, this creates a fundamental tension: you want AI assistance with your email and calendar, but you don't want your data leaving your machine.</p>
+        
+        <p>Local MCP takes a different approach: everything runs on your Mac, reading from native apps and local data stores. No tokens, no APIs, no cloud — just direct access to your productivity data.</p>
+
+        <div class="callout">
+            <div class="callout-title">The Teams Integration</div>
+            <p>Perhaps most impressive: Teams chat/channel access works by reading Microsoft Teams' local IndexedDB storage. No Graph API tokens required. This is the kind of pragmatic solution that makes self-hosted AI assistants viable for enterprise users.</p>
+        </div>
+
+        <h2>Capabilities</h2>
+
+        <div class="capability-grid">
+            <div class="capability-card">
+                <h4>📧 Mail</h4>
+                <p>Read, search, send, reply via Mail.app. Works with Gmail, Outlook, iCloud, Exchange.</p>
+            </div>
+            <div class="capability-card">
+                <h4>📅 Calendar</h4>
+                <p>List, create, delete events. Multi-account support for all calendar providers.</p>
+            </div>
+            <div class="capability-card">
+                <h4>👥 Contacts</h4>
+                <p>Search and list contacts from the native Contacts app.</p>
+            </div>
+            <div class="capability-card">
+                <h4>💬 Teams</h4>
+                <p>Read chats and channels via local IndexedDB. No Microsoft API needed.</p>
+            </div>
+            <div class="capability-card">
+                <h4>☁️ OneDrive</h4>
+                <p>Full file management: read, write, search, move, delete.</p>
+            </div>
+            <div class="capability-card">
+                <h4>📄 Documents</h4>
+                <p>Word, Excel, PowerPoint, PDF reading and extraction.</p>
+            </div>
+        </div>
+
+        <h2>Installation & Configuration</h2>
+        
+        <p>The zero-config approach is notable:</p>
+        
+        <pre><code>npm install -g local-mcp</code></pre>
+
+        <p>That's it. The package auto-detects which AI tools you have installed and configures them automatically. For manual configuration:</p>
+
+        <pre><code>{
+  "command": "npx",
+  "args": ["-y", "local-mcp@latest"]
+}</code></pre>
+
+        <h3>MCP Discovery</h3>
+        <p>Local MCP includes proper MCP discovery metadata:</p>
+        <pre><code>https://www.local-mcp.com/.well-known/mcp.json</code></pre>
+
+        <h2>Safety Features</h2>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Destructive Operation Previews</div>
+            <p>Before sending an email, the tool shows a preview of what will be sent. This "confirm before send" pattern is essential for AI assistants with write access — a single mistaken email could cause real damage.</p>
+        </div>
+
+        <p>This safety-first approach aligns with emerging best practices in agentic tooling: tools that can cause harm should require explicit confirmation, especially when the AI might be operating autonomously.</p>
+
+        <h2>Why Local Matters</h2>
+
+        <p>The privacy architecture has several advantages:</p>
+
+        <ul>
+            <li><strong>No API tokens to manage:</strong> OAuth flows are complex, tokens expire, and credential rotation is a pain</li>
+            <li><strong>No cloud dependency:</strong> Works offline, no latency to external services, no third-party data access</li>
+            <li><strong>Enterprise compliance:</strong> Some organizations prohibit sending productivity data to external APIs — this sidesteps the issue entirely</li>
+            <li><strong>Speed:</strong> Local reads are fast. No network round-trips for simple queries.</li>
+        </ul>
+
+        <h2>Limitations</h2>
+
+        <p>The local-only approach does have tradeoffs:</p>
+
+        <ul>
+            <li><strong>macOS only:</strong> Relies on native app data stores and AppleScript automation</li>
+            <li><strong>Teams via IndexedDB:</strong> Could break if Microsoft changes their local storage format</li>
+            <li><strong>No real-time sync:</strong> Reading local stores means you're working with cached data</li>
+        </ul>
+
+        <h2>Ecosystem Context</h2>
+
+        <p>Local MCP joins a growing category of "local-first" MCP servers that prioritize privacy:</p>
+
+        <ul>
+            <li><strong>MCP filesystem:</strong> Local file access</li>
+            <li><strong>MCP SQLite:</strong> Local database queries</li>
+            <li><strong>Local MCP:</strong> Productivity apps (this PR)</li>
+        </ul>
+
+        <p>The pattern: give AI assistants access to your local environment without requiring cloud services. As AI assistants become more capable, the question of "where does my data go?" becomes increasingly important.</p>
+
+        <h2>What's Next</h2>
+
+        <p>The PR adds Local MCP to the official MCP servers README. With 1,000+ downloads already, adoption is strong. Watch for:</p>
+
+        <ul>
+            <li>Potential Windows/Linux ports (though the approach would need to be fundamentally different)</li>
+            <li>Additional macOS app integrations (Slack, Discord, Notes, Reminders)</li>
+            <li>Write capability expansion (calendar events are already supported)</li>
+        </ul>
+
+        <p><strong>Links:</strong></p>
+        <ul>
+            <li><a href="https://github.com/modelcontextprotocol/servers/pull/3736" target="_blank">PR #3736: Add Local MCP</a></li>
+            <li><a href="https://www.npmjs.com/package/local-mcp" target="_blank">npm: local-mcp</a></li>
+            <li><a href="https://local-mcp.com" target="_blank">Website: local-mcp.com</a></li>
+        </ul>
+
+        <p style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.875rem;">
+            Published March 28, 2026 · <a href="/pulse.html">View Repo Pulse</a> · <a href="/">Home</a>
+        </p>
+    </div>
+</body>
+</html>

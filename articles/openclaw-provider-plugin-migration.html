@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Provider Policy Migration — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li { margin-bottom: 0.5rem; }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <h1>OpenClaw Provider Policy Migration — Plugins Complete Their Takeover</h1>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Architecture</span>
+            <span class="tag">Plugin SDK</span>
+            March 29, 2026 · Peter Steinberger · 
+            <a href="https://github.com/openclaw/openclaw/commit/637b4c8" target="_blank">View commit →</a>
+        </div>
+
+        <h2>Author Context</h2>
+        <p><strong>Peter Steinberger</strong> is the creator of OpenClaw and has been systematically refactoring the codebase to move provider-specific logic into the plugin system. This commit represents the final push in a multi-week effort to externalize provider policy from the core gateway.</p>
+
+        <h2>Why This Matters</h2>
+        <p>OpenClaw supports dozens of AI providers — Anthropic, OpenAI, Google, Mistral, Cohere, local models, and many more. Each provider has quirks: different rate limits, authentication flows, feature flags, and error handling. Previously, this provider-specific policy logic lived in the core gateway code.</p>
+
+        <p>This architecture had problems:</p>
+        <ul>
+            <li><strong>Monolith bloat:</strong> The gateway grew with every provider added</li>
+            <li><strong>Coupling:</strong> Changes to one provider risked breaking others</li>
+            <li><strong>Testing burden:</strong> Integration tests required mocking every provider</li>
+            <li><strong>Third-party friction:</strong> Adding a new provider meant modifying core code</li>
+        </ul>
+
+        <p>The plugin architecture inverts this: providers become self-contained packages that register their capabilities, policies, and transport hooks with the gateway at runtime.</p>
+
+        <h2>What Changed</h2>
+        <p>The commit touches 11 files across multiple packages:</p>
+
+        <pre><code>extensions/amazon-bedrock/index.ts
+extensions/anthropic-vertex/index.ts
+extensions/anthropic-vertex/index.test.ts
+extensions/anthropic-vertex/openclaw.plugin.json
+extensions/anthropic-vertex/package.json
+extensions/anthropic-vertex/provider.contract.test.ts
+src/agents/models-config.providers.implicit.ts
+src/agents/models-config.providers.policy.ts
+src/agents/models-config.providers.policy.test.ts
+src/agents/provider-capabilities.ts
+src/agents/provider-capabilities.test.ts</code></pre>
+
+        <div class="callout">
+            <p><strong>Key insight:</strong> The Anthropic Vertex extension now has its own <code>openclaw.plugin.json</code> manifest and contract tests — it's a fully independent package that can be versioned, tested, and published separately from the core gateway.</p>
+        </div>
+
+        <p>The coordinated commits on the same day tell the full story:</p>
+        <ul>
+            <li><code>edc58a6</code> — Generalize provider transport hooks (abstract the extension points)</li>
+            <li><code>8109195</code> — Fix recursive bundled facade loads (prevent circular dependencies)</li>
+            <li><code>24d16c3</code> — Remove source alias residue (clean up legacy patterns)</li>
+            <li><code>e611676</code> — Verify dist facade exports (ensure plugin SDK builds correctly)</li>
+            <li><code>637b4c8</code> — Move remaining provider policy into plugins (the final push)</li>
+        </ul>
+
+        <h2>Technical Details</h2>
+        <p>The refactor introduces a generalized <code>transport hooks</code> pattern. Instead of hardcoded provider checks:</p>
+
+        <pre><code>// Before: hardcoded in gateway
+if (provider === 'anthropic-vertex') {
+  request.headers['X-Vertex-Region'] = config.region;
+}</code></pre>
+
+        <p>Plugins now register transport hooks that the gateway invokes:</p>
+
+        <pre><code>// After: in anthropic-vertex plugin
+export const transportHooks = {
+  beforeRequest: (ctx) => {
+    ctx.headers['X-Vertex-Region'] = ctx.config.region;
+  }
+};</code></pre>
+
+        <p>This pattern extends to rate limiting, retry logic, error mapping, and capability discovery — all now delegated to plugins.</p>
+
+        <h2>Implications</h2>
+        <p><strong>For users:</strong> Nothing changes. The same providers work the same way. But future provider additions and updates will ship faster and break less.</p>
+
+        <p><strong>For contributors:</strong> Adding a new provider no longer requires understanding the gateway internals. Create a plugin package, implement the required interfaces, write contract tests, and submit a PR.</p>
+
+        <p><strong>For enterprise:</strong> Custom provider plugins become practical. Organizations can add internal model endpoints, custom authentication flows, or specialized rate limiting without forking the gateway.</p>
+
+        <h2>Next Steps</h2>
+        <p>With provider policy fully externalized, the plugin SDK is now feature-complete for transport-layer integrations. Expect documentation updates and potentially a "create your own provider" guide in the coming weeks.</p>
+
+        <p>The version bump to <code>2026.3.29</code> in the same batch of commits signals this is considered a stable milestone — the plugin architecture is ready for production use.</p>
+    </div>
+</body>
+</html>

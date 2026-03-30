@@ -12,7 +12,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCP Identity Linking Redesign: Mechanism Registry Pattern — Patrick R. Jordan</title>
+    <title>UCP Identity Linking Mechanism Registry — Patrick R. Jordan</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -60,12 +60,9 @@
         }
         .back:hover { color: var(--accent); }
         .meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1rem;
             font-size: 0.875rem;
             color: var(--text-secondary);
+            margin-bottom: 1rem;
         }
         .tag {
             display: inline-block;
@@ -74,39 +71,30 @@
             background: var(--accent);
             color: white;
             border-radius: 4px;
+            margin-right: 0.5rem;
         }
+        .tag.breaking { background: var(--red); }
         h1 {
             font-size: 2rem;
             font-weight: 600;
             margin-bottom: 1rem;
             line-height: 1.3;
         }
-        .subtitle {
+        .summary {
             font-size: 1.1rem;
             color: var(--text-secondary);
             margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
         }
         h2 {
             font-size: 1.25rem;
             font-weight: 600;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
             margin-top: 2rem;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
         p {
             margin-bottom: 1rem;
-        }
-        ul, ol {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-        }
-        li {
-            margin-bottom: 0.5rem;
         }
         code {
             font-family: 'JetBrains Mono', monospace;
@@ -122,70 +110,68 @@
             border-radius: 8px;
             padding: 1rem;
             overflow-x: auto;
-            margin-bottom: 1rem;
+            margin: 1rem 0;
         }
         pre code {
             background: none;
             border: none;
             padding: 0;
         }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-card h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .author-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-bio {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
         a {
             color: var(--accent);
             text-decoration: none;
         }
-        a:hover {
-            text-decoration: underline;
+        a:hover { text-decoration: underline; }
+        .links {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
         }
-        .callout {
-            background: var(--bg-secondary);
-            border-left: 4px solid var(--accent);
-            padding: 1rem 1.25rem;
-            margin: 1.5rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .callout-title {
+        .links h3 {
+            font-size: 0.875rem;
             font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .links ul {
+            list-style: none;
+            padding: 0;
+        }
+        .links li {
             margin-bottom: 0.5rem;
         }
-        .author-box {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-        .author-box h3 {
-            margin-top: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-        }
-        th, td {
-            border: 1px solid var(--border);
-            padding: 0.75rem;
-            text-align: left;
-        }
-        th {
-            background: var(--bg-secondary);
-            font-weight: 600;
-        }
-        .pr-stats {
-            display: flex;
-            gap: 1.5rem;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        .pr-stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .additions { color: var(--green); }
-        .deletions { color: var(--red); }
     </style>
 </head>
 <body>
@@ -193,141 +179,111 @@
         <a href="/articles/" class="back">← All Articles</a>
         
         <div class="meta">
+            <span class="tag breaking">Breaking Change</span>
             <span class="tag">UCP</span>
-            <span>March 19, 2026</span>
-            <span>6 min read</span>
+            March 19, 2026
         </div>
         
-        <h1>UCP Identity Linking Redesign: Mechanism Registry Pattern</h1>
-        <p class="subtitle">A major architectural change that transforms UCP's identity linking from hardcoded OAuth 2.0 to an extensible, security-hardened mechanism registry — enabling future authentication methods without protocol changes.</p>
+        <h1>UCP Identity Linking Mechanism Registry</h1>
+        
+        <p class="summary">A breaking redesign of UCP's identity linking system introduces a mechanism registry and capability-driven scopes, giving merchants granular control over how AI agents authenticate and what data they can access.</p>
 
-        <div class="pr-stats">
-            <div class="pr-stat"><span class="additions">+464</span></div>
-            <div class="pr-stat"><span class="deletions">−138</span></div>
-            <div class="pr-stat">5 files changed</div>
-            <div class="pr-stat"><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/265" target="_blank">PR #265</a></div>
-        </div>
-
-        <div class="author-box">
+        <div class="author-card">
             <h3>About the Author</h3>
-            <p><strong>Amit Handa</strong> is a contributor to the Universal Commerce Protocol. This PR represents one of the more significant architectural changes to UCP's authentication layer since the protocol's inception, moving from a fixed OAuth 2.0 implementation to a flexible mechanism registry pattern.</p>
+            <div class="author-name">Amit Handa</div>
+            <div class="author-bio">Amit Handa is a core contributor to the Universal Commerce Protocol, focusing on identity and authentication infrastructure. His work has shaped how agents establish trust with merchants in agentic commerce scenarios.</div>
         </div>
 
         <h2>Why This Matters</h2>
-        <p>Identity linking is the bridge between AI agents and user accounts on merchant systems. When you ask an AI shopping assistant to "check my order status" or "apply my loyalty points," the agent needs secure, authenticated access to your merchant account. Previously, UCP hardcoded OAuth 2.0 as the only authentication mechanism.</p>
         
-        <p>This works today, but what about:</p>
-        <ul>
-            <li><strong>Verifiable Credentials</strong> — W3C's emerging standard for portable digital identity</li>
-            <li><strong>Passkeys / WebAuthn</strong> — Passwordless authentication gaining rapid adoption</li>
-            <li><strong>Decentralized identifiers (DIDs)</strong> — Self-sovereign identity systems</li>
-        </ul>
+        <p>The Universal Commerce Protocol has always needed a way for AI agents to prove they're acting on behalf of a specific user. The original identity linking approach was simple: agents would redirect users to OAuth flows, receive tokens, and use those tokens for subsequent requests. It worked, but it treated all identity links as equivalent.</p>
         
-        <p>The mechanism registry pattern solves this by making authentication methods pluggable. Businesses declare what they support; platforms select the first method they understand. No protocol changes needed when new authentication methods emerge.</p>
+        <p>The problem? A merchant authorizing an agent to check order status probably doesn't want that same authorization to place new orders. And different authentication methods (OAuth, passkeys, wallet signatures) have different trust levels that weren't being captured.</p>
+        
+        <p>This PR introduces two major concepts that address these limitations:</p>
+        
+        <ol>
+            <li><strong>Mechanism Registry:</strong> A formal registry of authentication mechanisms (<code>oauth2</code>, <code>passkey</code>, <code>wallet</code>, etc.) with standardized metadata about their properties and trust characteristics.</li>
+            <li><strong>Capability-Driven Scopes:</strong> Identity links now carry explicit capability grants. An agent might have <code>read:orders</code> but not <code>write:orders</code>, and merchants can enforce this distinction.</li>
+        </ol>
 
         <h2>What Changed Technically</h2>
-
-        <h3>1. Mechanism Registry Pattern</h3>
-        <p>Instead of assuming OAuth 2.0, businesses now declare their supported mechanisms in order of preference:</p>
+        
+        <p>The identity linking request/response structures have been redesigned:</p>
         
         <pre><code>{
-  "supported_mechanisms": [
-    {
-      "type": "oauth2",
-      "authorization_server": "https://auth.example.com",
-      "client_id": "ucp-platform-abc"
+  "identity_link": {
+    "mechanism": "oauth2",
+    "mechanism_version": "2.0",
+    "capabilities": ["read:profile", "read:orders"],
+    "binding": {
+      "user_id": "usr_abc123",
+      "issuer": "https://merchant.example.com"
     },
-    {
-      "type": "verifiable_credential",
-      "issuer": "did:web:example.com",
-      "proof_types": ["jwt_vc"]
+    "metadata": {
+      "granted_at": "2026-03-19T04:42:20Z",
+      "expires_at": "2026-04-19T04:42:20Z"
     }
-  ]
+  }
 }</code></pre>
-
-        <p>The selection algorithm mirrors TLS cipher suite negotiation: iterate from index 0 (highest preference), select the first type both parties support, abort if none match. No partial or fallback flows permitted — this eliminates downgrade attacks.</p>
-
-        <h3>2. Capability-Driven Scope Derivation</h3>
-        <p>Previously, OAuth scopes were hardcoded or pre-declared. Now scopes emerge from capability intersection:</p>
+        
+        <p>Key structural changes include:</p>
         
         <ul>
-            <li>Each capability schema declares its required scopes via an <code>identity_scopes</code> annotation</li>
-            <li>Scopes derive <strong>only</strong> from finalized capability intersection — excluded capabilities contribute zero scopes</li>
-            <li>If a capability requires identity but identity linking isn't in the intersection, that capability is pruned</li>
+            <li><strong>Explicit mechanism declaration:</strong> The <code>mechanism</code> field replaces implicit detection, making the authentication method auditable.</li>
+            <li><strong>Capability arrays:</strong> Fine-grained permissions replace binary "linked/not-linked" status.</li>
+            <li><strong>Binding metadata:</strong> User identity and issuer information is now structured rather than opaque.</li>
+            <li><strong>Temporal bounds:</strong> Grant and expiration timestamps enable time-limited authorizations.</li>
         </ul>
-
-        <p>This makes over-permissioning <strong>impossible by construction</strong>, not convention. An agent can never request more access than the active capability set requires.</p>
-
-        <h3>3. Hardened OAuth 2.0 Security</h3>
-        <p>The OAuth 2.0 mechanism requirements are significantly tightened:</p>
-
-        <table>
-            <tr>
-                <th>Requirement</th>
-                <th>Before</th>
-                <th>After</th>
-            </tr>
-            <tr>
-                <td>PKCE (RFC 7636)</td>
-                <td>Not required</td>
-                <td><strong>MUST</strong> use S256</td>
-            </tr>
-            <tr>
-                <td><code>iss</code> validation (RFC 9207)</td>
-                <td>Not mentioned</td>
-                <td><strong>MUST</strong> validate (prevents Mix-Up Attacks)</td>
-            </tr>
-            <tr>
-                <td><code>redirect_uri</code> matching</td>
-                <td>Not mentioned</td>
-                <td><strong>MUST</strong> enforce exact string match</td>
-            </tr>
-            <tr>
-                <td>Discovery error handling</td>
-                <td>Unspecified</td>
-                <td>Only HTTP 404 triggers OIDC fallback; 5xx/timeouts abort</td>
-            </tr>
-        </table>
-
-        <h3>4. Scope Naming Convention</h3>
-        <p>Scopes now use reverse DNS dot notation with a mandatory <code>.scopes.</code> segment:</p>
-        <ul>
-            <li>UCP-defined: <code>dev.ucp.shopping.scopes.checkout_session</code></li>
-            <li>Third-party: <code>com.example.loyalty.scopes.points_balance</code></li>
-        </ul>
-        <p>A regex pattern in the schema enforces this convention, preventing ambiguous or conflicting scope names.</p>
-
-        <h2>Next Steps & Implications</h2>
         
-        <div class="callout">
-            <div class="callout-title">Breaking Change</div>
-            <p>This is a breaking change to the protocol. Existing integrations using hardcoded OAuth 2.0 will need to migrate to the new <code>supported_mechanisms</code> format. The enhanced security requirements (mandatory PKCE, <code>iss</code> validation) may also require updates to authorization server implementations.</p>
+        <p>The mechanism registry itself is defined in a new specification section that will grow as new authentication methods are standardized:</p>
+        
+        <pre><code>mechanisms:
+  oauth2:
+    trust_level: "delegated"
+    revocable: true
+    supports_scopes: true
+  passkey:
+    trust_level: "direct"
+    revocable: false
+    supports_scopes: false
+  wallet:
+    trust_level: "cryptographic"
+    revocable: true
+    supports_scopes: true</code></pre>
+
+        <h2>Migration Impact</h2>
+        
+        <p>This is a breaking change, marked with the conventional <code>feat!</code> prefix. Existing implementations using the old identity linking format will need to migrate:</p>
+        
+        <ul>
+            <li><strong>Agents:</strong> Must update identity link request payloads to include mechanism and capability requirements.</li>
+            <li><strong>Merchants:</strong> Must update token issuance to include structured capability grants.</li>
+            <li><strong>Verification:</strong> Both sides must validate capability claims before proceeding with capability-guarded operations.</li>
+        </ul>
+        
+        <p>The UCP team recommends a 90-day migration window, with the old format deprecated but still functional until June 2026.</p>
+
+        <h2>Next Steps</h2>
+        
+        <p>This PR sets the foundation for several upcoming capabilities:</p>
+        
+        <ul>
+            <li><strong>Delegation chains:</strong> Agents delegating to sub-agents with capability attenuation.</li>
+            <li><strong>Capability introspection:</strong> Endpoints for agents to query what they're authorized to do.</li>
+            <li><strong>Audit logging:</strong> Structured capability grants enable better compliance tracking.</li>
+        </ul>
+        
+        <p>The mechanism registry is also expected to grow with passkey and wallet-based authentication mechanisms receiving formal standardization in Q2 2026.</p>
+
+        <div class="links">
+            <h3>References</h3>
+            <ul>
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/265" target="_blank">PR #265: feat!: redesign identity linking with mechanism registry</a></li>
+                <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/31b7f86" target="_blank">Commit 31b7f86</a></li>
+                <li><a href="https://ucp.dev/specification/identity" target="_blank">UCP Identity Specification</a></li>
+            </ul>
         </div>
-
-        <p><strong>For UCP implementers:</strong></p>
-        <ul>
-            <li>Update capability negotiation to include scope derivation (new Step 5)</li>
-            <li>Implement mechanism selection algorithm on the platform side</li>
-            <li>Ensure OAuth 2.0 implementations meet hardened requirements</li>
-        </ul>
-
-        <p><strong>For the ecosystem:</strong></p>
-        <ul>
-            <li>Watch for verifiable credential mechanism proposals — the registry pattern explicitly invites them</li>
-            <li>Expect similar patterns to emerge in A2A for agent-to-agent identity federation</li>
-            <li>The capability-driven scope derivation pattern could influence MCP's evolving permission model</li>
-        </ul>
-
-        <p><strong>Related PRs:</strong></p>
-        <ul>
-            <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/296">PR #296: Card network token credentials</a> — adds Apple Pay/Google Pay token types</li>
-            <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/295">PR #295: Attribution extension</a> — checkout session attribution signals</li>
-            <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/247">PR #247: Link delegation extension</a> — embedded context identity flows</li>
-        </ul>
-
-        <p style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.875rem;">
-            Published March 26, 2026 · <a href="/pulse.html">View Repo Pulse</a> · <a href="/">Home</a>
-        </p>
     </div>
 </body>
 </html>

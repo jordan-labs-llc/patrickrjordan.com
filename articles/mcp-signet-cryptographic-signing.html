@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Signet: Cryptographic Action Signing — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .tag.security { background: var(--green); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .summary {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+        .author-card h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .author-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .author-bio {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        .links {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .links h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .links ul {
+            list-style: none;
+            padding: 0;
+        }
+        .links li {
+            margin-bottom: 0.5rem;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <div class="meta">
+            <span class="tag security">Security</span>
+            <span class="tag">MCP</span>
+            March 30, 2026 (Open PR)
+        </div>
+        
+        <h1>MCP Signet: Cryptographic Action Signing for Tool Calls</h1>
+        
+        <p class="summary">A new proposal for the MCP servers repository introduces Signet, a middleware layer that cryptographically signs tool call requests and responses—enabling non-repudiable audit trails for AI agent actions.</p>
+
+        <div class="author-card">
+            <h3>About the Author</h3>
+            <div class="author-name">William Hou (willamhou)</div>
+            <div class="author-bio">William Hou is the author of PR #3759, proposing Signet as a community server contribution. The PR introduces cryptographic signing middleware for MCP tool calls, addressing enterprise audit and compliance requirements.</div>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>As AI agents gain the ability to take real-world actions—sending emails, making purchases, modifying files—organizations need strong audit guarantees. Who authorized this action? When exactly did it happen? Has the record been tampered with?</p>
+        
+        <p>Traditional logging can answer some of these questions, but logs can be modified. Signet proposes cryptographic signatures that create non-repudiable records: if an action was signed, you can prove it happened exactly as recorded, and you can prove who authorized it.</p>
+        
+        <div class="callout">
+            <strong>Note:</strong> This is an open PR under review, not yet merged. The design may change based on community feedback.
+        </div>
+
+        <h2>How It Works</h2>
+        
+        <p>Signet operates as middleware that intercepts MCP tool calls at two points:</p>
+        
+        <ol>
+            <li><strong>Request signing:</strong> Before a tool call is executed, the request parameters are canonicalized and signed with the agent's private key.</li>
+            <li><strong>Response attestation:</strong> After execution, the response (including any side effects) is signed by the server, creating a complete audit record.</li>
+        </ol>
+        
+        <pre><code>{
+  "tool_call": {
+    "name": "send_email",
+    "arguments": {
+      "to": "alice@example.com",
+      "subject": "Meeting tomorrow",
+      "body": "..."
+    }
+  },
+  "signet": {
+    "request_signature": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFZDI1NTE5In0...",
+    "signer": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "timestamp": "2026-03-30T11:37:25Z",
+    "nonce": "abc123"
+  }
+}</code></pre>
+        
+        <p>The signature covers:</p>
+        
+        <ul>
+            <li>Tool name and arguments (canonicalized JSON)</li>
+            <li>Timestamp (prevents replay attacks)</li>
+            <li>Nonce (prevents duplicate processing)</li>
+            <li>Signer identity (DID or public key)</li>
+        </ul>
+
+        <h2>Technical Design</h2>
+        
+        <p>Signet supports multiple signature algorithms, with Ed25519 as the default for its performance characteristics:</p>
+        
+        <pre><code>signet:
+  algorithm: Ed25519
+  key_source: env:SIGNET_PRIVATE_KEY
+  require_signatures: true
+  allowed_signers:
+    - did:key:z6Mk...  # Allowed agent identities</code></pre>
+        
+        <p>Key design decisions from the PR:</p>
+        
+        <ul>
+            <li><strong>DID-based identities:</strong> Signers are identified using Decentralized Identifiers, enabling interoperability with existing identity systems.</li>
+            <li><strong>Optional enforcement:</strong> Servers can run in "log-only" mode (sign but don't require signatures) or "strict" mode (reject unsigned requests).</li>
+            <li><strong>Detached signatures:</strong> Signatures are carried in a separate field, not modifying the original tool call structure.</li>
+        </ul>
+
+        <h2>Use Cases</h2>
+        
+        <p>The PR outlines several scenarios where Signet adds value:</p>
+        
+        <ul>
+            <li><strong>Financial services:</strong> Compliance requirements for non-repudiable records of automated trading or account modifications.</li>
+            <li><strong>Healthcare:</strong> HIPAA audit trails for AI systems accessing patient records.</li>
+            <li><strong>Enterprise IT:</strong> SOC 2 evidence for automated infrastructure changes.</li>
+            <li><strong>Legal:</strong> Chain of custody for AI-generated or AI-modified documents.</li>
+        </ul>
+
+        <h2>Current Status</h2>
+        
+        <p>PR #3759 was opened on March 30, 2026 and is currently under review. The implementation includes:</p>
+        
+        <ul>
+            <li>Core signing middleware (TypeScript)</li>
+            <li>Ed25519 and secp256k1 signature support</li>
+            <li>Configuration schema</li>
+            <li>Integration tests</li>
+        </ul>
+        
+        <p>Open questions from the PR discussion include key management recommendations, performance impact benchmarks, and whether response attestation should be mandatory or optional.</p>
+
+        <h2>Implications</h2>
+        
+        <p>If merged, Signet would be one of the first community servers focused purely on security infrastructure rather than external service integration. It signals growing enterprise interest in MCP as a production-grade protocol, not just a developer convenience.</p>
+        
+        <p>The DID-based identity model also aligns with emerging standards in the agent identity space, potentially enabling cross-protocol signature verification with systems like A2A and UCP.</p>
+
+        <div class="links">
+            <h3>References</h3>
+            <ul>
+                <li><a href="https://github.com/modelcontextprotocol/servers/pull/3759" target="_blank">PR #3759: Add Signet - cryptographic action signing for MCP tool calls</a></li>
+                <li><a href="https://modelcontextprotocol.io" target="_blank">Model Context Protocol Documentation</a></li>
+                <li><a href="https://www.w3.org/TR/did-core/" target="_blank">W3C Decentralized Identifiers (DIDs)</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

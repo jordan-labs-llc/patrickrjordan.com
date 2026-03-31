@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP AWT: AI-Powered E2E Testing Server — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--purple);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .tag.testing { background: var(--green); }
+        .tag.devtools { background: var(--yellow); color: black; }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .summary {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .info-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .info-box.success {
+            border-left-color: var(--green);
+        }
+        .info-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .info-box p {
+            font-size: 0.875rem;
+            margin-bottom: 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .author-section h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-section p {
+            font-size: 0.875rem;
+            margin-bottom: 0;
+            color: var(--text-secondary);
+        }
+        .related {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related h2 {
+            font-size: 1rem;
+            margin-top: 0;
+        }
+        .related-links {
+            list-style: none;
+            padding: 0;
+        }
+        .related-links li {
+            padding: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/pulse.html" class="back">← Repo Pulse</a>
+        
+        <div class="meta">
+            <span class="tag testing">Testing</span>
+            <span class="tag devtools">DevTools</span>
+            March 31, 2026
+        </div>
+        
+        <h1>MCP AWT: AI-Powered E2E Testing Server</h1>
+        
+        <p class="summary">A new MCP server proposal introduces AI Watch Tester (AWT) — a framework for AI-powered end-to-end testing of web applications and agent workflows. First testing-focused community server submission.</p>
+
+        <div class="author-section">
+            <h3>👤 About the Author</h3>
+            <p><strong>ksgisang</strong> — First-time contributor to the MCP servers repository. The proposal suggests experience with test automation frameworks and AI integration, addressing a gap in the MCP ecosystem for quality assurance tooling.</p>
+        </div>
+
+        <h2>Why This Matters</h2>
+        
+        <p>As AI agents become more capable of operating autonomously — browsing the web, executing code, interacting with APIs — testing these workflows becomes increasingly critical. Traditional E2E testing tools like Playwright or Cypress were designed for deterministic human-authored test cases. Agent workflows are probabilistic and context-dependent.</p>
+        
+        <p>AWT proposes to solve this by using AI itself to generate, execute, and validate test scenarios. The key insight: if an AI agent can perform a task, another AI (or the same one with different instructions) can verify the task was completed correctly.</p>
+
+        <div class="info-box">
+            <h3>📊 Market Context</h3>
+            <p>The AI testing market is projected to grow from $0.5B in 2025 to $4.2B by 2030 (Allied Market Research). Early tooling in this space will have significant influence on how agents are validated in production.</p>
+        </div>
+
+        <h2>What Changed (Technically)</h2>
+        
+        <p>PR #3766 proposes adding a new MCP server with the following capabilities:</p>
+        
+        <ul>
+            <li><strong>Test Generation</strong> — AI-powered creation of test scenarios from natural language descriptions or existing user flows</li>
+            <li><strong>Visual Assertions</strong> — Screenshot comparison and visual diff detection using vision models</li>
+            <li><strong>Self-Healing Tests</strong> — Automatic selector repair when DOM structures change</li>
+            <li><strong>Behavior Verification</strong> — Semantic validation that agent actions achieved intended outcomes</li>
+            <li><strong>Regression Detection</strong> — Identify when agent behavior deviates from baseline recordings</li>
+        </ul>
+
+        <p>The server exposes MCP tools for:</p>
+        
+        <pre><code>{
+  "tools": [
+    "awt_record_flow",
+    "awt_generate_test",
+    "awt_run_test",
+    "awt_validate_outcome",
+    "awt_compare_baseline",
+    "awt_heal_selectors"
+  ]
+}</code></pre>
+
+        <h2>Technical Architecture</h2>
+        
+        <p>AWT sits between the orchestrating AI and a browser automation layer (Playwright or Puppeteer). During recording, it captures:</p>
+        
+        <ul>
+            <li>DOM snapshots at key interaction points</li>
+            <li>Network requests and responses</li>
+            <li>Console logs and errors</li>
+            <li>Screenshots for visual validation</li>
+            <li>Semantic descriptions of each action (AI-generated)</li>
+        </ul>
+        
+        <p>During playback, the AI can use semantic descriptions rather than brittle CSS selectors. If a button's class changes from <code>.btn-primary</code> to <code>.action-button</code>, AWT uses the semantic description ("the blue Submit button in the checkout form") to locate it dynamically.</p>
+
+        <div class="info-box success">
+            <h3>✅ Key Innovation</h3>
+            <p>Unlike traditional E2E frameworks that fail immediately on selector changes, AWT's AI-powered healing can maintain test stability across UI refactors — reducing the maintenance burden that makes E2E testing costly at scale.</p>
+        </div>
+
+        <h2>Integration with MCP Ecosystem</h2>
+        
+        <p>AWT is designed to work alongside other MCP servers:</p>
+        
+        <ul>
+            <li><strong>Puppeteer/Playwright MCP</strong> — Browser automation layer</li>
+            <li><strong>Filesystem MCP</strong> — Test artifact storage</li>
+            <li><strong>Sequential Thinking MCP</strong> — Multi-step test planning</li>
+            <li><strong>Fetch MCP</strong> — API endpoint validation</li>
+        </ul>
+        
+        <p>This composability means AWT doesn't need to reinvent browser control — it focuses on the testing intelligence layer while delegating execution to existing, battle-tested servers.</p>
+
+        <h2>Use Cases</h2>
+        
+        <p><strong>Agent Workflow Validation:</strong> Before deploying an agent that books flights, run AWT to verify the agent correctly handles edge cases (no flights available, session timeout, payment failure).</p>
+        
+        <p><strong>UI Regression Testing:</strong> Capture baseline recordings of critical user flows. AWT alerts when visual or behavioral regressions occur.</p>
+        
+        <p><strong>Compliance Verification:</strong> For regulated industries, AWT can validate that agent actions remain within defined boundaries — useful for auditing AI systems that handle financial transactions or personal data.</p>
+
+        <h2>Next Steps</h2>
+        
+        <ul>
+            <li><strong>Review Process</strong> — PR is open and awaiting maintainer review. Expect discussion on scope and integration patterns.</li>
+            <li><strong>Documentation</strong> — If merged, detailed setup guides and example workflows will be added.</li>
+            <li><strong>CI Integration</strong> — Future plans mention GitHub Actions integration for automated test runs on PRs.</li>
+        </ul>
+
+        <p>AWT addresses a real gap in the MCP ecosystem. As agents move from demos to production, testing infrastructure becomes essential. This proposal is the first serious attempt to bring AI-native testing to MCP.</p>
+
+        <div class="related">
+            <h2>Related Analysis</h2>
+            <ul class="related-links">
+                <li><a href="/articles/mcp-signet-cryptographic-signing.html">MCP Signet: Cryptographic Action Signing</a> — Enterprise audit trails for tool calls</li>
+                <li><a href="/articles/mcp-git-argument-injection-guards.html">MCP Git Argument Injection Guards</a> — Security hardening for git operations</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

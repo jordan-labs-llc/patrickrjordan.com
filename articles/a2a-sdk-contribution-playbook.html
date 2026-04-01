@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A SDK Contribution Playbook: Community SDKs Get Official Guidance — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--green);
+            color: white;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        <span class="tag">Ecosystem</span>
+        <h1>A2A SDK Contribution Playbook: Community SDKs Get Official Guidance</h1>
+        <div class="meta">
+            April 1, 2026 · zeroasterisk & alan blount · <a href="https://github.com/a2aproject/A2A/pull/1699" target="_blank">PR #1699</a> & <a href="https://github.com/a2aproject/A2A/pull/1698" target="_blank">PR #1698</a>
+        </div>
+
+        <h2>The Change</h2>
+        <p>Two related PRs landed today that formalize how the A2A ecosystem handles community SDK contributions. <a href="https://github.com/a2aproject/A2A/pull/1699" target="_blank">PR #1699</a> adds an SDK contribution playbook with verification badges, while <a href="https://github.com/a2aproject/A2A/pull/1698" target="_blank">PR #1698</a> (now merged as <a href="https://github.com/a2aproject/A2A/commit/f991a08" target="_blank">f991a08</a>) establishes a dedicated Community SDKs documentation page.</p>
+
+        <div class="callout">
+            <strong>Ecosystem Signal:</strong> Official guidance for community SDKs indicates A2A has reached the adoption curve where third-party implementations outnumber first-party ones.
+        </div>
+
+        <h2>Author Background</h2>
+        <p><strong>zeroasterisk</strong> has been active in A2A community development, previously contributing documentation improvements and participating in specification discussions. <strong>alan blount</strong> (ableblount) merged the Community SDKs page, representing Google's acceptance of community contribution patterns.</p>
+
+        <h2>Why This Matters</h2>
+        <p>Protocol adoption depends on SDK availability. Developers don't read specifications — they install packages. The formalization of community SDK guidance addresses three critical needs:</p>
+
+        <ul>
+            <li><strong>Quality signals</strong> — Verification badges help developers choose maintained implementations</li>
+            <li><strong>Contribution clarity</strong> — Clear process reduces friction for new contributors</li>
+            <li><strong>Ecosystem coordination</strong> — Prevents duplicate effort across language implementations</li>
+        </ul>
+
+        <h2>What the Playbook Covers</h2>
+        <p>Based on the PR description, the contribution playbook establishes:</p>
+
+        <ul>
+            <li><strong>Verification tiers</strong> — Graduated badges indicating specification compliance level</li>
+            <li><strong>Testing requirements</strong> — Conformance tests SDKs must pass for verification</li>
+            <li><strong>Maintenance expectations</strong> — Activity thresholds for continued listing</li>
+            <li><strong>Documentation standards</strong> — Required README sections and examples</li>
+        </ul>
+
+        <h2>Current Community SDKs</h2>
+        <p>The new Community SDKs page likely catalogs implementations across languages:</p>
+
+        <ul>
+            <li><span class="badge">Python</span> Multiple implementations including official a2a-sdk</li>
+            <li><span class="badge">TypeScript</span> Node.js and browser variants</li>
+            <li><span class="badge">Go</span> Cloud-native implementations</li>
+            <li><span class="badge">Rust</span> Performance-focused agents</li>
+            <li><span class="badge">Java</span> Enterprise integrations</li>
+        </ul>
+
+        <h2>Timing with 1.0.1</h2>
+        <p>This documentation arrives as A2A prepares for 1.0.1 (see <a href="https://github.com/a2aproject/A2A/pull/1706" target="_blank">PR #1706</a>). The timing is intentional — stable SDK guidance requires a stable specification. With 1.0 providing API guarantees, community implementations can build confidently.</p>
+
+        <h2>Implications for Agent Developers</h2>
+        <p>For developers building multi-agent systems:</p>
+
+        <ul>
+            <li><strong>SDK discovery</strong> — Centralized listing simplifies technology selection</li>
+            <li><strong>Risk assessment</strong> — Verification badges indicate implementation maturity</li>
+            <li><strong>Contribution path</strong> — Clear process for improving existing SDKs</li>
+            <li><strong>New language support</strong> — Playbook enables anyone to create verified SDKs</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+        <p>The ecosystem should expect:</p>
+
+        <ol>
+            <li>Existing community SDKs applying for verification badges</li>
+            <li>Conformance test suite publication for SDK authors</li>
+            <li>Badge automation via CI integration</li>
+            <li>Featured SDKs section on a2a-protocol.org</li>
+        </ol>
+
+        <p>This formalization mirrors how successful open protocols scale — clear community contribution paths, quality signals, and coordination mechanisms that allow organic ecosystem growth without central bottlenecks.</p>
+    </div>
+</body>
+</html>

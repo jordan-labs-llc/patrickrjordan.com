@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Breaking Change: Totals Now Use signed_amount — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --red: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--red);
+            color: white;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-warning {
+            border-left-color: var(--red);
+        }
+        ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        <span class="tag">Breaking Change</span>
+        <h1>UCP Breaking Change: Totals Now Use signed_amount</h1>
+        <div class="meta">
+            April 1, 2026 · Ryan C · <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/299" target="_blank">PR #299</a>
+        </div>
+
+        <h2>The Change</h2>
+        <p>Today's merge of <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/299" target="_blank">PR #299</a> updates UCP's <code>total</code> field to use <code>signed_amount.json</code> instead of the previous unsigned schema. This is a breaking change affecting all checkout and order flows.</p>
+
+        <div class="callout callout-warning">
+            <strong>Migration Required:</strong> Implementations parsing totals MUST now handle negative values. Positive-only validation will fail on legitimate discount and credit scenarios.
+        </div>
+
+        <h2>Author Background</h2>
+        <p><strong>Ryan C</strong> has been a consistent UCP contributor, recently shepherding the release preparation (<a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/02120f5" target="_blank">ci: prepare for release</a>) and overseeing CI infrastructure improvements. His focus on schema correctness reflects the protocol's maturation toward production stability.</p>
+
+        <h2>Why This Matters</h2>
+        <p>The shift to signed amounts addresses a fundamental limitation in UCP's commerce model. Real-world checkout flows frequently produce negative totals:</p>
+
+        <ul>
+            <li><strong>Store credits</strong> exceeding purchase amount</li>
+            <li><strong>Promotional balances</strong> covering entire orders</li>
+            <li><strong>Refund adjustments</strong> creating credit states</li>
+            <li><strong>Gift card overages</strong> leaving balances</li>
+        </ul>
+
+        <p>Previously, these scenarios were technically unsupported despite being documented in examples — a classic "works in docs, fails in prod" gap. AI agents attempting to apply large discounts would encounter validation errors or undefined behavior.</p>
+
+        <h2>Technical Details</h2>
+        <p>The change updates the JSON schema reference:</p>
+
+<pre>// Before
+"total": { "$ref": "amount.json" }
+
+// After  
+"total": { "$ref": "signed_amount.json" }</pre>
+
+        <p>The <code>signed_amount.json</code> schema permits negative values while maintaining the same structure (value + currency). Implementations should:</p>
+
+        <ul>
+            <li>Update validation logic to accept negative totals</li>
+            <li>Handle display formatting for negative amounts (parentheses, minus signs)</li>
+            <li>Consider business logic implications (e.g., "pay nothing" vs "receive credit")</li>
+        </ul>
+
+        <h2>Implications for AI Agents</h2>
+        <p>This change directly benefits agentic commerce scenarios:</p>
+
+        <ul>
+            <li><strong>Coupon stacking</strong> — Agents can apply multiple discounts without hitting schema errors</li>
+            <li><strong>Gift card redemption</strong> — Full balance application now works correctly</li>
+            <li><strong>Refund flows</strong> — Agents can understand and communicate credit states</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+        <p>The UCP team is preparing for release (see <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/02120f5" target="_blank">02120f5</a>), with this fix included. Implementations should:</p>
+
+        <ol>
+            <li>Review total handling code for unsigned assumptions</li>
+            <li>Update UI components that display totals</li>
+            <li>Add test cases for negative total scenarios</li>
+            <li>Verify business logic handles "zero cost" and "credit due" states</li>
+        </ol>
+
+        <p>This fix continues UCP's pattern of hardening schema definitions ahead of enterprise adoption — where edge cases become common cases at scale.</p>
+    </div>
+</body>
+</html>

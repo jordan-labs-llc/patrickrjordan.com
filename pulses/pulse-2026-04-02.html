@@ -137,7 +137,6 @@
         .type-pr { background: var(--purple); color: white; }
         .type-discussion { background: var(--accent); color: white; }
         .type-release { background: var(--red); color: white; }
-        .type-revert { background: var(--red); color: white; }
         .activity-content { flex: 1; }
         .activity-content a {
             color: var(--text);
@@ -236,20 +235,20 @@
             </div>
             <ul class="insights-list">
                 <li>
-                    <div class="insight-title">⏪ UCP identity linking mechanism registry reverted — specification instability signals caution</div>
-                    <div class="insight-detail"><strong>Ilya Grigorik</strong> rolls back <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/329" target="_blank">PR #329</a>, reverting the mechanism registry from <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/265" target="_blank">#265</a>. A breaking change merged two weeks ago is being pulled back. Implementers should pause identity extensibility work. <a href="/articles/ucp-identity-linking-revert.html">Read analysis →</a></div>
+                    <div class="insight-title">⚠️ UCP breaking change week: Three schema updates land in 48 hours</div>
+                    <div class="insight-detail">Currency now required on Order (<a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/283" target="_blank">PR #283</a>), Order capability restructured for multi-checkout (<a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/254" target="_blank">PR #254</a>), and totals use signed_amount (<a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/299" target="_blank">PR #299</a>). <a href="/articles/ucp-order-currency-required-breaking.html">Read analysis →</a></div>
                 </li>
                 <li>
-                    <div class="insight-title">🦞 OpenClaw provider runtime refactoring — shared activation context matures plugin SDK</div>
-                    <div class="insight-detail"><strong>Peter Steinberger</strong> and <strong>Vincent Koc</strong> push 10+ commits including shared activation context (<a href="https://github.com/openclaw/openclaw/commit/8b6c224" target="_blank">8b6c224</a>), Anthropic cache-ttl fix (<a href="https://github.com/openclaw/openclaw/commit/ed297eb" target="_blank">ed297eb</a>), and WhatsApp lazy-loading. <a href="/articles/openclaw-provider-runtime-refactoring.html">Read analysis →</a></div>
+                    <div class="insight-title">🦞 OpenClaw 2026.4.2-beta.1 release prep — image generation and task-flow improvements</div>
+                    <div class="insight-detail"><strong>Peter Steinberger</strong> and <strong>Vincent Koc</strong> push 10+ commits today including image generation routing (<a href="https://github.com/openclaw/openclaw/commit/0ad2dbd" target="_blank">0ad2dbd</a>), gateway startup optimization (<a href="https://github.com/openclaw/openclaw/commit/d2ce3e9" target="_blank">d2ce3e9</a>), and Telegram approval callback refactoring.</div>
                 </li>
                 <li>
-                    <div class="insight-title">🌐 MCP community server momentum continues — CalDAV/CardDAV and smart money intelligence proposed</div>
-                    <div class="insight-detail">Three new server PRs: universal CalDAV/CardDAV/VTODO orchestration (<a href="https://github.com/modelcontextprotocol/servers/pull/3802" target="_blank">#3802</a>), Meridian smart money scanner (<a href="https://github.com/modelcontextprotocol/servers/pull/3801" target="_blank">#3801</a>), and Drop Beacon MCP server (<a href="https://github.com/modelcontextprotocol/servers/pull/3803" target="_blank">#3803</a>).</div>
+                    <div class="insight-title">🌐 MCP community server wave continues — VerdictSwarm, NannyKeeper, ClawSocial proposed</div>
+                    <div class="insight-detail">Three new server PRs in 24h: multi-agent crypto risk scanning (<a href="https://github.com/modelcontextprotocol/servers/pull/3789" target="_blank">#3789</a>), parental monitoring (<a href="https://github.com/modelcontextprotocol/servers/pull/3788" target="_blank">#3788</a>), and persistent agent identity with trust scoring (<a href="https://github.com/modelcontextprotocol/servers/issues/3793" target="_blank">#3793</a>).</div>
                 </li>
                 <li>
-                    <div class="insight-title">📦 A2A v1.0.1 release imminent — CI restructuring and partner ecosystem growth</div>
-                    <div class="insight-detail">Release bot PR <a href="https://github.com/a2aproject/A2A/pull/1706" target="_blank">#1706</a> awaits merge. MERX TRON agent submitted (<a href="https://github.com/a2aproject/A2A/issues/1711" target="_blank">#1711</a>), Strale and OIXA Protocol added to partners. CI spelling workflow getting permissions fix (<a href="https://github.com/a2aproject/A2A/pull/1709" target="_blank">#1709</a>).</div>
+                    <div class="insight-title">📚 A2A approaching v1.0.1 — CI restructuring and SDK contribution formalization</div>
+                    <div class="insight-detail">Release bot opened <a href="https://github.com/a2aproject/A2A/pull/1706" target="_blank">PR #1706</a> for v1.0.1. Community SDKs now have verification badges and contribution playbook. CI spelling workflow getting permissions fix (<a href="https://github.com/a2aproject/A2A/pull/1709" target="_blank">#1709</a>).</div>
                 </li>
             </ul>
         </div>
@@ -271,30 +270,6 @@
                 <div class="activity-title">Recent Activity (Last 7 Days)</div>
                 
                 <div class="activity-item">
-                    <span class="activity-type type-revert">Revert</span>
-                    <div class="activity-content">
-                        <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/329" target="_blank">Revert "feat!: redesign identity linking with mechanism registry" (#329)</a>
-                        <div class="activity-meta">Ilya Grigorik • Merged Apr 3 · <a href="/articles/ucp-identity-linking-revert.html">Analysis →</a></div>
-                    </div>
-                </div>
-                
-                <div class="activity-item">
-                    <span class="activity-type type-commit">Commit</span>
-                    <div class="activity-content">
-                        <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/7d09f6d" target="_blank">feat: Add an optional label field on Order to hold additional identifiers (#326)</a>
-                        <div class="activity-meta">Jing Li • Merged Apr 3</div>
-                    </div>
-                </div>
-                
-                <div class="activity-item">
-                    <span class="activity-type type-commit">Commit</span>
-                    <div class="activity-content">
-                        <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/c1b9c7e" target="_blank">fix(security): update lodash to fix Trivy vulnerabilities (#333)</a>
-                        <div class="activity-meta">NanL3001 • Merged Apr 2</div>
-                    </div>
-                </div>
-                
-                <div class="activity-item">
                     <span class="activity-type type-commit">Commit</span>
                     <div class="activity-content">
                         <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/9bb4a66" target="_blank">feat!: Update the Order schema to make currency a required field (#283)</a>
@@ -303,10 +278,34 @@
                 </div>
                 
                 <div class="activity-item">
-                    <span class="activity-type type-issue">Issue</span>
+                    <span class="activity-type type-commit">Commit</span>
                     <div class="activity-content">
-                        <a href="https://github.com/Universal-Commerce-Protocol/ucp/issues/334" target="_blank">[Bug]: about samples and ucp sdk not match</a>
-                        <div class="activity-meta">zhanghongyong123456 • Open · Apr 3</div>
+                        <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/fd859ad" target="_blank">ci: don't run docs build on release cut (#327)</a>
+                        <div class="activity-meta">Ryan C • Merged Apr 1</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <span class="activity-type type-commit">Commit</span>
+                    <div class="activity-content">
+                        <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/89727fb" target="_blank">feat!: update Order capability (#254)</a>
+                        <div class="activity-meta">Lee Richmond • Merged Apr 1 · <a href="/articles/ucp-order-capability-restructuring.html">Analysis →</a></div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <span class="activity-type type-commit">Commit</span>
+                    <div class="activity-content">
+                        <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/59b56cc" target="_blank">fix!: update total to use signed_amount.json (#299)</a>
+                        <div class="activity-meta">Ryan C • Merged Apr 1 · <a href="/articles/ucp-signed-amount-totals-breaking.html">Analysis →</a></div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <span class="activity-type type-commit">Commit</span>
+                    <div class="activity-content">
+                        <a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/02120f5" target="_blank">ci: prepare for release</a>
+                        <div class="activity-meta">Ryan C • Merged Mar 31</div>
                     </div>
                 </div>
             </div>
@@ -331,40 +330,40 @@
                 <div class="activity-item">
                     <span class="activity-type type-pr">PR</span>
                     <div class="activity-content">
-                        <a href="https://github.com/modelcontextprotocol/servers/pull/3803" target="_blank">feat: add Drop Beacon MCP server</a>
-                        <div class="activity-meta">direct-web • Open · Apr 3</div>
+                        <a href="https://github.com/modelcontextprotocol/servers/pull/3792" target="_blank">fix(sequential-thinking): remove unused dependency</a>
+                        <div class="activity-meta">kt3k • Open · Apr 2</div>
                     </div>
                 </div>
                 
                 <div class="activity-item">
                     <span class="activity-type type-pr">PR</span>
                     <div class="activity-content">
-                        <a href="https://github.com/modelcontextprotocol/servers/pull/3802" target="_blank">Add dav-mcp community server — universal CalDAV/CardDAV/VTODO orchestration</a>
-                        <div class="activity-meta">PhilflowIO • Open · Apr 3</div>
+                        <a href="https://github.com/modelcontextprotocol/servers/pull/3791" target="_blank">fix: preserve UNC path prefix in isPathWithinAllowedDirectories</a>
+                        <div class="activity-meta">hashwnath • Open · Apr 2</div>
                     </div>
                 </div>
                 
                 <div class="activity-item">
                     <span class="activity-type type-pr">PR</span>
                     <div class="activity-content">
-                        <a href="https://github.com/modelcontextprotocol/servers/pull/3801" target="_blank">community: add Meridian smart money intelligence MCP server</a>
-                        <div class="activity-meta">himraven • Open · Apr 3</div>
-                    </div>
-                </div>
-                
-                <div class="activity-item">
-                    <span class="activity-type type-issue">Issue</span>
-                    <div class="activity-content">
-                        <a href="https://github.com/modelcontextprotocol/servers/issues/3800" target="_blank">@modelcontextprotocol/server-fetch isn't on npmjs</a>
-                        <div class="activity-meta">yurivict • Open · Apr 2</div>
+                        <a href="https://github.com/modelcontextprotocol/servers/pull/3789" target="_blank">Add VerdictSwarm — Multi-agent crypto token risk scanner</a>
+                        <div class="activity-meta">vswarm-ai • Open · Apr 2</div>
                     </div>
                 </div>
                 
                 <div class="activity-item">
                     <span class="activity-type type-pr">PR</span>
                     <div class="activity-content">
-                        <a href="https://github.com/modelcontextprotocol/servers/pull/3797" target="_blank">Add mcp-server-madeonsol community server</a>
-                        <div class="activity-meta">LamboPoewert • Open · Apr 2</div>
+                        <a href="https://github.com/modelcontextprotocol/servers/pull/3788" target="_blank">Add NannyKeeper MCP server</a>
+                        <div class="activity-meta">imaznation • Open · Apr 2</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <span class="activity-type type-commit">Commit</span>
+                    <div class="activity-content">
+                        <a href="https://github.com/modelcontextprotocol/servers/commit/f424458" target="_blank">fix(fetch): refresh uv lockfile (#3598)</a>
+                        <div class="activity-meta">Arif Celebi • Merged Mar 17</div>
                     </div>
                 </div>
             </div>
@@ -387,14 +386,6 @@
                 <div class="activity-title">Recent Activity (Last 7 Days)</div>
                 
                 <div class="activity-item">
-                    <span class="activity-type type-issue">Issue</span>
-                    <div class="activity-content">
-                        <a href="https://github.com/a2aproject/A2A/issues/1711" target="_blank">Community Agent Submission: MERX TRON Agent</a>
-                        <div class="activity-meta">Hovsteder • Open · Apr 2</div>
-                    </div>
-                </div>
-                
-                <div class="activity-item">
                     <span class="activity-type type-pr">PR</span>
                     <div class="activity-content">
                         <a href="https://github.com/a2aproject/A2A/pull/1709" target="_blank">fix(ci): restructure check-spelling workflow for restricted permissions</a>
@@ -414,7 +405,7 @@
                     <span class="activity-type type-commit">Commit</span>
                     <div class="activity-content">
                         <a href="https://github.com/a2aproject/A2A/commit/f991a08" target="_blank">docs: add Community SDKs (#1698)</a>
-                        <div class="activity-meta">alan blount • Merged Mar 31</div>
+                        <div class="activity-meta">alan blount • Merged Mar 31 · <a href="/articles/a2a-sdk-contribution-playbook.html">Analysis →</a></div>
                     </div>
                 </div>
                 
@@ -423,6 +414,14 @@
                     <div class="activity-content">
                         <a href="https://github.com/a2aproject/A2A/pull/1706" target="_blank">chore(main): release 1.0.1</a>
                         <div class="activity-meta">a2a-bot • Open · Mar 31</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <span class="activity-type type-commit">Commit</span>
+                    <div class="activity-content">
+                        <a href="https://github.com/a2aproject/A2A/commit/5ac9d2c" target="_blank">docs: add Strale to partners list (#1702)</a>
+                        <div class="activity-meta">petterlindstrom79 • Merged Mar 30</div>
                     </div>
                 </div>
             </div>
@@ -445,48 +444,48 @@
                 <div class="activity-title">Recent Activity (Last 7 Days)</div>
                 
                 <div class="activity-item">
-                    <span class="activity-type type-commit">Commit</span>
+                    <span class="activity-type type-release">Release</span>
                     <div class="activity-content">
-                        <a href="https://github.com/openclaw/openclaw/commit/c6b8109" target="_blank">fix(ci): use sdk seams in whatsapp test harnesses</a>
-                        <div class="activity-meta">Peter Steinberger • Apr 3</div>
+                        <a href="https://github.com/openclaw/openclaw/commit/423f7c3" target="_blank">build: prep 2026.4.2-beta.1 release</a>
+                        <div class="activity-meta">Peter Steinberger • Apr 2</div>
                     </div>
                 </div>
                 
                 <div class="activity-item">
                     <span class="activity-type type-commit">Commit</span>
                     <div class="activity-content">
-                        <a href="https://github.com/openclaw/openclaw/commit/8b6c224" target="_blank">refactor(plugins): share activation context for provider runtimes</a>
-                        <div class="activity-meta">Peter Steinberger • Apr 3 · <a href="/articles/openclaw-provider-runtime-refactoring.html">Analysis →</a></div>
+                        <a href="https://github.com/openclaw/openclaw/commit/0ad2dbd" target="_blank">fix(providers): route image generation through shared transport (#59729)</a>
+                        <div class="activity-meta">Vincent Koc • Merged Apr 2</div>
                     </div>
                 </div>
                 
                 <div class="activity-item">
                     <span class="activity-type type-commit">Commit</span>
                     <div class="activity-content">
-                        <a href="https://github.com/openclaw/openclaw/commit/ed297eb" target="_blank">fix(providers): align cache-ttl anthropic semantics (#60375)</a>
-                        <div class="activity-meta">Vincent Koc • Apr 3</div>
+                        <a href="https://github.com/openclaw/openclaw/commit/d2ce3e9" target="_blank">perf(plugins): keep gateway startup channel-only (#59754)</a>
+                        <div class="activity-meta">Vincent Koc • Merged Apr 2</div>
                     </div>
                 </div>
                 
                 <div class="activity-item">
                     <span class="activity-type type-commit">Commit</span>
                     <div class="activity-content">
-                        <a href="https://github.com/openclaw/openclaw/commit/dae0400" target="_blank">fix: honor discord account guild policy config</a>
-                        <div class="activity-meta">Tak Hoffman • Apr 3</div>
+                        <a href="https://github.com/openclaw/openclaw/commit/988f762" target="_blank">refactor(telegram): centralize approval callback shaping</a>
+                        <div class="activity-meta">Peter Steinberger • Merged Apr 2</div>
                     </div>
                 </div>
                 
                 <div class="activity-item">
                     <span class="activity-type type-commit">Commit</span>
                     <div class="activity-content">
-                        <a href="https://github.com/openclaw/openclaw/commit/79aa212" target="_blank">refactor(whatsapp): lazy-load send and action runtimes</a>
-                        <div class="activity-meta">Vincent Koc • Apr 3</div>
+                        <a href="https://github.com/openclaw/openclaw/commit/efe9464" target="_blank">fix(tasks): tighten task-flow CLI surface (#59757)</a>
+                        <div class="activity-meta">Vincent Koc • Merged Apr 2</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <p class="updated">Last updated: April 3, 2026 • Updated daily • <a href="/pulses/">View archive</a></p>
+        <p class="updated">Last updated: April 2, 2026 • Updated daily • <a href="/pulses/">View archive</a></p>
     </div>
 </body>
 </html>

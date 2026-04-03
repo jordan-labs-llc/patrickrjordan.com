@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCP Order Capability Restructuring: Multi-Checkout Support and Signed Quantities — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--red);
+            color: white;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout-warning {
+            border-left-color: var(--red);
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        <span class="tag">Breaking Change</span>
+        <h1>UCP Order Capability Restructuring: Multi-Checkout Support and Signed Quantities</h1>
+        <div class="meta">
+            April 1, 2026 · Lee Richmond (richmolj) · <a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/254" target="_blank">PR #254</a>
+        </div>
+
+        <h2>Overview</h2>
+        <p><a href="https://github.com/Universal-Commerce-Protocol/ucp/pull/254" target="_blank">PR #254</a> represents the most significant restructuring of UCP's Order capability since launch. The changes address fundamental modeling limitations that prevented proper handling of order edits, exchanges, and returns — scenarios that are increasingly common in agentic commerce.</p>
+
+        <div class="callout callout-warning">
+            <strong>Multiple Breaking Changes:</strong> This PR contains four distinct breaking changes affecting checkout references, adjustment amounts, and quantity constraints. Existing implementations will require significant updates.
+        </div>
+
+        <h2>Author Background</h2>
+        <p><strong>Lee Richmond</strong> (richmolj) has been instrumental in shaping UCP's capability model. His contributions focus on schema flexibility and real-world commerce scenarios — this PR reflects extensive analysis of edge cases encountered in production deployments.</p>
+
+        <h2>Breaking Changes Summary</h2>
+
+        <table>
+            <tr>
+                <th>Change</th>
+                <th>Before</th>
+                <th>After</th>
+            </tr>
+            <tr>
+                <td>Checkout reference</td>
+                <td><code>checkout_id</code> (string)</td>
+                <td><code>checkouts</code> (array of objects)</td>
+            </tr>
+            <tr>
+                <td>Adjustment amounts</td>
+                <td><code>amount</code> (single value)</td>
+                <td><code>totals</code> (array of Total objects)</td>
+            </tr>
+            <tr>
+                <td>Line item quantities</td>
+                <td><code>minimum: 1</code></td>
+                <td>Signed (can be negative)</td>
+            </tr>
+            <tr>
+                <td>Amount values</td>
+                <td><code>minimum: 0</code></td>
+                <td>Signed (can be negative)</td>
+            </tr>
+        </table>
+
+        <h2>Key Changes Explained</h2>
+
+        <h3>1. Order:Checkout is Now 1:N</h3>
+        <p>The most significant architectural change: Orders can now reference multiple Checkout sessions. This enables:</p>
+
+        <ul>
+            <li><strong>Order edits</strong> — Customer changes quantity post-purchase, creating a new checkout session</li>
+            <li><strong>Exchanges</strong> — Return one item, purchase another in a linked transaction</li>
+            <li><strong>Subscriptions</strong> — Recurring orders can track renewal checkouts</li>
+        </ul>
+
+<pre>// Before: Single checkout reference
+{
+  "checkout_id": "chk_abc123"
+}
+
+// After: Array with timestamps
+{
+  "checkouts": [
+    { "id": "chk_abc123", "created_at": "2026-04-01T10:00:00Z" },
+    { "id": "chk_xyz789", "created_at": "2026-04-01T14:30:00Z" }
+  ]
+}</pre>
+
+        <h3>2. Signed Quantities for Returns</h3>
+        <p>Adjustment line item quantities no longer enforce <code>minimum: 1</code>. Negative quantities represent returned items:</p>
+
+<pre>// Adjustment: Customer returned 2 items, kept 3
+{
+  "line_items": [
+    { "sku": "WIDGET-001", "quantity": -2 },
+    { "sku": "GADGET-002", "quantity": 3 }
+  ]
+}</pre>
+
+        <h3>3. Adjustment Totals Alignment</h3>
+        <p>The <code>amount</code> field on Adjustments has been renamed to <code>totals</code> and restructured to match the pattern used by Order and OrderLineItem:</p>
+
+<pre>// Before: Single amount
+{
+  "amount": { "value": "10.00", "currency": "USD" }
+}
+
+// After: Array of totals
+{
+  "totals": [
+    { "type": "subtotal", "amount": { "value": "-10.00", "currency": "USD" } },
+    { "type": "tax", "amount": { "value": "-0.90", "currency": "USD" } }
+  ]
+}</pre>
+
+        <h3>4. Documentation Clarifications</h3>
+        <p>The PR also softens previously rigid language:</p>
+        <ul>
+            <li>"Append-only" on adjustments → now acknowledges adjustment modifications</li>
+            <li>"Immutable" on line items → recognizes edit scenarios</li>
+            <li>"Derived from events" quantity language → removed to allow direct specification</li>
+        </ul>
+
+        <h2>Implications for AI Agents</h2>
+        <p>These changes significantly improve agent capabilities:</p>
+
+        <ul>
+            <li><strong>Order modification flows</strong> — Agents can now properly model "change my order" requests</li>
+            <li><strong>Return processing</strong> — Negative quantities provide clear return semantics</li>
+            <li><strong>Transaction history</strong> — Multiple checkouts enable complete order lifecycle visibility</li>
+            <li><strong>Refund calculations</strong> — Signed amounts enable accurate partial refund computation</li>
+        </ul>
+
+        <h2>Migration Guide</h2>
+        <ol>
+            <li><strong>Update checkout references</strong> — Replace <code>checkout_id</code> with <code>checkouts</code> array</li>
+            <li><strong>Adjust validation rules</strong> — Remove minimum constraints on quantities and amounts</li>
+            <li><strong>Rename adjustment fields</strong> — Change <code>amount</code> to <code>totals</code> with array structure</li>
+            <li><strong>Handle negative values</strong> — Update display logic for quantities and amounts</li>
+            <li><strong>Test exchange flows</strong> — Verify multi-checkout scenarios work correctly</li>
+        </ol>
+
+        <h2>Context: Part of a Larger Wave</h2>
+        <p>This PR lands alongside other significant UCP changes:</p>
+        <ul>
+            <li><a href="/articles/ucp-signed-amount-totals-breaking.html">signed_amount for totals</a> (PR #299, April 1)</li>
+            <li><a href="/articles/ucp-order-currency-required-breaking.html">Required currency on Order</a> (PR #283, April 2)</li>
+            <li><a href="https://github.com/Universal-Commerce-Protocol/ucp/commit/cbd9f33" target="_blank">ec.totals.change for embedded checkout</a> (March 27)</li>
+        </ul>
+
+        <p>Together, these represent UCP's most significant breaking change window — positioning the protocol for enterprise adoption where complex order lifecycle management is the norm, not the exception.</p>
+    </div>
+</body>
+</html>

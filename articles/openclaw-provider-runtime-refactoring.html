@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Provider Runtime Refactoring: Shared Activation Context — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .author-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+        .author-section h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .author-section p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .commit-list {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .commit-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+        .commit-item:last-child {
+            border-bottom: none;
+        }
+        .commit-sha {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← Articles</a>
+        
+        <h1>OpenClaw Provider Runtime Refactoring: Shared Activation Context</h1>
+        
+        <div class="meta">
+            <span class="tag">OpenClaw</span>
+            <span class="tag">Architecture</span>
+            <span class="tag">Provider SDK</span>
+            <br><br>
+            April 3, 2026 · Peter Steinberger, Vincent Koc · Multiple commits
+        </div>
+
+        <div class="author-section">
+            <h3>About the Contributors</h3>
+            <p><strong>Peter Steinberger</strong> is the founder and lead architect of OpenClaw, previously founder of PSPDFKit. His commits focus on plugin architecture, security hardening, and cross-platform reliability.</p>
+            <p style="margin-top: 0.5rem;"><strong>Vincent Koc</strong> is a core contributor focusing on provider integrations, test infrastructure, and channel stability. His work frequently addresses edge cases in production deployments.</p>
+        </div>
+
+        <p>Today's OpenClaw activity shows a coordinated push on provider runtime architecture. Over 10 commits from <strong>Peter Steinberger</strong> and <strong>Vincent Koc</strong> refactor how provider plugins share context, handle caching, and manage test isolation.</p>
+
+        <h2>Key Changes</h2>
+
+        <div class="commit-list">
+            <div class="commit-item">
+                <span class="commit-sha">8b6c224</span> — refactor(plugins): share activation context for provider runtimes
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha">ed297eb</span> — fix(providers): align cache-ttl anthropic semantics (#60375)
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha">79aa212</span> — refactor(whatsapp): lazy-load send and action runtimes
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha">c831875</span> — test(contracts): lazily resolve session binding registry
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha">dae0400</span> — fix: honor discord account guild policy config
+            </div>
+            <div class="commit-item">
+                <span class="commit-sha">c6b8109</span> — fix(ci): use sdk seams in whatsapp test harnesses
+            </div>
+        </div>
+
+        <h2>Shared Activation Context</h2>
+
+        <p>The headline change (<code>8b6c224</code>) introduces a shared activation context pattern for provider runtimes. Previously, each provider plugin initialized its own isolated context — authentication state, rate limit tracking, connection pools — leading to duplication and inconsistent behavior.</p>
+
+        <p>The new pattern allows providers to share:</p>
+
+        <ul>
+            <li><strong>Authentication tokens</strong> — OAuth refresh flows coordinate across providers using the same credentials</li>
+            <li><strong>Rate limit state</strong> — Providers can respect global rate limits rather than per-instance limits</li>
+            <li><strong>Connection pools</strong> — HTTP clients can be shared where appropriate, reducing overhead</li>
+        </ul>
+
+        <h2>Anthropic Cache TTL Fix</h2>
+
+        <p>The cache-ttl fix (<code>ed297eb</code>) addresses a subtle semantic mismatch. Anthropic's API uses <code>cache_control</code> headers differently than OpenAI's — OpenClaw was applying OpenAI-style TTL semantics to Anthropic responses, causing premature cache eviction and unnecessary API calls.</p>
+
+        <p>For users of Claude models via OpenClaw, this fix reduces token costs by properly respecting cache validity windows.</p>
+
+        <h2>WhatsApp Lazy Loading</h2>
+
+        <p>The WhatsApp refactor (<code>79aa212</code>) continues the trend toward lazy initialization. Send and action runtimes now load on-demand rather than at startup, improving gateway boot time when WhatsApp isn't immediately needed.</p>
+
+        <p>Combined with similar changes across other channels, OpenClaw startup continues to get faster — particularly important for development workflows where the gateway restarts frequently.</p>
+
+        <h2>Test Infrastructure Improvements</h2>
+
+        <p>Several commits focus on test isolation and SDK seams:</p>
+
+        <ul>
+            <li><strong>Lazy session binding registry</strong> — Tests can now mock session bindings without polluting global state</li>
+            <li><strong>SDK seams in WhatsApp harnesses</strong> — CI tests use injectable SDK implementations rather than live APIs</li>
+            <li><strong>Isolated Slack outbound harness</strong> — Slack tests no longer require network access</li>
+        </ul>
+
+        <p>These changes make the test suite more reliable and faster, enabling more aggressive CI parallelization.</p>
+
+        <h2>Implications</h2>
+
+        <p>This refactoring is infrastructure work — it doesn't add visible features but makes the codebase more maintainable and the runtime more efficient. Key benefits:</p>
+
+        <ul>
+            <li><strong>Faster startup</strong> — Lazy loading reduces time-to-first-message</li>
+            <li><strong>Lower costs</strong> — Correct cache semantics reduce API token usage</li>
+            <li><strong>Better testing</strong> — Isolated test harnesses catch regressions earlier</li>
+            <li><strong>Plugin SDK maturity</strong> — Shared context patterns make third-party provider plugins easier to write</li>
+        </ul>
+
+        <p>For OpenClaw users, update to get the cache-ttl fix — it's a free cost reduction for Anthropic users.</p>
+
+        <p style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-secondary);">
+            Related: <a href="/articles/openclaw-provider-plugin-migration.html">OpenClaw Provider Policy Migration — Plugins Complete Their Takeover</a>
+        </p>
+    </div>
+</body>
+</html>

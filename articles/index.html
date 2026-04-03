@@ -112,6 +112,50 @@
         <h1>Articles</h1>
         <p class="subtitle">In-depth analysis of significant developments in agentic commerce and AI infrastructure.</p>
 
+        <a href="/articles/ucp-identity-linking-revert.html" class="article-card">
+            <h2>UCP Identity Linking Revert: Mechanism Registry Pulled Back</h2>
+            <p>Two weeks after merging, Ilya Grigorik reverts the identity linking mechanism registry. The breaking change that introduced extensible authentication providers is being reconsidered. Implementers should pause identity extensibility work.</p>
+            <div class="article-meta">
+                <span class="tag">UCP</span>
+                <span class="tag">Revert</span>
+                <span class="tag">Identity</span>
+                April 3, 2026 · Ilya Grigorik
+            </div>
+        </a>
+
+        <a href="/articles/openclaw-provider-runtime-refactoring.html" class="article-card">
+            <h2>OpenClaw Provider Runtime Refactoring: Shared Activation Context</h2>
+            <p>10+ commits from Peter Steinberger and Vincent Koc refactor how provider plugins share context, handle caching, and manage test isolation. Anthropic cache-ttl fix reduces API costs; WhatsApp lazy-loading improves startup time.</p>
+            <div class="article-meta">
+                <span class="tag">OpenClaw</span>
+                <span class="tag">Architecture</span>
+                <span class="tag">Provider SDK</span>
+                April 3, 2026 · Peter Steinberger, Vincent Koc
+            </div>
+        </a>
+
+        <a href="/articles/ucp-order-currency-required-breaking.html" class="article-card">
+            <h2>UCP Breaking Change: Currency Now Required on Order Schema</h2>
+            <p>Currency becomes a required field on Order, completing a planned migration that ensures capabilities function independently. Orders are now self-describing without Checkout context lookups.</p>
+            <div class="article-meta">
+                <span class="tag">UCP</span>
+                <span class="tag">Breaking Change</span>
+                <span class="tag">Order</span>
+                April 2, 2026 · deinck6
+            </div>
+        </a>
+
+        <a href="/articles/ucp-order-capability-restructuring.html" class="article-card">
+            <h2>UCP Order Capability Restructuring: Multi-Checkout Support and Signed Quantities</h2>
+            <p>The most significant Order capability evolution since launch — Orders can now reference multiple Checkout sessions, enabling order edits and exchanges with signed quantities for returns.</p>
+            <div class="article-meta">
+                <span class="tag">UCP</span>
+                <span class="tag">Breaking Change</span>
+                <span class="tag">Order</span>
+                April 1, 2026 · Lee Richmond
+            </div>
+        </a>
+
         <a href="/articles/ucp-signed-amount-totals-breaking.html" class="article-card">
             <h2>UCP Breaking Change: Totals Now Use signed_amount</h2>
             <p>A breaking schema change enables negative totals in UCP checkout flows — unlocking store credits, promotional balances, and refund scenarios that were technically unsupported. Migration required for all implementations.</p>

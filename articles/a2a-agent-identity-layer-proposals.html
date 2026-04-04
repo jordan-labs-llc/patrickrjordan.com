@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Agent Identity Layer Proposals: WTRMRK and Cross-Org Accountability — Patrick R. Jordan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .meta a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .proposal-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .proposal-box h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        .proposal-box p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .highlight {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg) 100%);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .highlight-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .comparison-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+        .footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/articles/" class="back">← All Articles</a>
+        
+        <h1>A2A Agent Identity Layer Proposals: WTRMRK and Cross-Org Accountability</h1>
+        
+        <div class="meta">
+            <span class="tag">A2A</span>
+            <span class="tag">Identity</span>
+            <span class="tag">Trust</span>
+            <span class="tag">Proposal</span>
+            <br><br>
+            April 4, 2026 · Issues <a href="https://github.com/a2aproject/A2A/issues/1712" target="_blank">#1712</a> and <a href="https://github.com/a2aproject/A2A/issues/1713" target="_blank">#1713</a>
+        </div>
+
+        <p>Two significant proposals dropped this week addressing how A2A agents establish trust when communicating across organizational boundaries. As multi-agent systems proliferate, the question of agent identity becomes critical: how does Agent A know Agent B is who it claims to be, and how do we hold agents accountable for their actions?</p>
+
+        <h2>The Problem Space</h2>
+
+        <p>A2A Protocol v1.0 provides communication primitives but leaves identity largely to implementers. This works within a single organization where you control all agents, but falls apart in federated scenarios:</p>
+
+        <ul>
+            <li><strong>First-contact transactions:</strong> Agent A (your travel agent) needs to negotiate with Agent B (an airline's booking agent) with no prior relationship</li>
+            <li><strong>Accountability gaps:</strong> If Agent B misbehaves, how does Agent A's organization pursue recourse?</li>
+            <li><strong>Impersonation risks:</strong> How do you verify an agent claiming to represent "Delta Airlines" is actually authorized?</li>
+        </ul>
+
+        <h2>Proposal 1: WTRMRK as a Trust Primitive</h2>
+
+        <div class="proposal-box">
+            <h3>Issue #1712 — 64R3N</h3>
+            <p>Proposes using WTRMRK (watermarking) technology as a foundational trust primitive for A2A agent identity verification.</p>
+        </div>
+
+        <p>The WTRMRK proposal suggests embedding cryptographic watermarks into agent responses that can be verified by receiving agents. Key concepts:</p>
+
+        <h3>Watermark Embedding</h3>
+        <p>Agents embed imperceptible signatures in their outputs — not just text, but across modalities including generated images, structured data, and even behavioral patterns:</p>
+
+        <pre><code>{
+  "agent_card": {
+    "id": "urn:a2a:agent:delta-booking-v2",
+    "wtrmrk": {
+      "algorithm": "WTRMRK-v1",
+      "verification_endpoint": "https://verify.delta.com/.well-known/wtrmrk",
+      "embedded_signals": ["text", "structured_response", "timing"]
+    }
+  }
+}</code></pre>
+
+        <h3>Verification Flow</h3>
+        <ol>
+            <li>Receiving agent extracts watermark signals from response</li>
+            <li>Verification request sent to declared endpoint</li>
+            <li>Endpoint confirms watermark validity and agent authorization</li>
+            <li>Trust score computed based on verification success</li>
+        </ol>
+
+        <h3>Strengths and Limitations</h3>
+        <ul>
+            <li><strong>Pro:</strong> Works across any response modality</li>
+            <li><strong>Pro:</strong> Difficult to forge without access to watermarking keys</li>
+            <li><strong>Con:</strong> Requires watermarking infrastructure at each organization</li>
+            <li><strong>Con:</strong> Verification latency adds to transaction time</li>
+        </ul>
+
+        <h2>Proposal 2: Cross-Org Accountability Layer</h2>
+
+        <div class="proposal-box">
+            <h3>Issue #1713 — kevin-biot</h3>
+            <p>Addresses accountability for first-contact A2A transactions when organizations don't share an Authorization Server.</p>
+        </div>
+
+        <p>This proposal focuses less on identity verification and more on creating enforceable accountability trails:</p>
+
+        <h3>Accountability Registry</h3>
+        <p>A federated registry where organizations publish:</p>
+        <ul>
+            <li>Agent manifests with authorized capabilities</li>
+            <li>Dispute resolution contacts</li>
+            <li>Insurance/bonding information</li>
+            <li>Historical behavior scores</li>
+        </ul>
+
+        <h3>Transaction Receipts</h3>
+        <p>Every cross-org A2A transaction generates a cryptographically signed receipt:</p>
+
+        <pre><code>{
+  "transaction_id": "txn_abc123",
+  "initiator": "urn:a2a:agent:my-travel-agent",
+  "responder": "urn:a2a:agent:delta-booking-v2",
+  "timestamp": "2026-04-04T15:30:00Z",
+  "operation": "flight_booking_request",
+  "result_hash": "sha256:...",
+  "signatures": {
+    "initiator_sig": "...",
+    "responder_sig": "..."
+  }
+}</code></pre>
+
+        <h3>Dispute Resolution Path</h3>
+        <p>When issues arise:</p>
+        <ol>
+            <li>Aggrieved party submits receipt to accountability registry</li>
+            <li>Registry notifies responsible organization</li>
+            <li>30-day resolution window</li>
+            <li>Unresolved disputes affect public trust scores</li>
+        </ol>
+
+        <h2>Comparing the Approaches</h2>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>WTRMRK (#1712)</th>
+                <th>Accountability Layer (#1713)</th>
+            </tr>
+            <tr>
+                <td>Focus</td>
+                <td>Identity verification</td>
+                <td>Post-transaction accountability</td>
+            </tr>
+            <tr>
+                <td>Timing</td>
+                <td>Real-time verification</td>
+                <td>Asynchronous resolution</td>
+            </tr>
+            <tr>
+                <td>Infrastructure</td>
+                <td>Per-org watermarking</td>
+                <td>Federated registry</td>
+            </tr>
+            <tr>
+                <td>Trust Model</td>
+                <td>Cryptographic proof</td>
+                <td>Reputation-based</td>
+            </tr>
+        </table>
+
+        <div class="highlight">
+            <div class="highlight-title">💡 These Proposals Are Complementary</div>
+            <p>WTRMRK provides real-time identity verification ("this agent is authorized by Delta"). The accountability layer provides recourse when things go wrong ("Delta's agent double-booked me"). A complete trust framework likely needs both.</p>
+        </div>
+
+        <h2>Implications for Agent Developers</h2>
+
+        <p>If either proposal gains traction:</p>
+
+        <ul>
+            <li><strong>Agent Cards will evolve:</strong> Expect new fields for trust primitive declarations</li>
+            <li><strong>Transaction logging becomes mandatory:</strong> Keep immutable logs of all cross-org A2A exchanges</li>
+            <li><strong>Trust verification overhead:</strong> Budget for additional latency in multi-agent workflows</li>
+            <li><strong>Insurance requirements:</strong> Enterprise deployments may require bonding for high-value agent operations</li>
+        </ul>
+
+        <h2>What's Next</h2>
+
+        <p>Both proposals are in early discussion. The A2A TSC has not yet scheduled formal review, but the timing — shortly after v1.0 release — suggests identity/trust will be a major focus for v1.1 or a dedicated extension.</p>
+
+        <p>For now, implementers building cross-org A2A systems should:</p>
+        <ol>
+            <li>Design with identity verification in mind (even if mechanisms evolve)</li>
+            <li>Log all cross-org transactions with sufficient detail for future accountability</li>
+            <li>Monitor these issues for TSC direction</li>
+        </ol>
+
+        <div class="footer-nav">
+            <a href="/articles/">← All Articles</a>
+            <a href="/pulse.html">Repo Pulse →</a>
+        </div>
+    </div>
+</body>
+</html>

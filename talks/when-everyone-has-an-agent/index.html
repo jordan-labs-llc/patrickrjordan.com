@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC8KNJ6FE8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PC8KNJ6FE8');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When Everyone Has an Agent — Patrick R. Jordan</title>
+    <meta name="description" content="Keynote at the GenAIECommerce 2026 workshop (RecSys 2026): what changes when AI agents recommend, negotiate, and transact on behalf of buyers and sellers, and why the challenge shifts from better decisions to better markets.">
+    <link rel="canonical" href="https://patrickrjordan.com/talks/when-everyone-has-an-agent/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="When Everyone Has an Agent: From Better Decisions to Better Markets">
+    <meta property="og:description" content="Keynote, GenAIECommerce 2026 workshop at RecSys 2026 · Patrick R. Jordan">
+    <meta property="og:url" content="https://patrickrjordan.com/talks/when-everyone-has-an-agent/">
+    <meta property="og:image" content="https://patrickrjordan.com/talks/when-everyone-has-an-agent/og.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f172a;
+                --bg-secondary: #1e293b;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --accent: #3b82f6;
+                --accent-hover: #60a5fa;
+                --border: #334155;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        .back {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back:hover { color: var(--accent); }
+        .eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.25rem;
+        }
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .meta a { color: var(--text-secondary); }
+        .meta a:hover { color: var(--accent); }
+        .preview {
+            display: block;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .preview:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .preview img { display: block; width: 100%; height: auto; }
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0 3rem;
+        }
+        .actions a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.5rem 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .actions a.primary { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+        .actions a:hover { border-color: var(--accent); color: var(--accent); }
+        .actions a.primary:hover { background: var(--accent-hover); color: #ffffff; }
+        section { margin-bottom: 3rem; }
+        h2 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        p { margin-bottom: 1rem; }
+        ol.outline { padding-left: 1.25rem; }
+        ol.outline li { margin-bottom: 0.5rem; }
+        ol.outline li span { color: var(--text-secondary); }
+        .refs h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin: 1.5rem 0 0.5rem;
+        }
+        .refs ul { list-style: none; }
+        .refs li {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .refs li:last-child { border-bottom: none; }
+        .refs a { color: var(--text); text-decoration: none; font-weight: 500; }
+        .refs a:hover { color: var(--accent); }
+        .note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back">← Back</a>
+        <div class="eyebrow">Keynote</div>
+        <h1>When Everyone Has an Agent</h1>
+        <div class="subtitle">From Better Decisions to Better Markets</div>
+        <div class="meta"><a href="https://genai-ecommerce.github.io/GenAIECommerce2026" target="_blank">GenAIECommerce 2026</a> workshop at ACM RecSys 2026 · Minneapolis · September 28, 2026</div>
+
+        <a class="preview" href="slides.pdf" target="_blank" aria-label="Open the slides (PDF)">
+            <img src="cover-preview.jpg" width="1280" height="720" alt="Title slide: When Everyone Has an Agent — From better decisions to better markets, with a cup of espresso.">
+        </a>
+        <div class="actions">
+            <a class="primary" href="slides.pdf" target="_blank">Slides (PDF, 5 MB)</a>
+            <a href="#references">References</a>
+            <a href="https://genai-ecommerce.github.io/GenAIECommerce2026" target="_blank">Workshop</a>
+        </div>
+
+        <section>
+            <h2>Abstract</h2>
+            <p>AI agents are rapidly becoming capable of searching, recommending, negotiating, and transacting on behalf of users and businesses. But something fundamental changes when these agents interact with other independently motivated agents: the problem shifts from making good decisions to making good decisions in a strategic environment.</p>
+            <p>This talk explores that transition through the lens of recommendation games. When a user agent solicits recommendations from multiple competing agents, each recommendation is no longer simply a prediction of what the user wants. It is also a strategic action, shaped by what other agents recommend and by the rules governing selection and reward.</p>
+            <p>More broadly, the talk considers a shift from decision theory to game theory and mechanism design for agentic commerce at scale. The central challenge is not simply to build smarter agents. It is to design and evaluate the environments in which they interact, so that useful behavior becomes strategically advantageous.</p>
+        </section>
+
+        <section>
+            <h2>Outline</h2>
+            <ol class="outline">
+                <li>A running example <span>— one buyer, five espresso machines, an $800 budget</span></li>
+                <li>Better decisions <span>— preferences as vectors; recommendation as nearest-neighbor search</span></li>
+                <li>Recommendation as a game <span>— competing recommenders, facility-location games, and equilibria</span></li>
+                <li>When the players are LLMs <span>— language as strategy, and evidence that agents take the first offer</span></li>
+                <li>Improving agents <span>— empirical game-theoretic analysis and prompts as strategies</span></li>
+                <li>Market design <span>— a market agent, lessons from ad tech, and subsidized exploration</span></li>
+                <li>The world we can build <span>— an advocate for everyone; markets as design objects</span></li>
+            </ol>
+        </section>
+
+        <section class="refs" id="references">
+            <h2>References</h2>
+
+            <h3>Recommendation as a game</h3>
+            <ul>
+                <li><a href="https://doi.org/10.1145/3340922" target="_blank">Rethinking search engines and recommendation systems: a game theoretic perspective</a><br>Tennenholtz &amp; Kurland · CACM 2019</li>
+                <li><a href="https://arxiv.org/abs/1806.00955" target="_blank">A game-theoretic approach to recommendation systems with strategic content providers</a><br>Ben-Porat &amp; Tennenholtz · NeurIPS 2018</li>
+                <li><a href="https://ojs.aaai.org/index.php/AAAI/article/view/4000" target="_blank">From recommendation systems to facility location games</a><br>Ben-Porat, Rosenberg &amp; Tennenholtz · AAAI 2019</li>
+                <li><a href="https://proceedings.mlr.press/v202/yao23b.html" target="_blank">How bad is top-K recommendation under competing content creators?</a><br>Yao et al. · ICML 2023</li>
+                <li><a href="https://arxiv.org/abs/2206.13489" target="_blank">Supply-side equilibria in recommender systems</a><br>Jagadeesan, Garg &amp; Steinhardt · NeurIPS 2023</li>
+                <li><a href="https://arxiv.org/abs/2208.14423" target="_blank">Competition, alignment, and equilibria in digital marketplaces</a><br>Jagadeesan, Jordan &amp; Haghtalab · AAAI 2023</li>
+                <li><a href="https://openreview.net/forum?id=l6CpxixmUg" target="_blank">Modeling content creator incentives on algorithm-curated platforms</a><br>Hron et al. · ICLR 2023</li>
+                <li><a href="https://www.aeaweb.org/articles?id=10.1257/aer.102.2.780" target="_blank">Competition through commissions and kickbacks</a><br>Inderst &amp; Ottaviani · American Economic Review 2012</li>
+                <li><a href="https://arxiv.org/abs/2509.13462" target="_blank">Strategic pricing and ranking in recommendation systems with seller competition</a><br>Walunj, Kavitha, Nair &amp; Agarwal · Performance Evaluation 2025</li>
+            </ul>
+
+            <h3>LLM agents as players</h3>
+            <ul>
+                <li><a href="https://arxiv.org/abs/2310.10826" target="_blank">Mechanism design for large language models</a><br>Dütting, Mirrokni, Paes Leme, Xu &amp; Zuo · WWW 2024</li>
+                <li><a href="https://arxiv.org/abs/2404.08126" target="_blank">Auctions with LLM summaries</a><br>Dubey, Feng, Kidambi, Mehta &amp; Wang · KDD 2024</li>
+                <li><a href="https://arxiv.org/abs/2510.25779" target="_blank">Magentic Marketplace: an open-source environment for studying agentic markets</a><br>Bansal et al. · arXiv 2025</li>
+                <li><a href="https://arxiv.org/abs/2607.25253" target="_blank">The user asks, platforms compete: how agentic recommendation markets take shape</a><br>Hong et al. · arXiv 2026</li>
+                <li><a href="https://arxiv.org/abs/2508.02630" target="_blank">What is your AI agent buying? Evaluation, biases, model dependence, and emerging implications for agentic e-commerce</a><br>Allouah, Besbes, Figueroa, Kanoria &amp; Kumar · arXiv 2025</li>
+                <li><a href="https://arxiv.org/abs/2404.00806" target="_blank">Algorithmic collusion by large language models</a><br>Fish, Gonczarowski &amp; Shorrer · arXiv 2024</li>
+            </ul>
+
+            <h3>Empirical game-theoretic analysis</h3>
+            <ul>
+                <li>Methods for empirical game-theoretic analysis<br>Wellman · AAAI 2006</li>
+                <li>Strategy exploration in empirical games<br>Jordan, Schvartzman &amp; Wellman · AAMAS 2010</li>
+                <li><a href="https://arxiv.org/abs/1711.00832" target="_blank">A unified game-theoretic approach to multiagent reinforcement learning</a><br>Lanctot et al. · NeurIPS 2017</li>
+                <li><a href="https://arxiv.org/abs/2403.04018" target="_blank">Empirical game-theoretic analysis: a survey</a><br>Wellman, Tuyls &amp; Greenwald · arXiv 2024</li>
+                <li><a href="https://arxiv.org/abs/2402.01704" target="_blank">Steering language models with game-theoretic solvers</a><br>Gemp et al. · arXiv 2024</li>
+            </ul>
+
+            <h3>Market design</h3>
+            <ul>
+                <li><a href="https://ojs.aaai.org/index.php/AAAI/article/view/30266" target="_blank">Recommender ecosystems: a mechanism design perspective on holistic modeling and optimization</a><br>Boutilier, Mladenov &amp; G. Tennenholtz · AAAI 2024</li>
+                <li><a href="https://proceedings.mlr.press/v267/kapoor25a.html" target="_blank">Position: build agent advocates, not platform agents</a><br>Kapoor, Kolt &amp; Lazar · ICML 2025</li>
+                <li><a href="https://mpra.ub.uni-muenchen.de/30529/1/MPRA_paper_30529.pdf" target="_blank">Paying for prominence</a><br>Armstrong &amp; Zhou · Economic Journal 2011</li>
+                <li><a href="https://doi.org/10.1111/1756-2171.12298" target="_blank">A model of biased intermediation</a><br>de Cornière &amp; Taylor · RAND Journal of Economics 2019</li>
+                <li><a href="https://doi.org/10.1086/676597" target="_blank">Implementing the "wisdom of the crowd"</a><br>Kremer, Mansour &amp; Perry · Journal of Political Economy 2014</li>
+                <li><a href="https://arxiv.org/abs/1602.07570" target="_blank">Bayesian exploration: incentivizing exploration in Bayesian games</a><br>Mansour, Slivkins, Syrgkanis &amp; Wu · Operations Research 2022</li>
+                <li><a href="https://arxiv.org/abs/2306.01990" target="_blank">Incentivizing exploration in linear contextual bandits under information gap</a><br>Wang, Xu, Li, Liu &amp; Wang · RecSys 2023</li>
+                <li><a href="https://www.hbs.edu/ris/Publication%20Files/11-124_8b1a6cfc-d364-4f8b-8c9a-ecf05b5c4598.pdf" target="_blank">Search diversion and platform competition</a><br>Hagiu &amp; Jullien · International Journal of Industrial Organization 2014</li>
+                <li><a href="https://robinlee.sites.fas.harvard.edu/papers/ExclusivityAndControl.pdf" target="_blank">Exclusivity and control</a><br>Hagiu &amp; Lee · Journal of Economics &amp; Management Strategy 2011</li>
+            </ul>
+        </section>
+
+        <p class="note">The opinions in this talk are my own and do not represent my employer. The espresso market is a stylized example.</p>
+    </div>
+</body>
+</html>

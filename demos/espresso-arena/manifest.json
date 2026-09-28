@@ -1,0 +1,21 @@
+{
+  "version": "espresso-presentation-v1",
+  "file": "index.html",
+  "study_id": "5069e5fb39be2f46188362806b34160c46ac041dca581356e3e621efeacbaa8e",
+  "source_experiment": "80d5e156b714eeecc87df85414cd3044277f2e00296457cdffe6f75d5ec7fd34",
+  "html_sha256": "fc89e1d53b065adef61731729b26164b1fd082e0c63dd8003cab33a5bed31cc3",
+  "data_sha256": "eed230f99459d6432fa11862c8f76f02ace70a9a8a5a431d6242fd261bc752a2",
+  "javascript_sha256": "40f3e9d5340a54ba062e638284407755eec460f00c9c0f0c1870c06d86f3b42e",
+  "css_sha256": "a1aacf44c2b002234a9f26b602beb9ca8e31f069a88a4ec3c2ed80e1a9352f20",
+  "replay_source_sha256": "f1982ef405401ffc3f8f693bc3ddca6106c2d8c63b8963d1376291a311831719",
+  "examples_source_sha256": "7c37a33ffa901d193f4139b8a3a7b2a9cae93cc7d9055f3a9e8d735ca615103b",
+  "buyer_examples_sha256": "f579639fa1d82e3bd5202f84e1b80b2c4107d152e82759c2f2469ea804796e23",
+  "resource_count": 45,
+  "horizons": [
+    200,
+    1000,
+    5000
+  ],
+  "bytes": 8673330,
+  "buyer_example_count": 5
+}

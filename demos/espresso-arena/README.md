@@ -2,7 +2,7 @@
 
 Published at https://patrickrjordan.com/demos/espresso-arena/.
 
-`index.html` is the complete interactive presentation: replicator dynamics, Nash-based empirical game-theoretic analysis (EGTA), and five buyer encounters before and after strategy exploration. It includes its data, JavaScript, and styles and requires no backend, model runtime, or external assets.
+`index.html` is the complete interactive presentation: a scenario primer with buyer distributions and recorded Laya JSON inputs/outputs, replicator dynamics, Nash-based empirical game-theoretic analysis (EGTA), and five buyer encounters before and after strategy exploration. It includes its data, JavaScript, and styles and requires no backend, model runtime, or external assets.
 
 The results come from a saved study, including cached real Laya model responses and learned public-input best-response policies. The page performs no live model inference, training, or equilibrium solving.
 
